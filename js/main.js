@@ -45,8 +45,23 @@ const getRandomValue = (a, b) => {
   return Math.floor(result);
 };
 
+const createRandomIdGenerator = () => {
+  let generatedIdArray = [];
+
+  return function () {
+    let newUserId = getRandomValue(MIN_USER_ID, MAX_USER_ID);
+    while (generatedIdArray.includes(newUserId)) {
+      newUserId = getRandomValue(MIN_USER_ID, MAX_USER_ID);
+    }
+    generatedIdArray.push(newUserId);
+    return generatedIdArray;
+  };
+}
+
+let userIdGenerator = createRandomIdGenerator();
+
 const createComment = () => ({
-  id: getRandomValue(MIN_USER_ID, MAX_USER_ID),
+  id: userIdGenerator().at(-1),
   avatar: `img/avatar-${getRandomValue(MIN_USER_ID, MAX_USER_ID)}.svg`,
   message: MESSAGES[getRandomValue(0, MESSAGES.length -1)],
   name: NAMES[getRandomValue(0, NAMES.length -1)],
@@ -76,18 +91,17 @@ const createObject = () => {
   }
 }
 
-console.log(createObject())
-
-const createArrayOfObjects = (valueOfObjects) => {
-  let arrayOfObjects = [];
+let createArrayOfObjects = (valueOfObjects) => {
+  let initialArray = [];
 
   for (let i = 0; i < valueOfObjects; i++) {
-    arrayOfObjects.push(createObject())
+    let newObject = createObject();
+    initialArray.push(newObject);
   }
 
-  return arrayOfObjects;
+  return initialArray;
 }
 
 
-// console.log(createArrayOfObjects(3))
+console.log(createArrayOfObjects(2))
 
