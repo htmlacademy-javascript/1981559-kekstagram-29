@@ -5,8 +5,29 @@ const MIN_COMMENTS_VALUE = 0;
 const MAX_COMMENTS_VALUE = 30;
 const MIN_USER_ID = 0;
 const MAX_USER_ID = 999;
-const MIN_USER_AVATAR = 0;
-const MAX_USER_AVATAR = 999;
+const NAMES = [
+  'Иван',
+  'Хуан Себастьян',
+  'Мария',
+  'Кристоф',
+  'Виктор',
+  'Юлия',
+  'Люпита',
+  'Вашингтон',
+  'Артём',
+];
+
+const MESSAGES = [
+  'В целом всё неплохо. Но не всё.',
+  'Все отлично, давай еще.',
+  'Я бы сделал лучше.',
+  'Как скачать?',
+  'Продолжай делать контент. Мне нравится!',
+  'Сохранил себе!',
+  'Контент, который нам всем нужен!',
+  'Очень круто, пожалуйста, побольше подобного контента!',
+  'Спасибо большое',
+];
 
 const createIdGenerator = () => {
   let generatedId = 0;
@@ -24,24 +45,22 @@ const getRandomValue = (a, b) => {
   return Math.floor(result);
 };
 
-const createRandomValueArray = (valueOfComments) => {
-  let usedNumbersInArray = [];
+const createComment = () => ({
+  id: getRandomValue(MIN_USER_ID, MAX_USER_ID),
+  avatar: `img/avatar-${getRandomValue(MIN_USER_ID, MAX_USER_ID)}.svg`,
+  message: MESSAGES[getRandomValue(0, MESSAGES.length -1)],
+  name: NAMES[getRandomValue(0, NAMES.length -1)],
+});
+
+const createCommentArray = () => {
+  let commentArray = [];
+  let valueOfComments = getRandomValue(MIN_COMMENTS_VALUE, MAX_COMMENTS_VALUE);
 
   for (let i = 0; i < valueOfComments; i++) {
-    let newRandomIdValue = getRandomValue(MIN_USER_ID, MAX_USER_ID);
-    usedNumbersInArray.push(newRandomIdValue)
+    commentArray.push(createComment())
   }
 
-  return usedNumbersInArray;
-}
-
-const createComment = () => {
-  return {
-    id: 135,
-    avatar: 'img/avatar-6.svg',
-    message: 'В целом всё неплохо. Но не всё.',
-    name: 'Артём',
-  }
+  return commentArray;
 }
 
 const createObject = () => {
@@ -53,8 +72,11 @@ const createObject = () => {
     url: `photos/${newId}.jpg`,
     description: `${newId} фото.`,
     likes: newLikeValue,
+    comments: createCommentArray(),
   }
 }
+
+console.log(createObject())
 
 const createArrayOfObjects = (valueOfObjects) => {
   let arrayOfObjects = [];
@@ -67,5 +89,5 @@ const createArrayOfObjects = (valueOfObjects) => {
 }
 
 
-console.log(createArrayOfObjects(3))
+// console.log(createArrayOfObjects(3))
 
