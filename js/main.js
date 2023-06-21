@@ -31,13 +31,13 @@ const MESSAGES = [
 ];
 
 const createIdGenerator = () => {
-  let generatedId = 0;
+  let newGeneratedId = 0;
 
   return function () {
-    return ++generatedId;
+    return ++newGeneratedId;
   };
 }
-const generateId = createIdGenerator();
+const generatedId = createIdGenerator();
 
 const getRandomValue = (a, b) => {
   const lower = Math.ceil(Math.min(a, b));
@@ -91,7 +91,7 @@ const createCommentArray = () => {
 }
 
 const createObject = () => {
-  let newId = generateId();
+  let newId = generatedId();
   let newLikeValue = getRandomValue(MIN_LIKE_VALUE, MAX_LIKE_VALUE);
 
   return {
@@ -103,15 +103,16 @@ const createObject = () => {
   }
 }
 
-let createArrayOfObjects = (valueOfObjects) => {
+let newArrayOfObjects = (valueOfObjects) => {
   let initialArray = [];
 
   for (let i = 0; i < valueOfObjects; i++) {
-    let newObject = createObject();
-    initialArray.push(newObject);
+    initialArray.push(createObject());
   }
 
   return initialArray;
 }
+
+newArrayOfObjects(OBJECTS_NUMBER);
 
 
