@@ -104,15 +104,8 @@ const createObject = () => {
 };
 
 const newArrayOfObjects = (valueOfObjects) => {
-  const initialArray = [];
-
-  for (let i = 0; i < valueOfObjects; i++) {
-    initialArray.push(createObject());
-  }
-
-  return initialArray;
+  return Array.from({length: valueOfObjects}, createObject)
 };
 
 newArrayOfObjects(OBJECTS_NUMBER);
-
 
