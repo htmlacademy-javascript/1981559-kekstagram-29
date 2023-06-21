@@ -103,9 +103,7 @@ const createObject = () => {
   };
 };
 
-const newArrayOfObjects = (valueOfObjects) => {
-  return Array.from({length: valueOfObjects}, createObject)
-};
+const newArrayOfObjects = (valueOfObjects) => Array.from({length: valueOfObjects}, createObject);
 
 newArrayOfObjects(OBJECTS_NUMBER);
 
