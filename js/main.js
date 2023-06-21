@@ -36,7 +36,7 @@ const createIdGenerator = () => {
   return function () {
     return ++newGeneratedId;
   };
-}
+};
 const generatedId = createIdGenerator();
 
 const getRandomValue = (a, b) => {
@@ -47,7 +47,7 @@ const getRandomValue = (a, b) => {
 };
 
 const createRandomIdGenerator = () => {
-  let generatedIdArray = [];
+  const generatedIdArray = [];
 
   return function () {
     let newUserId = getRandomValue(MIN_USER_ID, MAX_USER_ID);
@@ -57,42 +57,42 @@ const createRandomIdGenerator = () => {
     generatedIdArray.push(newUserId);
     return generatedIdArray;
   };
-}
+};
 
-let userIdGenerator = createRandomIdGenerator();
+const userIdGenerator = createRandomIdGenerator();
 
 const generateMassageText = () => {
   let generatedResult = '';
 
   for (let i = 1; i <= getRandomValue(MIN_RANDOM_MESSAGES, MAX_RANDOM_MESSAGES); i++) {
-    let randomMessage = MESSAGES[getRandomValue(0, MESSAGES.length -1)];
-    (i > 1) ? generatedResult += ' ' + randomMessage : generatedResult += randomMessage;
+    const randomMessage = MESSAGES[getRandomValue(0, MESSAGES.length - 1)];
+    generatedResult = (i > 1) ? generatedResult += ` ${randomMessage}` : generatedResult += randomMessage;
   }
 
   return generatedResult;
-}
+};
 
 const createComment = () => ({
   id: userIdGenerator().at(-1),
   avatar: `img/avatar-${getRandomValue(MIN_AVATAR_ID, MAX_AVATAR_ID)}.svg`,
   message: generateMassageText(),
-  name: NAMES[getRandomValue(0, NAMES.length -1)],
+  name: NAMES[getRandomValue(0, NAMES.length - 1)],
 });
 
 const createCommentArray = () => {
-  let commentArray = [];
-  let valueOfComments = getRandomValue(MIN_COMMENTS_VALUE, MAX_COMMENTS_VALUE);
+  const commentArray = [];
+  const valueOfComments = getRandomValue(MIN_COMMENTS_VALUE, MAX_COMMENTS_VALUE);
 
   for (let i = 0; i < valueOfComments; i++) {
-    commentArray.push(createComment())
+    commentArray.push(createComment());
   }
 
   return commentArray;
-}
+};
 
 const createObject = () => {
-  let newId = generatedId();
-  let newLikeValue = getRandomValue(MIN_LIKE_VALUE, MAX_LIKE_VALUE);
+  const newId = generatedId();
+  const newLikeValue = getRandomValue(MIN_LIKE_VALUE, MAX_LIKE_VALUE);
 
   return {
     id: newId,
@@ -100,18 +100,18 @@ const createObject = () => {
     description: `${newId} фото.`,
     likes: newLikeValue,
     comments: createCommentArray(),
-  }
-}
+  };
+};
 
-let newArrayOfObjects = (valueOfObjects) => {
-  let initialArray = [];
+const newArrayOfObjects = (valueOfObjects) => {
+  const initialArray = [];
 
   for (let i = 0; i < valueOfObjects; i++) {
     initialArray.push(createObject());
   }
 
   return initialArray;
-}
+};
 
 newArrayOfObjects(OBJECTS_NUMBER);
 
