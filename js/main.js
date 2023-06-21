@@ -5,6 +5,10 @@ const MIN_COMMENTS_VALUE = 0;
 const MAX_COMMENTS_VALUE = 30;
 const MIN_USER_ID = 0;
 const MAX_USER_ID = 999;
+const MIN_AVATAR_ID = 1;
+const MAX_AVATAR_ID = 6;
+const MIN_RANDOM_MESSAGES = 1;
+const MAX_RANDOM_MESSAGES = 2;
 const NAMES = [
   'Иван',
   'Хуан Себастьян',
@@ -18,15 +22,12 @@ const NAMES = [
 ];
 
 const MESSAGES = [
+  'Всё отлично!',
   'В целом всё неплохо. Но не всё.',
-  'Все отлично, давай еще.',
-  'Я бы сделал лучше.',
-  'Как скачать?',
-  'Продолжай делать контент. Мне нравится!',
-  'Сохранил себе!',
-  'Контент, который нам всем нужен!',
-  'Очень круто, пожалуйста, побольше подобного контента!',
-  'Спасибо большое',
+  'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
+  'Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.',
+  'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
+  'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'
 ];
 
 const createIdGenerator = () => {
@@ -60,10 +61,21 @@ const createRandomIdGenerator = () => {
 
 let userIdGenerator = createRandomIdGenerator();
 
+const generateMassageText = () => {
+  let generatedResult = '';
+
+  for (let i = 1; i <= getRandomValue(MIN_RANDOM_MESSAGES, MAX_RANDOM_MESSAGES); i++) {
+    let randomMessage = MESSAGES[getRandomValue(0, MESSAGES.length -1)];
+    (i > 1) ? generatedResult += ' ' + randomMessage : generatedResult += randomMessage;
+  }
+
+  return generatedResult;
+}
+
 const createComment = () => ({
   id: userIdGenerator().at(-1),
-  avatar: `img/avatar-${getRandomValue(MIN_USER_ID, MAX_USER_ID)}.svg`,
-  message: MESSAGES[getRandomValue(0, MESSAGES.length -1)],
+  avatar: `img/avatar-${getRandomValue(MIN_AVATAR_ID, MAX_AVATAR_ID)}.svg`,
+  message: generateMassageText(),
   name: NAMES[getRandomValue(0, NAMES.length -1)],
 });
 
@@ -102,6 +114,4 @@ let createArrayOfObjects = (valueOfObjects) => {
   return initialArray;
 }
 
-
-console.log(createArrayOfObjects(2))
 
