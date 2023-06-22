@@ -37,7 +37,7 @@ const createIdGenerator = () => {
     return ++newGeneratedId;
   };
 };
-const generatedId = createIdGenerator();
+const generateId = createIdGenerator();
 
 const getRandomValue = (a, b) => {
   const lower = Math.ceil(Math.min(a, b));
@@ -91,7 +91,7 @@ const createCommentArray = () => {
 };
 
 const createObject = () => {
-  const newId = generatedId();
+  const newId = generateId();
   const newLikeValue = getRandomValue(MIN_LIKE_VALUE, MAX_LIKE_VALUE);
 
   return {
