@@ -1,5 +1,44 @@
-//Функция для проверки длины строки.
+//Функция рабочего дня.
+const MINUTES_IN_HOUR = 60;
 
+const checkWorkdayTime = (workdayStart, workdayEnd, meetingStartTime, meetingDuration) => {
+  const workdayTimeArray = [...workdayStart.split(':'), ...workdayEnd.split(':'), ...meetingStartTime.split(':')];
+
+  for (let i = 0; i < workdayTimeArray.length; i++) {
+    workdayTimeArray[i] = +workdayTimeArray[i];
+    if (i === 0 || i % 2 === 0) {
+      workdayTimeArray[i] *= MINUTES_IN_HOUR;
+    }
+  }
+
+  workdayStart = workdayTimeArray[0] + workdayTimeArray[1];
+  workdayEnd = workdayTimeArray[2] + workdayTimeArray[3];
+  meetingStartTime = workdayTimeArray[4] + workdayTimeArray[5];
+
+  if (meetingStartTime < workdayStart || meetingStartTime > workdayEnd) {
+    return false;
+  }
+
+  const timeAfterMeeting = meetingStartTime + meetingDuration;
+
+  if (timeAfterMeeting > workdayEnd) {
+    return false;
+  }
+
+  return true;
+};
+
+checkWorkdayTime('08:00', '17:30', '14:00', 90);
+
+//Тесты функции рабочего дня.
+// console.log(checkWorkdayTime('08:00', '17:30', '14:00', 90)); // true
+// console.log(checkWorkdayTime('8:0', '10:0', '8:0', 120));  // true
+// console.log(checkWorkdayTime('08:00', '14:30', '14:00', 90)); // false
+// console.log(checkWorkdayTime('14:00', '17:30', '08:0', 90));  // false
+// console.log(checkWorkdayTime('8:00', '17:30', '08:00', 900)); // false
+
+//Функция для проверки длины строки.
+/*
 const checkLength = (string, maxLength) => string.length <= maxLength;
 
 checkLength();
@@ -67,3 +106,4 @@ findNumbers();
 // console.log(findNumbers(2023));
 // console.log(findNumbers(-1));
 // console.log(findNumbers(1.5));
+*/
