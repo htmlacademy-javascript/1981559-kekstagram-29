@@ -6,4 +6,3 @@ const getRandomValue = (a, b) => {
 };
 
 export {getRandomValue};
-
