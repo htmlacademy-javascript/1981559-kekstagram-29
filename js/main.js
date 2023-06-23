@@ -30,14 +30,7 @@ const MESSAGES = [
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'
 ];
 
-const createIdGenerator = () => {
-  let newGeneratedId = 0;
-
-  return function () {
-    return ++newGeneratedId;
-  };
-};
-const generateId = createIdGenerator();
+let userId = 1;
 
 const getRandomValue = (a, b) => {
   const lower = Math.ceil(Math.min(a, b));
@@ -49,7 +42,7 @@ const getRandomValue = (a, b) => {
 const createRandomIdGenerator = () => {
   const generatedIdArray = [];
 
-  return function () {
+  return () => {
     let newUserId = getRandomValue(MIN_USER_ID, MAX_USER_ID);
     while (generatedIdArray.includes(newUserId)) {
       newUserId = getRandomValue(MIN_USER_ID, MAX_USER_ID);
@@ -91,7 +84,7 @@ const createCommentArray = () => {
 };
 
 const createObject = () => {
-  const newId = generateId();
+  const newId = userId++;
   const newLikeValue = getRandomValue(MIN_LIKE_VALUE, MAX_LIKE_VALUE);
 
   return {
@@ -106,4 +99,3 @@ const createObject = () => {
 const newArrayOfObjects = (valueOfObjects) => Array.from({length: valueOfObjects}, createObject);
 
 newArrayOfObjects(OBJECTS_NUMBER);
-
