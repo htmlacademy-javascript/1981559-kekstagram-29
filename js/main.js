@@ -31,13 +31,7 @@ const MESSAGES = [
 ];
 
 let userId = 1;
-
-const getRandomValue = (a, b) => {
-  const lower = Math.ceil(Math.min(a, b));
-  const upper = Math.floor(Math.max(a, b));
-  const result = Math.random() * (upper - lower + 1) + lower;
-  return Math.floor(result);
-};
+import {getRandomValue} from './util.js';
 
 const createRandomIdGenerator = () => {
   const generatedIdArray = [];
