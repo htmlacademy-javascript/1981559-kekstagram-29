@@ -1,27 +1,29 @@
 //Функция рабочего дня.
-const MINUTES_IN_HOUR = 60;
 
 const checkWorkdayTime = (workdayStart, workdayEnd, meetingStartTime, meetingDuration) => {
-  const workdayTimeArray = [...workdayStart.split(':'), ...workdayEnd.split(':'), ...meetingStartTime.split(':')];
+  const WORKDAY_START = new Date();
+  WORKDAY_START.setHours(parseInt(workdayStart, 10));
+  WORKDAY_START.setMinutes(Number(workdayStart.split(':')[1]));
 
-  for (let i = 0; i < workdayTimeArray.length; i++) {
-    workdayTimeArray[i] = +workdayTimeArray[i];
-    if (i === 0 || i % 2 === 0) {
-      workdayTimeArray[i] *= MINUTES_IN_HOUR;
-    }
-  }
+  const WORKDAY_END = new Date();
+  WORKDAY_END.setHours(parseInt(workdayEnd, 10));
+  WORKDAY_END.setMinutes(Number(workdayEnd.split(':')[1]));
 
-  workdayStart = workdayTimeArray[0] + workdayTimeArray[1];
-  workdayEnd = workdayTimeArray[2] + workdayTimeArray[3];
-  meetingStartTime = workdayTimeArray[4] + workdayTimeArray[5];
+  const MEETING_START = new Date();
+  MEETING_START.setHours(parseInt(meetingStartTime, 10));
+  MEETING_START.setMinutes(Number(meetingStartTime.split(':')[1]));
 
-  if (meetingStartTime < workdayStart || meetingStartTime > workdayEnd) {
+  const RESULT_TIME = new Date();
+  RESULT_TIME.setHours(MEETING_START.getHours());
+  RESULT_TIME.setMinutes(MEETING_START.getMinutes() + meetingDuration);
+
+  if (MEETING_START.getHours() < WORKDAY_START.getHours() || MEETING_START.getHours() > WORKDAY_END.getHours()) {
     return false;
-  }
-
-  const timeAfterMeeting = meetingStartTime + meetingDuration;
-
-  if (timeAfterMeeting > workdayEnd) {
+  } else if (MEETING_START.getHours() === WORKDAY_END.getHours() && MEETING_START.getMinutes() >= WORKDAY_END.getMinutes()) {
+    return false;
+  } else if (RESULT_TIME.getHours() > WORKDAY_END.getHours()) {
+    return false;
+  } else if (RESULT_TIME.getHours() === WORKDAY_END.getHours() && RESULT_TIME.getMinutes() > WORKDAY_END.getMinutes()) {
     return false;
   }
 
@@ -36,6 +38,44 @@ checkWorkdayTime('08:00', '17:30', '14:00', 90);
 // console.log(checkWorkdayTime('08:00', '14:30', '14:00', 90)); // false
 // console.log(checkWorkdayTime('14:00', '17:30', '08:0', 90));  // false
 // console.log(checkWorkdayTime('8:00', '17:30', '08:00', 900)); // false
+
+// Доп. проверки. --------------------------------------------------
+// console.log(checkWorkdayTime('14:00', '17:30', '17:31', 90));  // false - проверка на минуты. Встреча после смены.
+// console.log(checkWorkdayTime('14:00', '17:30', '13:59', 90));  // false - проверка на минуты. Встреча перед сменой.
+// console.log(checkWorkdayTime('8:00', '17:30', '08:00', 570)); // true - проверка на совещание, которое длится весь день.
+
+// --------------------------------------------
+// Начало старого кода проверки рабочего дня.
+
+// const checkWorkdayTime = (workdayStart, workdayEnd, meetingStartTime, meetingDuration) => {
+//   const workdayTimeArray = [...workdayStart.split(':'), ...workdayEnd.split(':'), ...meetingStartTime.split(':')];
+//
+//   for (let i = 0; i < workdayTimeArray.length; i++) {
+//     workdayTimeArray[i] = +workdayTimeArray[i];
+//     if (i === 0 || i % 2 === 0) {
+//       workdayTimeArray[i] *= MINUTES_IN_HOUR;
+//     }
+//   }
+//
+//   workdayStart = workdayTimeArray[0] + workdayTimeArray[1];
+//   workdayEnd = workdayTimeArray[2] + workdayTimeArray[3];
+//   meetingStartTime = workdayTimeArray[4] + workdayTimeArray[5];
+//
+//   if (meetingStartTime < workdayStart || meetingStartTime > workdayEnd) {
+//     return false;
+//   }
+//
+//   const timeAfterMeeting = meetingStartTime + meetingDuration;
+//
+//   if (timeAfterMeeting > workdayEnd) {
+//     return false;
+//   }
+//
+//   return true;
+// };
+
+// Конец старого кода проверки рабочего дня.
+//-----------------------------------------
 
 //Функция для проверки длины строки.
 /*
