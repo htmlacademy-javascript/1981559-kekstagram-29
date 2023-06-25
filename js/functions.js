@@ -1,33 +1,34 @@
 //Функция рабочего дня.
 
-const checkWorkdayTime = (workdayStart, workdayEnd, meetingStartTime, meetingDuration) => {
-  const WORKDAY_START = new Date();
-  WORKDAY_START.setHours(parseInt(workdayStart, 10));
-  WORKDAY_START.setMinutes(Number(workdayStart.split(':')[1]));
+const checkWorkdayTime = (workdayStart, workdayEnd, meetingStart, meetingDuration) => {
+  const [hourStart, minuteStart] = workdayStart.split(':');
+  const [hourEnd, minuteEnd] = workdayEnd.split(':');
+  const [meetingHourStart, meetingMinutesEnd] = meetingStart.split(':');
 
-  const WORKDAY_END = new Date();
-  WORKDAY_END.setHours(parseInt(workdayEnd, 10));
-  WORKDAY_END.setMinutes(Number(workdayEnd.split(':')[1]));
+  const workdayStartTime = new Date(2023, 0, 1, hourStart, minuteStart);
+  const workdayEndTime = new Date(2023, 0, 1, hourEnd, minuteEnd);
+  const meetingStartTime = new Date(2023, 0, 1, meetingHourStart, meetingMinutesEnd);
+  const sumMeetingStartTimeAndMeetingDuration = meetingStartTime.getMinutes() + meetingDuration;
+  const resultTime = new Date(2023, 0, 1, meetingStartTime.getHours(), sumMeetingStartTimeAndMeetingDuration);
 
-  const MEETING_START = new Date();
-  MEETING_START.setHours(parseInt(meetingStartTime, 10));
-  MEETING_START.setMinutes(Number(meetingStartTime.split(':')[1]));
+  const isMeetingWithinWorkdayTime = meetingStartTime.getHours() < workdayStartTime.getHours() || meetingStartTime.getHours() > workdayEndTime.getHours();
+  const isMeetingWithinWorkdayTimeMinutes = meetingStartTime.getHours() === workdayEndTime.getHours() && meetingStartTime.getMinutes() >= workdayEndTime.getMinutes();
+  const isMeetingLongerWorkdayTime = resultTime.getHours() > workdayEndTime.getHours();
+  const isMeetingLongerWorkdayTimeMinutes = resultTime.getHours() === workdayEndTime.getHours() && resultTime.getMinutes() > workdayEndTime.getMinutes();
 
-  const RESULT_TIME = new Date();
-  RESULT_TIME.setHours(MEETING_START.getHours());
-  RESULT_TIME.setMinutes(MEETING_START.getMinutes() + meetingDuration);
-
-  if (MEETING_START.getHours() < WORKDAY_START.getHours() || MEETING_START.getHours() > WORKDAY_END.getHours()) {
-    return false;
-  } else if (MEETING_START.getHours() === WORKDAY_END.getHours() && MEETING_START.getMinutes() >= WORKDAY_END.getMinutes()) {
-    return false;
-  } else if (RESULT_TIME.getHours() > WORKDAY_END.getHours()) {
-    return false;
-  } else if (RESULT_TIME.getHours() === WORKDAY_END.getHours() && RESULT_TIME.getMinutes() > WORKDAY_END.getMinutes()) {
+  if (isMeetingWithinWorkdayTime) {
     return false;
   }
 
-  return true;
+  if (isMeetingWithinWorkdayTimeMinutes) {
+    return false;
+  }
+
+  if (isMeetingLongerWorkdayTime) {
+    return false;
+  }
+
+  return !isMeetingLongerWorkdayTimeMinutes;
 };
 
 checkWorkdayTime('08:00', '17:30', '14:00', 90);
