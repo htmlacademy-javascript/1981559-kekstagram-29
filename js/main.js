@@ -1,3 +1,2 @@
-import {newArrayOfObjects} from './data.js';
+import './rendering.js';
 
-newArrayOfObjects();
