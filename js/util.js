@@ -5,4 +5,6 @@ const getRandomValue = (a, b) => {
   return Math.floor(result);
 };
 
-export {getRandomValue};
+const isEscapeKey = (evt) => evt.key === 'Escape';
+
+export {getRandomValue, isEscapeKey};

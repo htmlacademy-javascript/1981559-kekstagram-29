@@ -1,3 +1,4 @@
+import {onPictureClick} from './fullphoto-rendering.js';
 const renderPhotoArray = (photoArray) => {
   const pictureTemplate = document.querySelector('#picture')
     .content
@@ -11,6 +12,7 @@ const renderPhotoArray = (photoArray) => {
     pictureElement.querySelector('.picture__img').alt = photo.description;
     pictureElement.querySelector('.picture__likes').textContent = photo.likes;
     pictureElement.querySelector('.picture__comments').textContent = photo.comments.length;
+    pictureElement.addEventListener('click', onPictureClick);
     photosFragment.appendChild(pictureElement);
   });
 
