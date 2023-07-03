@@ -32,13 +32,15 @@ const cardPictureWall = document.querySelector('.pictures');
 const onCardClick = (evt) => {
   const bigPictureImage = bigPicture.querySelector('.big-picture__img img');
   const bigPictureLikes = bigPicture.querySelector('.likes-count');
+  const bigPictureDescription = bigPicture.querySelector('.social__caption');
   const bigPictureCommentsValue = bigPicture.querySelector('.comments-count');
 
   if (evt.target.matches('.picture__img')) {
     let selectedPictureId = evt.target.dataset.pictureId;
     bigPictureImage.src = `./photos/${selectedPictureId}.jpg`
-    bigPictureLikes.textContent = newArrayOfObjects[selectedPictureId - 1].likes;
-    bigPictureCommentsValue.textContent = newArrayOfObjects[selectedPictureId - 1].comments.length;
+    bigPictureLikes.textContent = String(newArrayOfObjects[selectedPictureId - 1].likes);
+    bigPictureDescription.textContent = newArrayOfObjects[selectedPictureId - 1].description;
+    bigPictureCommentsValue.textContent = String(newArrayOfObjects[selectedPictureId - 1].comments.length);
   }
 };
 
