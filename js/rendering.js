@@ -8,6 +8,7 @@ const renderPhotoArray = (photoArray) => {
 
   photoArray.forEach((photo) => {
     const pictureElement = pictureTemplate.cloneNode(true);
+    pictureElement.querySelector('.picture__img').dataset.pictureId = photo.id;
     pictureElement.querySelector('.picture__img').src = photo.url;
     pictureElement.querySelector('.picture__img').alt = photo.description;
     pictureElement.querySelector('.picture__likes').textContent = photo.likes;
