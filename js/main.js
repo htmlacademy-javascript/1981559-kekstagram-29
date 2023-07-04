@@ -1,3 +1,3 @@
+import {renderPhotoArray} from './rendering.js';
 import {newArrayOfObjects} from './data.js';
-
-newArrayOfObjects();
+renderPhotoArray(newArrayOfObjects());
