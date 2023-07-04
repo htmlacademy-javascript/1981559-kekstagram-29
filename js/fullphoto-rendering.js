@@ -4,15 +4,11 @@ import {newArrayOfObjects} from './data.js';
 const bigPicture = document.querySelector('.big-picture');
 const closeButton = bigPicture.querySelector('.big-picture__cancel');
 
-const removeEventListenerOnPicture = () => {
-  document.removeEventListener('keydown', onEscapeClick);
-  bigPicture.classList.add('hidden');
-};
-
 const onEscapeClick = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
-    removeEventListenerOnPicture();
+    document.removeEventListener('keydown', onEscapeClick);
+    bigPicture.classList.add('hidden');
   }
 };
 
