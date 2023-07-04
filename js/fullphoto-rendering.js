@@ -30,6 +30,8 @@ const onCardClick = (evt) => {
   const bigPictureCommentsValue = bigPicture.querySelector('.comments-count');
   const bigPictureCommentsList = bigPicture.querySelector('.social__comments');
   const bigPictureCommentsItem = bigPicture.querySelectorAll('.social__comment');
+  const bigPictureCommentsCount = bigPicture.querySelector('.social__comment-count');
+  const bigPictureCommentsLoader = bigPicture.querySelector('.comments-loader');
 
   if (evt.target.matches('.picture__img')) {
     const selectedPictureId = evt.target.dataset.pictureId;
@@ -38,6 +40,8 @@ const onCardClick = (evt) => {
     bigPictureDescription.textContent = newArrayOfObjects[selectedPictureId - 1].description;
     bigPictureCommentsValue.textContent = String(newArrayOfObjects[selectedPictureId - 1].comments.length);
     bigPictureCommentsItem.forEach((item) => item.remove());
+    bigPictureCommentsCount.classList.add('hidden');
+    bigPictureCommentsLoader.classList.add('hidden');
 
     const messagesArray = newArrayOfObjects[selectedPictureId - 1].comments;
     const messagesFragment = document.createDocumentFragment();
