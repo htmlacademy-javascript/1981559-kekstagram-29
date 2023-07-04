@@ -1,29 +1,29 @@
-import {isEscapeKey} from "./util.js";
+import {isEscapeKey} from './util.js';
 import {newArrayOfObjects} from './data.js';
 
 const bigPicture = document.querySelector('.big-picture');
 const closeButton = bigPicture.querySelector('.big-picture__cancel');
 
-const onPictureClick = () => {
-  bigPicture.classList.remove('hidden');
-  closeButton.addEventListener('click', onCloseButtonClick);
-  document.addEventListener('keydown', onEscapeClick);
-}
-
-const onCloseButtonClick = () => {
-  closeButton.removeEventListener('click', onCloseButtonClick);
+const removeEventListenerOnPicture = () => {
   document.removeEventListener('keydown', onEscapeClick);
   bigPicture.classList.add('hidden');
-}
+};
 
 const onEscapeClick = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
-    closeButton.removeEventListener('click', onCloseButtonClick);
+    removeEventListenerOnPicture();
+  }
+};
+
+const onPictureClick = () => {
+  bigPicture.classList.remove('hidden');
+  closeButton.addEventListener('click', () => {
     document.removeEventListener('keydown', onEscapeClick);
     bigPicture.classList.add('hidden');
-  }
-}
+  });
+  document.addEventListener('keydown', onEscapeClick);
+};
 
 const cardPictureWall = document.querySelector('.pictures');
 
@@ -41,7 +41,7 @@ const onCardClick = (evt) => {
     bigPictureLikes.textContent = String(newArrayOfObjects[selectedPictureId - 1].likes);
     bigPictureDescription.textContent = newArrayOfObjects[selectedPictureId - 1].description;
     bigPictureCommentsValue.textContent = String(newArrayOfObjects[selectedPictureId - 1].comments.length);
-    bigPictureCommentsItem.forEach(item => item.remove());
+    bigPictureCommentsItem.forEach((item) => item.remove());
 
     const messagesArray = newArrayOfObjects[selectedPictureId - 1].comments;
     const messagesFragment = document.createDocumentFragment();
@@ -66,11 +66,10 @@ const onCardClick = (evt) => {
       messagesFragment.appendChild(newElement);
     });
 
-    bigPictureCommentsList.appendChild(messagesFragment)
+    bigPictureCommentsList.appendChild(messagesFragment);
   }
 };
 
 cardPictureWall.addEventListener('click', onCardClick);
-
 
 export {onPictureClick};
