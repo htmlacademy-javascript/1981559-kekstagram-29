@@ -1,8 +1,6 @@
 import {isEscapeKey} from "./util.js";
 import {newArrayOfObjects} from './data.js';
 
-console.log(newArrayOfObjects[0])
-
 const bigPicture = document.querySelector('.big-picture');
 const closeButton = bigPicture.querySelector('.big-picture__cancel');
 
@@ -45,23 +43,30 @@ const onCardClick = (evt) => {
     bigPictureCommentsValue.textContent = String(newArrayOfObjects[selectedPictureId - 1].comments.length);
     bigPictureCommentsItem.forEach(item => item.remove());
 
-    const newElement = document.createElement('li');
-    newElement.classList.add('social__comment');
+    const messagesArray = newArrayOfObjects[selectedPictureId - 1].comments;
+    const messagesFragment = document.createDocumentFragment();
 
-    const newAvatar = document.createElement('img');
-    newAvatar.classList.add('social__picture');
-    newAvatar.src = './img/avatar-1.svg';
-    newAvatar.alt = 'Имя комметатора';
-    newAvatar.width = 35;
-    newAvatar.height = 35;
-    newElement.appendChild(newAvatar);
+    messagesArray.forEach((comment) => {
+      const newElement = document.createElement('li');
+      newElement.classList.add('social__comment');
 
-    const newCommentContent = document.createElement('p');
-    newCommentContent.classList.add('social__text');
-    newCommentContent.textContent = 'Текст комментария';
-    newElement.appendChild(newCommentContent);
+      const newAvatar = document.createElement('img');
+      newAvatar.classList.add('social__picture');
+      newAvatar.src = comment.avatar;
+      newAvatar.alt = comment.name;
+      newAvatar.width = 35;
+      newAvatar.height = 35;
+      newElement.appendChild(newAvatar);
 
-    bigPictureCommentsList.appendChild(newElement)
+      const newCommentContent = document.createElement('p');
+      newCommentContent.classList.add('social__text');
+      newCommentContent.textContent = comment.message;
+      newElement.appendChild(newCommentContent);
+
+      messagesFragment.appendChild(newElement);
+    });
+
+    bigPictureCommentsList.appendChild(messagesFragment)
   }
 };
 
