@@ -9,6 +9,7 @@ const onEscapeClick = (evt) => {
     evt.preventDefault();
     document.removeEventListener('keydown', onEscapeClick);
     bigPicture.classList.add('hidden');
+    document.body.classList.remove('modal-open');
   }
 };
 
@@ -17,6 +18,7 @@ const onPictureClick = () => {
   closeButton.addEventListener('click', () => {
     document.removeEventListener('keydown', onEscapeClick);
     bigPicture.classList.add('hidden');
+    document.body.classList.remove('modal-open');
   });
   document.addEventListener('keydown', onEscapeClick);
 };
@@ -34,6 +36,7 @@ const onCardClick = (evt) => {
   const bigPictureCommentsLoader = bigPicture.querySelector('.comments-loader');
 
   if (evt.target.matches('.picture__img')) {
+    document.body.classList.add('modal-open');
     const selectedPictureId = evt.target.dataset.pictureId;
     bigPictureImage.src = `./photos/${selectedPictureId}.jpg`;
     bigPictureLikes.textContent = String(newArrayOfObjects[selectedPictureId - 1].likes);
