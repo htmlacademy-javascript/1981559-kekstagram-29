@@ -45,9 +45,12 @@ const onCardClick = (evt) => {
     const messagesArray = newArrayOfObjects[selectedPictureId - 1].comments;
     const messagesFragment = document.createDocumentFragment();
 
-    messagesArray.forEach((comment) => {
+    messagesArray.forEach((comment, index) => {
       const newElement = document.createElement('li');
       newElement.classList.add('social__comment');
+      if (index + 1 > 5) {
+        newElement.classList.add('hidden')
+      }
 
       const newAvatar = document.createElement('img');
       newAvatar.classList.add('social__picture');
@@ -81,6 +84,17 @@ const onCardClick = (evt) => {
 
     bigPictureCommentsList.appendChild(messagesFragment);
   }
+
+  const hiddenCommentsArray = document.querySelectorAll('.social__comment.hidden');
+  let idToRemove = 0;
+
+  bigPictureCommentsLoader.addEventListener('click', () => {
+    hiddenCommentsArray[idToRemove].classList.remove('hidden');
+    idToRemove++;
+    if (idToRemove === hiddenCommentsArray.length) {
+      bigPictureCommentsLoader.classList.add('hidden')
+    }
+  });
 };
 
 cardPictureWall.addEventListener('click', onCardClick);
