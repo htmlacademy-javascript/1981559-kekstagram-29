@@ -45,20 +45,6 @@ const onCardClick = (evt) => {
     const messagesArray = newArrayOfObjects[selectedPictureId - 1].comments;
     const messagesFragment = document.createDocumentFragment();
 
-    bigPictureCommentsLoader.classList.add('hidden');
-    if (messagesArray.length === 0) {
-      bigPictureCommentsCount.textContent = `0 комментариев`;
-    } else if (messagesArray.length === 1) {
-      bigPictureCommentsCount.textContent = `1 комментарий`;
-    } else if (messagesArray.length > 1 && messagesArray.length < 5 ) {
-      bigPictureCommentsCount.textContent = `${messagesArray.length} комментария`;
-    } else if (messagesArray.length === 5) {
-      bigPictureCommentsCount.textContent = `5 комментариев`;
-    } else {
-      bigPictureCommentsCount.innerHTML = `5 из <span class="comments-count">${String(messagesArray.length)}</span> комментариев`;
-      bigPictureCommentsLoader.classList.remove('hidden');
-    }
-
     messagesArray.forEach((comment) => {
       const newElement = document.createElement('li');
       newElement.classList.add('social__comment');
@@ -78,6 +64,20 @@ const onCardClick = (evt) => {
 
       messagesFragment.appendChild(newElement);
     });
+
+    bigPictureCommentsLoader.classList.add('hidden');
+    if (messagesArray.length === 0) {
+      bigPictureCommentsCount.textContent = `0 комментариев`;
+    } else if (messagesArray.length === 1) {
+      bigPictureCommentsCount.textContent = `1 комментарий`;
+    } else if (messagesArray.length > 1 && messagesArray.length < 5 ) {
+      bigPictureCommentsCount.textContent = `${messagesArray.length} комментария`;
+    } else if (messagesArray.length === 5) {
+      bigPictureCommentsCount.textContent = `5 комментариев`;
+    } else {
+      bigPictureCommentsCount.innerHTML = `5 из <span class="comments-count">${String(messagesArray.length)}</span> комментариев`;
+      bigPictureCommentsLoader.classList.remove('hidden');
+    }
 
     bigPictureCommentsList.appendChild(messagesFragment);
   }
