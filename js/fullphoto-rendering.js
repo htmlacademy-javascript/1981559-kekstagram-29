@@ -29,7 +29,6 @@ const onCardClick = (evt) => {
   const bigPictureImage = bigPicture.querySelector('.big-picture__img img');
   const bigPictureLikes = bigPicture.querySelector('.likes-count');
   const bigPictureDescription = bigPicture.querySelector('.social__caption');
-  const bigPictureCommentsValue = bigPicture.querySelector('.comments-count');
   const bigPictureCommentsList = bigPicture.querySelector('.social__comments');
   const bigPictureCommentsItem = bigPicture.querySelectorAll('.social__comment');
   const bigPictureCommentsCount = bigPicture.querySelector('.social__comment-count');
@@ -41,13 +40,22 @@ const onCardClick = (evt) => {
     bigPictureImage.src = `./photos/${selectedPictureId}.jpg`;
     bigPictureLikes.textContent = String(newArrayOfObjects[selectedPictureId - 1].likes);
     bigPictureDescription.textContent = newArrayOfObjects[selectedPictureId - 1].description;
-    bigPictureCommentsValue.textContent = String(newArrayOfObjects[selectedPictureId - 1].comments.length);
     bigPictureCommentsItem.forEach((item) => item.remove());
-    bigPictureCommentsCount.classList.add('hidden');
-    bigPictureCommentsLoader.classList.add('hidden');
 
     const messagesArray = newArrayOfObjects[selectedPictureId - 1].comments;
     const messagesFragment = document.createDocumentFragment();
+
+    if (messagesArray.length === 0) {
+      bigPictureCommentsCount.textContent = `0 комментариев`;
+    } else if (messagesArray.length === 1) {
+      bigPictureCommentsCount.textContent = `1 комментарий`;
+    } else if (messagesArray.length > 1 && messagesArray.length < 5 ) {
+      bigPictureCommentsCount.textContent = `${messagesArray.length} комментария`;
+    } else if (messagesArray.length === 5) {
+      bigPictureCommentsCount.textContent = `5 комментариев`;
+    } else {
+      bigPictureCommentsCount.innerHTML = `5 из <span class="comments-count">${String(messagesArray.length)}</span> комментариев`;
+    }
 
     messagesArray.forEach((comment) => {
       const newElement = document.createElement('li');
