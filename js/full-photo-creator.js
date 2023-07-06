@@ -1,6 +1,7 @@
 import {newArrayOfObjects} from "./data.js";
 
-const createFullPhotoCard = (image, likes, description, commentsValue, commentsItemArray, pictureId) => {
+const createFullPhotoCard = (imageContainer, image, likes, description, commentsValue, pictureId) => {
+  const commentsItemArray = imageContainer.querySelectorAll('.social__comment');
   image.src = `./photos/${pictureId}.jpg`;
   likes.textContent = String(newArrayOfObjects[pictureId - 1].likes);
   description.textContent = newArrayOfObjects[pictureId - 1].description;

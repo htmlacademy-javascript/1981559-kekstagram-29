@@ -8,7 +8,6 @@ const bigPictureLikes = bigPicture.querySelector('.likes-count');
 const bigPictureDescription = bigPicture.querySelector('.social__caption');
 const bigPictureCommentsValue = bigPicture.querySelector('.comments-count');
 const bigPictureCommentsList = bigPicture.querySelector('.social__comments');
-const bigPictureCommentsItem = bigPicture.querySelectorAll('.social__comment');
 const bigPictureCommentsCount = bigPicture.querySelector('.social__comment-count');
 const bigPictureCommentsLoader = bigPicture.querySelector('.comments-loader');
 const cardPictureWall = document.querySelector('.pictures');
@@ -36,7 +35,7 @@ const onCardClick = (evt) => {
   if (evt.target.matches('.picture__img')) {
     document.body.classList.add('modal-open');
     const selectedPictureId = evt.target.dataset.pictureId;
-    createFullPhotoCard(bigPictureImage, bigPictureLikes, bigPictureDescription, bigPictureCommentsValue, bigPictureCommentsItem, selectedPictureId);
+    createFullPhotoCard(bigPicture, bigPictureImage, bigPictureLikes, bigPictureDescription, bigPictureCommentsValue, selectedPictureId);
 
     bigPictureCommentsCount.classList.add('hidden');
     bigPictureCommentsLoader.classList.add('hidden');
