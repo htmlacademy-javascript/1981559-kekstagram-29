@@ -10,6 +10,15 @@ const createCommentList = (pictureId, commentsArray) => {
     commentsList.appendChild(commentsArray);
   }
 
+  const showMoreComments = () => {
+    const commentsArray = Array.from(commentsList.querySelectorAll('.social__comment.hidden'));
+    commentsArray[0].classList.remove('hidden');
+    commentsArray.shift();
+    if (!commentsArray.length) {
+      bigPictureCommentsLoader.classList.add('hidden');
+    }
+  }
+
   bigPictureCommentsLoader.classList.add('hidden');
   if (!messagesArray.length) {
     bigPictureCommentsCount.textContent = `0 комментариев`;
@@ -22,6 +31,7 @@ const createCommentList = (pictureId, commentsArray) => {
   } else {
     bigPictureCommentsCount.innerHTML = `5 из <span class="comments-count">${String(messagesArray.length)}</span> комментариев`;
     bigPictureCommentsLoader.classList.remove('hidden');
+    bigPictureCommentsLoader.addEventListener('click', showMoreComments);
   }
 }
 
