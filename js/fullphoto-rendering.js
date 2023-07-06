@@ -85,15 +85,28 @@ const onCardClick = (evt) => {
     bigPictureCommentsList.appendChild(messagesFragment);
   }
 
-  const hiddenCommentsArray = document.querySelectorAll('.social__comment.hidden');
-  let idToRemove = 0;
 
   bigPictureCommentsLoader.addEventListener('click', () => {
-    hiddenCommentsArray[idToRemove].classList.remove('hidden');
-    idToRemove++;
-    if (idToRemove === hiddenCommentsArray.length) {
-      bigPictureCommentsLoader.classList.add('hidden')
+  let hiddenCommentsArray = document.querySelectorAll('.social__comment.hidden');
+
+  if (hiddenCommentsArray.length <= 5) {
+    for (let i = 0; i < hiddenCommentsArray.length; i++) {
+      hiddenCommentsArray[i].classList.remove('hidden');
     }
+    bigPictureCommentsLoader.classList.add('hidden');
+  } else if (hiddenCommentsArray.length > 5) {
+    for (let i = 0; i < 5; i++) {
+      hiddenCommentsArray[i].classList.remove('hidden');
+      hiddenCommentsArray = document.querySelectorAll('.social__comment.hidden');
+      console.log(hiddenCommentsArray)
+
+      /* нужно создать переменную в начале области, которая активируется после клика на картинку.
+       В ней будет число, это чилсо будет отвечать за предел показывания комментариев в карточке.
+       Эта переменная должна обнулятся в конце этой области когда закрывается окно.
+       */
+    }
+  }
+
   });
 };
 
