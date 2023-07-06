@@ -1,0 +1,38 @@
+import {newArrayOfObjects} from "./data.js";
+
+const createFullPhotoCard = (image, likes, description, commentsValue, commentsItemArray, pictureId) => {
+  image.src = `./photos/${pictureId}.jpg`;
+  likes.textContent = String(newArrayOfObjects[pictureId - 1].likes);
+  description.textContent = newArrayOfObjects[pictureId - 1].description;
+  commentsValue.textContent = String(newArrayOfObjects[pictureId - 1].comments.length);
+  commentsItemArray.forEach((item) => item.remove());
+};
+
+const addCommentsInFullPhotoCard = (pictureId) => {
+  const messagesArray = newArrayOfObjects[pictureId - 1].comments;
+  const messagesFragment = document.createDocumentFragment();
+
+  messagesArray.forEach((comment) => {
+    const newElement = document.createElement('li');
+    newElement.classList.add('social__comment');
+
+    const newAvatar = document.createElement('img');
+    newAvatar.classList.add('social__picture');
+    newAvatar.src = comment.avatar;
+    newAvatar.alt = comment.name;
+    newAvatar.width = 35;
+    newAvatar.height = 35;
+    newElement.appendChild(newAvatar);
+
+    const newCommentContent = document.createElement('p');
+    newCommentContent.classList.add('social__text');
+    newCommentContent.textContent = comment.message;
+    newElement.appendChild(newCommentContent);
+
+    messagesFragment.appendChild(newElement);
+  });
+
+  return messagesFragment;
+};
+
+export {createFullPhotoCard, addCommentsInFullPhotoCard};

@@ -1,4 +1,4 @@
 import {renderPhotoArray} from './rendering.js';
 import {newArrayOfObjects} from './data.js';
-import './fullphoto-rendering.js';
+import './full-photo-click-handler.js';
 renderPhotoArray(newArrayOfObjects);
