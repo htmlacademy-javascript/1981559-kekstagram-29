@@ -37,7 +37,7 @@ const onCardClick = (evt) => {
 
     const newCommentsInCard = addCommentsInFullPhotoCard(selectedPictureId);
 
-    createCommentList(selectedPictureId);
+    createCommentList(selectedPictureId, newCommentsInCard);
   }
 
 
