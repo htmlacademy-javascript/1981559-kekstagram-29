@@ -1,4 +1,4 @@
-import {onPictureClick} from './fullphoto-rendering.js';
+import {onPictureClick} from './full-photo-click-handler.js';
 const renderPhotoArray = (photoArray) => {
   const pictureTemplate = document.querySelector('#picture')
     .content
