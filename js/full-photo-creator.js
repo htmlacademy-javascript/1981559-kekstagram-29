@@ -1,4 +1,4 @@
-import {newArrayOfObjects} from "./data.js";
+import {newArrayOfObjects} from './data.js';
 
 const createFullPhotoCard = (imageContainer, image, likes, description, commentsValue, pictureId) => {
   const commentsItemArray = imageContainer.querySelectorAll('.social__comment');
