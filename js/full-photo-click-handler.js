@@ -1,8 +1,16 @@
 import {isEscapeKey} from './util.js';
-import {newArrayOfObjects} from './data.js';
+import {createFullPhotoCard, addCommentsInFullPhotoCard} from './full-photo-creator.js';
 
 const bigPicture = document.querySelector('.big-picture');
 const closeButton = bigPicture.querySelector('.big-picture__cancel');
+const bigPictureImage = bigPicture.querySelector('.big-picture__img img');
+const bigPictureLikes = bigPicture.querySelector('.likes-count');
+const bigPictureDescription = bigPicture.querySelector('.social__caption');
+const bigPictureCommentsValue = bigPicture.querySelector('.comments-count');
+const bigPictureCommentsList = bigPicture.querySelector('.social__comments');
+const bigPictureCommentsCount = bigPicture.querySelector('.social__comment-count');
+const bigPictureCommentsLoader = bigPicture.querySelector('.comments-loader');
+const cardPictureWall = document.querySelector('.pictures');
 
 const onEscapeClick = (evt) => {
   if (isEscapeKey(evt)) {
@@ -23,91 +31,60 @@ const onPictureClick = () => {
   document.addEventListener('keydown', onEscapeClick);
 };
 
-const cardPictureWall = document.querySelector('.pictures');
-
 const onCardClick = (evt) => {
-  const bigPictureImage = bigPicture.querySelector('.big-picture__img img');
-  const bigPictureLikes = bigPicture.querySelector('.likes-count');
-  const bigPictureDescription = bigPicture.querySelector('.social__caption');
-  const bigPictureCommentsList = bigPicture.querySelector('.social__comments');
-  const bigPictureCommentsItems = bigPicture.querySelectorAll('.social__comment');
-  const bigPictureCommentsCount = bigPicture.querySelector('.social__comment-count');
-  const bigPictureCommentsLoader = bigPicture.querySelector('.comments-loader');
-
   if (evt.target.matches('.picture__img')) {
     document.body.classList.add('modal-open');
     const selectedPictureId = evt.target.dataset.pictureId;
-    bigPictureImage.src = `./photos/${selectedPictureId}.jpg`;
-    bigPictureLikes.textContent = String(newArrayOfObjects[selectedPictureId - 1].likes);
-    bigPictureDescription.textContent = newArrayOfObjects[selectedPictureId - 1].description;
-    bigPictureCommentsItems.forEach((item) => item.remove());
+    createFullPhotoCard(bigPicture, bigPictureImage, bigPictureLikes, bigPictureDescription, bigPictureCommentsValue, selectedPictureId);
 
-    const messagesArray = newArrayOfObjects[selectedPictureId - 1].comments;
-    const messagesFragment = document.createDocumentFragment();
+    const newCommentsInCard = addCommentsInFullPhotoCard(selectedPictureId);
 
-    messagesArray.forEach((comment, index) => {
-      const newElement = document.createElement('li');
-      newElement.classList.add('social__comment');
-      if (index + 1 > 5) {
-        newElement.classList.add('hidden')
-      }
-
-      const newAvatar = document.createElement('img');
-      newAvatar.classList.add('social__picture');
-      newAvatar.src = comment.avatar;
-      newAvatar.alt = comment.name;
-      newAvatar.width = 35;
-      newAvatar.height = 35;
-      newElement.appendChild(newAvatar);
-
-      const newCommentContent = document.createElement('p');
-      newCommentContent.classList.add('social__text');
-      newCommentContent.textContent = comment.message;
-      newElement.appendChild(newCommentContent);
-
-      messagesFragment.appendChild(newElement);
-    });
-
-    bigPictureCommentsLoader.classList.add('hidden');
-    if (messagesArray.length === 0) {
-      bigPictureCommentsCount.textContent = `0 комментариев`;
-    } else if (messagesArray.length === 1) {
-      bigPictureCommentsCount.textContent = `1 комментарий`;
-    } else if (messagesArray.length > 1 && messagesArray.length < 5 ) {
-      bigPictureCommentsCount.textContent = `${messagesArray.length} комментария`;
-    } else if (messagesArray.length === 5) {
-      bigPictureCommentsCount.textContent = `5 комментариев`;
+    if (newCommentsInCard) {
+      bigPictureCommentsList.classList.remove('hidden');
+      bigPictureCommentsList.appendChild(newCommentsInCard);
     } else {
-      bigPictureCommentsCount.innerHTML = `5 из <span class="comments-count">${String(messagesArray.length)}</span> комментариев`;
-      bigPictureCommentsLoader.classList.remove('hidden');
+      bigPictureCommentsList.classList.add('hidden');
     }
 
-    bigPictureCommentsList.appendChild(messagesFragment);
+    // bigPictureCommentsLoader.classList.add('hidden');
+    // if (messagesArray.length === 0) {
+    //   bigPictureCommentsCount.textContent = `0 комментариев`;
+    // } else if (messagesArray.length === 1) {
+    //   bigPictureCommentsCount.textContent = `1 комментарий`;
+    // } else if (messagesArray.length > 1 && messagesArray.length < 5 ) {
+    //   bigPictureCommentsCount.textContent = `${messagesArray.length} комментария`;
+    // } else if (messagesArray.length === 5) {
+    //   bigPictureCommentsCount.textContent = `5 комментариев`;
+    // } else {
+    //   bigPictureCommentsCount.innerHTML = `5 из <span class="comments-count">${String(messagesArray.length)}</span> комментариев`;
+    //   bigPictureCommentsLoader.classList.remove('hidden');
+    // }
+
   }
 
 
-  bigPictureCommentsLoader.addEventListener('click', () => {
-  let hiddenCommentsArray = document.querySelectorAll('.social__comment.hidden');
-
-  if (hiddenCommentsArray.length <= 5) {
-    for (let i = 0; i < hiddenCommentsArray.length; i++) {
-      hiddenCommentsArray[i].classList.remove('hidden');
-    }
-    bigPictureCommentsLoader.classList.add('hidden');
-  } else if (hiddenCommentsArray.length > 5) {
-    for (let i = 0; i < 5; i++) {
-      hiddenCommentsArray[i].classList.remove('hidden');
-      hiddenCommentsArray = document.querySelectorAll('.social__comment.hidden');
-      console.log(hiddenCommentsArray)
-
-      /* нужно создать переменную в начале области, которая активируется после клика на картинку.
-       В ней будет число, это чилсо будет отвечать за предел показывания комментариев в карточке.
-       Эта переменная должна обнулятся в конце этой области когда закрывается окно.
-       */
-    }
-  }
-
-  });
+  // bigPictureCommentsLoader.addEventListener('click', () => {
+  // let hiddenCommentsArray = document.querySelectorAll('.social__comment.hidden');
+  //
+  // if (hiddenCommentsArray.length <= 5) {
+  //   for (let i = 0; i < hiddenCommentsArray.length; i++) {
+  //     hiddenCommentsArray[i].classList.remove('hidden');
+  //   }
+  //   bigPictureCommentsLoader.classList.add('hidden');
+  // } else if (hiddenCommentsArray.length > 5) {
+  //   for (let i = 0; i < 5; i++) {
+  //     hiddenCommentsArray[i].classList.remove('hidden');
+  //     hiddenCommentsArray = document.querySelectorAll('.social__comment.hidden');
+  //     console.log(hiddenCommentsArray)
+  //
+  //     /* нужно создать переменную в начале области, которая активируется после клика на картинку.
+  //      В ней будет число, это чилсо будет отвечать за предел показывания комментариев в карточке.
+  //      Эта переменная должна обнулятся в конце этой области когда закрывается окно.
+  //      */
+  //   }
+  // }
+  //
+  // });
 };
 
 cardPictureWall.addEventListener('click', onCardClick);
