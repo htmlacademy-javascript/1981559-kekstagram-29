@@ -1,5 +1,6 @@
 import {isEscapeKey} from './util.js';
 import {createFullPhotoCard, addCommentsInFullPhotoCard} from './full-photo-creator.js';
+import {createCommentList} from "./full-photo-comments-creator.js";
 
 const bigPicture = document.querySelector('.big-picture');
 const closeButton = bigPicture.querySelector('.big-picture__cancel');
@@ -7,9 +8,6 @@ const bigPictureImage = bigPicture.querySelector('.big-picture__img img');
 const bigPictureLikes = bigPicture.querySelector('.likes-count');
 const bigPictureDescription = bigPicture.querySelector('.social__caption');
 const bigPictureCommentsValue = bigPicture.querySelector('.comments-count');
-const bigPictureCommentsList = bigPicture.querySelector('.social__comments');
-const bigPictureCommentsCount = bigPicture.querySelector('.social__comment-count');
-const bigPictureCommentsLoader = bigPicture.querySelector('.comments-loader');
 const cardPictureWall = document.querySelector('.pictures');
 
 const onEscapeClick = (evt) => {
@@ -39,27 +37,7 @@ const onCardClick = (evt) => {
 
     const newCommentsInCard = addCommentsInFullPhotoCard(selectedPictureId);
 
-    if (newCommentsInCard) {
-      bigPictureCommentsList.classList.remove('hidden');
-      bigPictureCommentsList.appendChild(newCommentsInCard);
-    } else {
-      bigPictureCommentsList.classList.add('hidden');
-    }
-
-    // bigPictureCommentsLoader.classList.add('hidden');
-    // if (messagesArray.length === 0) {
-    //   bigPictureCommentsCount.textContent = `0 комментариев`;
-    // } else if (messagesArray.length === 1) {
-    //   bigPictureCommentsCount.textContent = `1 комментарий`;
-    // } else if (messagesArray.length > 1 && messagesArray.length < 5 ) {
-    //   bigPictureCommentsCount.textContent = `${messagesArray.length} комментария`;
-    // } else if (messagesArray.length === 5) {
-    //   bigPictureCommentsCount.textContent = `5 комментариев`;
-    // } else {
-    //   bigPictureCommentsCount.innerHTML = `5 из <span class="comments-count">${String(messagesArray.length)}</span> комментариев`;
-    //   bigPictureCommentsLoader.classList.remove('hidden');
-    // }
-
+    createCommentList(selectedPictureId);
   }
 
 
