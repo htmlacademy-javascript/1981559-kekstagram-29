@@ -11,6 +11,10 @@ const createFullPhotoCard = (imageContainer, image, likes, description, comments
 
 const addCommentsInFullPhotoCard = (pictureId) => {
   const messagesArray = newArrayOfObjects[pictureId - 1].comments;
+  if (!messagesArray.length) {
+    return messagesArray.length;
+  }
+
   const messagesFragment = document.createDocumentFragment();
 
   messagesArray.forEach((comment) => {

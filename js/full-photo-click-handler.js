@@ -40,7 +40,14 @@ const onCardClick = (evt) => {
     bigPictureCommentsCount.classList.add('hidden');
     bigPictureCommentsLoader.classList.add('hidden');
 
-    bigPictureCommentsList.appendChild(addCommentsInFullPhotoCard(selectedPictureId));
+    const newCommentsInCard = addCommentsInFullPhotoCard(selectedPictureId);
+
+    if (newCommentsInCard) {
+      bigPictureCommentsList.classList.remove('hidden');
+      bigPictureCommentsList.appendChild(newCommentsInCard);
+    } else {
+      bigPictureCommentsList.classList.add('hidden')
+    }
   }
 };
 
