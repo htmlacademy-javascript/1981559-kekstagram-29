@@ -31,7 +31,7 @@ const createCommentList = (pictureId, commentsArray) => {
   } else {
     bigPictureCommentsCount.innerHTML = `5 из <span class="comments-count">${String(messagesArray.length)}</span> комментариев`;
     bigPictureCommentsLoader.classList.remove('hidden');
-    bigPictureCommentsLoader.addEventListener('click', showMoreComments);
+    bigPictureCommentsLoader.onclick = showMoreComments;
   }
 }
 
