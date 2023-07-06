@@ -91,6 +91,6 @@ const createObject = () => {
   };
 };
 
-const newArrayOfObjects = () => Array.from({length: OBJECTS_NUMBER}, createObject);
+const newArrayOfObjects = Array.from({length: OBJECTS_NUMBER}, createObject);
 
 export {newArrayOfObjects};
