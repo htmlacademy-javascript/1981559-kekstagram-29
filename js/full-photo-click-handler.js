@@ -1,6 +1,6 @@
 import {isEscapeKey} from './util.js';
 import {createFullPhotoCard, addCommentsInFullPhotoCard} from './full-photo-creator.js';
-import {createCommentList} from "./full-photo-comments-creator.js";
+import {createCommentList} from './full-photo-comments-creator.js';
 
 const bigPicture = document.querySelector('.big-picture');
 const closeButton = bigPicture.querySelector('.big-picture__cancel');

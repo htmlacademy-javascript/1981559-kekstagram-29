@@ -21,7 +21,7 @@ const addCommentsInFullPhotoCard = (pictureId) => {
     const newElement = document.createElement('li');
     newElement.classList.add('social__comment');
     if (index + 1 > 5) {
-      newElement.classList.add('hidden')
+      newElement.classList.add('hidden');
     }
 
     const newAvatar = document.createElement('img');
