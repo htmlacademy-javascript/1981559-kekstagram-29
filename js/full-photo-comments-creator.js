@@ -21,13 +21,14 @@ const createCommentList = (pictureId, commentsArray) => {
       for (let i = 0; i < DEFAULT_SHOWN_COMMENTS; i++) {
         hiddenComments[i].classList.remove('hidden');
       }
-      commentCounterContainer.innerHTML = `${Number(commentCounterContainerValue) + Number(DEFAULT_SHOWN_COMMENTS)} из <span class="comments-count">${String(messagesArray.length)}</span> комментариев`;
+      const shownCommentsValue = Number(commentCounterContainerValue) + Number(DEFAULT_SHOWN_COMMENTS);
+      commentCounterContainer.innerHTML = `${shownCommentsValue} из <span class="comments-count">${String(messagesArray.length)}</span> комментариев`;
     } else if (hiddenComments.length < DEFAULT_SHOWN_COMMENTS) {
       for (let i = 0; i < hiddenComments.length; i++) {
         hiddenComments[i].classList.remove('hidden');
       }
-
-      commentCounterContainer.innerHTML = `${Number(commentCounterContainerValue) + Number(hiddenComments.length)} из <span class="comments-count">${String(messagesArray.length)}</span> комментариев`;
+      const shownCommentsValue = Number(commentCounterContainerValue) + Number(hiddenComments.length);
+      commentCounterContainer.innerHTML = `${shownCommentsValue} из <span class="comments-count">${String(messagesArray.length)}</span> комментариев`;
     }
 
     if (hiddenComments.length <= DEFAULT_SHOWN_COMMENTS) {
