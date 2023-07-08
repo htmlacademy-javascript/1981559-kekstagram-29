@@ -47,6 +47,8 @@ const onCardClickCreate = (evt) => {
       showMoreButton.classList.remove('hidden');
     }
 
+    createFullPhotoCard(BigPictureData, selectedPictureId);
+
     if (!messagesArrayLength) {
       BigPictureData.commentsCounter.textContent = '0 комментариев';
     } else if (messagesArrayLength === 1) {
@@ -75,7 +77,6 @@ const onCardClickCreate = (evt) => {
 
     document.body.classList.add('modal-open');
 
-    createFullPhotoCard(BigPictureData, selectedPictureId);
     generateComments(DEFAULT_SHOWN_COMMENTS, selectedPictureId);
 
     showMoreButton.addEventListener('click', onClickShowMore);
