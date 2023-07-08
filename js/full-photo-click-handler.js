@@ -42,11 +42,11 @@ const onCardClickCreate = (evt) => {
     // Здесь можно попробовать объект сосздать, чтобы столько данных не писать.
 
     addCommentsInFullPhotoCard(DEFAULT_SHOWN_COMMENTS, selectedPictureId);
-    let initialSownCardsValue = DEFAULT_SHOWN_COMMENTS;
+    let initialSownCommentsValue = DEFAULT_SHOWN_COMMENTS;
 
     showMoreButton.addEventListener('click', () => {
-      initialSownCardsValue += DEFAULT_SHOWN_COMMENTS;
-      addCommentsInFullPhotoCard(initialSownCardsValue, selectedPictureId);
+      initialSownCommentsValue += DEFAULT_SHOWN_COMMENTS;
+      addCommentsInFullPhotoCard(initialSownCommentsValue, selectedPictureId);
     });
 
     // hideCommentsLoader(messagesArrayLength)
