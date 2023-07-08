@@ -7,13 +7,12 @@ const cardPictureWall = document.querySelector('.pictures');
 const bigPicture = document.querySelector('.big-picture');
 const closeButton = bigPicture.querySelector('.big-picture__cancel');
 const bigPictureCommentsList = bigPicture.querySelector('.social__comments');
-const bigPictureCommentsCounter = bigPicture.querySelector('.social__comment-count');
 const showMoreButton = bigPicture.querySelector('.comments-loader');
 const BigPictureData = {
   image: bigPicture.querySelector('.big-picture__img img'),
   likes: bigPicture.querySelector('.likes-count'),
   description: bigPicture.querySelector('.social__caption'),
-  commentsValue: bigPicture.querySelector('.comments-count'),
+  commentsCounter: bigPicture.querySelector('.social__comment-count'),
 };
 
 const onEscapeClick = (evt) => {
@@ -49,13 +48,13 @@ const onCardClickCreate = (evt) => {
     }
 
     if (!messagesArrayLength) {
-      bigPictureCommentsCounter.textContent = '0 комментариев';
+      BigPictureData.commentsCounter.textContent = '0 комментариев';
     } else if (messagesArrayLength === 1) {
-      bigPictureCommentsCounter.textContent = '1 комментарий';
+      BigPictureData.commentsCounter.textContent = '1 комментарий';
     } else if (messagesArrayLength > 1 && messagesArrayLength < 5) {
-      bigPictureCommentsCounter.textContent = `${messagesArrayLength} комментария`;
+      BigPictureData.commentsCounter.textContent = `${messagesArrayLength} комментария`;
     } else if (messagesArrayLength === DEFAULT_SHOWN_COMMENTS) {
-      bigPictureCommentsCounter.textContent = `${DEFAULT_SHOWN_COMMENTS} комментариев`;
+      BigPictureData.commentsCounter.textContent = `${DEFAULT_SHOWN_COMMENTS} комментариев`;
     }
 
     const onClickShowMore = () => {
@@ -67,7 +66,7 @@ const onCardClickCreate = (evt) => {
         }
       }
 
-      bigPictureCommentsCounter.innerHTML = `${initialSownCommentsValue} из <span class="comments-count">${String(messagesArrayLength)}</span> комментариев`;
+      BigPictureData.commentsCounter.innerHTML = `${initialSownCommentsValue} из <span class="comments-count">${String(messagesArrayLength)}</span> комментариев`;
       generateComments(initialSownCommentsValue, selectedPictureId);
       if (initialSownCommentsValue === messagesArrayLength) {
         showMoreButton.classList.add('hidden');
