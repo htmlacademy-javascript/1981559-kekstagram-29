@@ -40,6 +40,22 @@ const onCardClickCreate = (evt) => {
     const messagesArrayLength = newArrayOfObjects[selectedPictureId - 1].comments.length;
     let initialSownCommentsValue = DEFAULT_SHOWN_COMMENTS;
 
+    if (messagesArrayLength <= DEFAULT_SHOWN_COMMENTS) {
+      showMoreButton.classList.add('hidden');
+    } else {
+      showMoreButton.classList.remove('hidden');
+    }
+
+    if (!messagesArrayLength) {
+      bigPictureCommentsCounter.textContent = '0 комментариев';
+    } else if (messagesArrayLength === 1) {
+      bigPictureCommentsCounter.textContent = '1 комментарий';
+    } else if (messagesArrayLength > 1 && messagesArrayLength < 5) {
+      bigPictureCommentsCounter.textContent = `${messagesArrayLength} комментария`;
+    } else if (messagesArrayLength === DEFAULT_SHOWN_COMMENTS) {
+      bigPictureCommentsCounter.textContent = `${DEFAULT_SHOWN_COMMENTS} комментариев`;
+    }
+
     const onClickShowMore = () => {
       if (initialSownCommentsValue + DEFAULT_SHOWN_COMMENTS < messagesArrayLength) {
         initialSownCommentsValue += DEFAULT_SHOWN_COMMENTS;
@@ -48,6 +64,7 @@ const onCardClickCreate = (evt) => {
           initialSownCommentsValue++;
         }
       }
+
       bigPictureCommentsCounter.innerHTML = `${initialSownCommentsValue} из <span class="comments-count">${String(messagesArrayLength)}</span> комментариев`;
       generateComments(initialSownCommentsValue, selectedPictureId);
       if (initialSownCommentsValue === messagesArrayLength) {
@@ -61,23 +78,6 @@ const onCardClickCreate = (evt) => {
     generateComments(DEFAULT_SHOWN_COMMENTS, selectedPictureId);
 
     showMoreButton.addEventListener('click', onClickShowMore);
-
-    if (messagesArrayLength <= DEFAULT_SHOWN_COMMENTS) {
-      showMoreButton.classList.add('hidden');
-    } else {
-      showMoreButton.classList.remove('hidden');
-    }
-
-    if (!messagesArrayLength) {
-        bigPictureCommentsCounter.textContent = '0 комментариев';
-    } else if (messagesArrayLength === 1) {
-        bigPictureCommentsCounter.textContent = '1 комментарий';
-    } else if (messagesArrayLength > 1 && messagesArrayLength < 5) {
-        bigPictureCommentsCounter.textContent = `${messagesArrayLength} комментария`;
-    } else if (messagesArrayLength === DEFAULT_SHOWN_COMMENTS) {
-        bigPictureCommentsCounter.textContent = `${DEFAULT_SHOWN_COMMENTS} комментариев`;
-    }
-
     }
   };
 
