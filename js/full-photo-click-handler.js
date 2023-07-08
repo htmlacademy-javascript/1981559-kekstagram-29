@@ -34,7 +34,6 @@ const onPictureClick = () => {
   document.addEventListener('keydown', onEscapeClick);
 };
 
-
 const onCardClickCreate = (evt) => {
   if (evt.target.closest('.picture')) {
     const selectedPictureId = evt.target.closest('.picture').dataset.pictureId;
