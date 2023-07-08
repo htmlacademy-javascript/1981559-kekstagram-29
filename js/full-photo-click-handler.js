@@ -30,9 +30,9 @@ const onPictureClick = () => {
 };
 
 const onCardClick = (evt) => {
-  if (evt.target.matches('.picture__img')) {
+  if (evt.target.closest('.picture')) {
     document.body.classList.add('modal-open');
-    const selectedPictureId = evt.target.dataset.pictureId;
+    const selectedPictureId = evt.target.closest('.picture').dataset.pictureId;
     createFullPhotoCard(bigPicture, bigPictureImage, bigPictureLikes, bigPictureDescription, bigPictureCommentsValue, selectedPictureId);
 
     const newCommentsInCard = addCommentsInFullPhotoCard(selectedPictureId);
