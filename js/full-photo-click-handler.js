@@ -72,6 +72,7 @@ const onCardClickCreate = (evt) => {
       generateComments(initialSownCommentsValue, selectedPictureId);
       if (initialSownCommentsValue === messagesArrayLength) {
         showMoreButton.classList.add('hidden');
+        showMoreButton.removeEventListener('click', onClickShowMore);
       }
     };
 
@@ -79,7 +80,9 @@ const onCardClickCreate = (evt) => {
 
     generateComments(DEFAULT_SHOWN_COMMENTS, selectedPictureId);
 
-    showMoreButton.addEventListener('click', onClickShowMore);
+    if (messagesArrayLength > DEFAULT_SHOWN_COMMENTS) {
+      showMoreButton.addEventListener('click', onClickShowMore);
+    }
   }
 };
 
