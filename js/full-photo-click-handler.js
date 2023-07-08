@@ -6,13 +6,15 @@ import {generateComments} from './full-photo-comments-creator.js';
 const cardPictureWall = document.querySelector('.pictures');
 const bigPicture = document.querySelector('.big-picture');
 const closeButton = bigPicture.querySelector('.big-picture__cancel');
-const bigPictureImage = bigPicture.querySelector('.big-picture__img img');
-const bigPictureLikes = bigPicture.querySelector('.likes-count');
-const bigPictureDescription = bigPicture.querySelector('.social__caption');
-const bigPictureCommentsValue = bigPicture.querySelector('.comments-count');
 const bigPictureCommentsList = bigPicture.querySelector('.social__comments');
 const bigPictureCommentsCounter = bigPicture.querySelector('.social__comment-count');
 const showMoreButton = bigPicture.querySelector('.comments-loader');
+const BigPictureData = {
+  image: bigPicture.querySelector('.big-picture__img img'),
+  likes: bigPicture.querySelector('.likes-count'),
+  description: bigPicture.querySelector('.social__caption'),
+  commentsValue: bigPicture.querySelector('.comments-count'),
+};
 
 const onEscapeClick = (evt) => {
   if (isEscapeKey(evt)) {
@@ -70,17 +72,16 @@ const onCardClickCreate = (evt) => {
       if (initialSownCommentsValue === messagesArrayLength) {
         showMoreButton.classList.add('hidden');
       }
-    }
+    };
 
     document.body.classList.add('modal-open');
-    createFullPhotoCard(bigPictureImage, bigPictureLikes, bigPictureDescription, bigPictureCommentsValue, selectedPictureId);
-    // Здесь можно попробовать объект сосздать, чтобы столько данных не писать.
+
+    createFullPhotoCard(BigPictureData, selectedPictureId);
     generateComments(DEFAULT_SHOWN_COMMENTS, selectedPictureId);
 
     showMoreButton.addEventListener('click', onClickShowMore);
-    }
-  };
-
+  }
+};
 
 cardPictureWall.addEventListener('click', onCardClickCreate);
 
