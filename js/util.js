@@ -7,4 +7,27 @@ const getRandomValue = (a, b) => {
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
-export {getRandomValue, isEscapeKey};
+const createClosePictureHandle = (pictureContainer, closeButton) => {
+  const onEscapeClick = (evt) => {
+    if (isEscapeKey(evt)) {
+      evt.preventDefault();
+      document.removeEventListener('keydown', onEscapeClick);
+      pictureContainer.classList.add('hidden');
+      document.body.classList.remove('modal-open');
+    }
+  };
+
+  return (evt) => {
+    evt.preventDefault();
+    document.body.classList.add('modal-open');
+    pictureContainer.classList.remove('hidden');
+    closeButton.addEventListener('click', () => {
+      document.removeEventListener('keydown', onEscapeClick);
+      pictureContainer.classList.add('hidden');
+      document.body.classList.remove('modal-open');
+    });
+    document.addEventListener('keydown', onEscapeClick);
+  }
+}
+
+export {getRandomValue, isEscapeKey, createClosePictureHandle};
