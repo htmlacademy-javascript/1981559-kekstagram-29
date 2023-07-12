@@ -26,6 +26,7 @@ const onEscapeClick = (evt) => {
 
 const onPictureClick = () => {
   bigPicture.classList.remove('hidden');
+  document.body.classList.add('modal-open');
   closeButton.addEventListener('click', () => {
     document.removeEventListener('keydown', onEscapeClick);
     bigPicture.classList.add('hidden');
@@ -75,8 +76,6 @@ const onCardClickCreate = (evt) => {
         showMoreButton.removeEventListener('click', onClickShowMore);
       }
     };
-
-    document.body.classList.add('modal-open');
 
     generateComments(DEFAULT_SHOWN_COMMENTS, selectedPictureId);
 
