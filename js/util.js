@@ -30,4 +30,4 @@ const createClosePictureHandle = (pictureContainer, closeButton) => {
   }
 }
 
-export {getRandomValue, isEscapeKey, createClosePictureHandle};
+export {getRandomValue, createClosePictureHandle};

@@ -1,4 +1,4 @@
-import {isEscapeKey} from './util.js';
+import {createClosePictureHandle} from './util.js';
 import {newArrayOfObjects, DEFAULT_SHOWN_COMMENTS} from './data.js';
 import {createFullPhotoCard} from './full-photo-creator.js';
 import {generateComments} from './full-photo-comments-creator.js';
@@ -15,26 +15,7 @@ const BigPictureData = {
   commentsCounter: bigPicture.querySelector('.social__comment-count'),
 };
 
-const onEscapeClick = (evt) => {
-  if (isEscapeKey(evt)) {
-    evt.preventDefault();
-    document.removeEventListener('keydown', onEscapeClick);
-    bigPicture.classList.add('hidden');
-    document.body.classList.remove('modal-open');
-  }
-};
-
-const onPictureClick = () => {
-  bigPicture.classList.remove('hidden');
-  document.body.classList.add('modal-open');
-  closeButton.addEventListener('click', () => {
-    document.removeEventListener('keydown', onEscapeClick);
-    bigPicture.classList.add('hidden');
-    document.body.classList.remove('modal-open');
-  });
-  document.addEventListener('keydown', onEscapeClick);
-};
-
+const closeImage = createClosePictureHandle(bigPicture, closeButton);
 
 const onCardClickCreate = (evt) => {
   if (evt.target.closest('.picture')) {
@@ -87,4 +68,4 @@ const onCardClickCreate = (evt) => {
 
 cardPictureWall.addEventListener('click', onCardClickCreate);
 
-export {onPictureClick, bigPictureCommentsList, showMoreButton};
+export {closeImage, bigPictureCommentsList, showMoreButton};

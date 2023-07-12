@@ -1,4 +1,4 @@
-import {onPictureClick} from './full-photo-click-handler.js';
+import {closeImage} from './full-photo-click-handler.js';
 const renderPhotoArray = (photoArray) => {
   const pictureTemplate = document.querySelector('#picture')
     .content
@@ -13,7 +13,7 @@ const renderPhotoArray = (photoArray) => {
     pictureElement.querySelector('.picture__img').alt = photo.description;
     pictureElement.querySelector('.picture__likes').textContent = photo.likes;
     pictureElement.querySelector('.picture__comments').textContent = photo.comments.length;
-    pictureElement.addEventListener('click', onPictureClick);
+    pictureElement.addEventListener('click', closeImage);
     photosFragment.appendChild(pictureElement);
   });
 
