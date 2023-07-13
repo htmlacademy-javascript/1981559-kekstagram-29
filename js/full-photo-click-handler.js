@@ -19,6 +19,7 @@ const closeImage = createClosePictureHandle(bigPicture, closeButton);
 
 const onCardClickCreate = (evt) => {
   if (evt.target.closest('.picture')) {
+    evt.preventDefault();
     const selectedPictureId = evt.target.closest('.picture').dataset.pictureId;
     const messagesArrayLength = newArrayOfObjects[selectedPictureId - 1].comments.length;
     let initialSownCommentsValue = DEFAULT_SHOWN_COMMENTS;

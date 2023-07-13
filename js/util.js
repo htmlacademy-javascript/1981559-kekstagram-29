@@ -8,26 +8,26 @@ const getRandomValue = (a, b) => {
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
 const createClosePictureHandle = (pictureContainer, closeButton) => {
+  const doAfterClose = () => {
+    document.removeEventListener('keydown', onEscapeClick);
+    closeButton.removeEventListener('click', doAfterClose);
+    pictureContainer.classList.add('hidden');
+    document.body.classList.remove('modal-open');
+  }
+
   const onEscapeClick = (evt) => {
     if (isEscapeKey(evt)) {
       evt.preventDefault();
-      document.removeEventListener('keydown', onEscapeClick);
-      pictureContainer.classList.add('hidden');
-      document.body.classList.remove('modal-open');
+      doAfterClose();
     }
   };
 
-  return (evt) => {
-    evt.preventDefault();
+  return () => {
     document.body.classList.add('modal-open');
     pictureContainer.classList.remove('hidden');
-    closeButton.addEventListener('click', () => {
-      document.removeEventListener('keydown', onEscapeClick);
-      pictureContainer.classList.add('hidden');
-      document.body.classList.remove('modal-open');
-    });
+    closeButton.addEventListener('click', doAfterClose);
     document.addEventListener('keydown', onEscapeClick);
   }
 }
 
-export {getRandomValue, isEscapeKey, createClosePictureHandle};
+export {getRandomValue, createClosePictureHandle};
