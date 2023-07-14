@@ -5,6 +5,7 @@ const uploadImage = uploadForm.querySelector('.img-upload__input');
 const uploadOverlay = uploadForm.querySelector('.img-upload__overlay');
 const cancelUploadButton = uploadForm.querySelector('.img-upload__cancel');
 const hashTagInput = uploadForm.querySelector('.text__hashtags');
+const commentField = uploadForm.querySelector('.text__description');
 
 const doAfterClose = () => {
   document.removeEventListener('keydown', onEscapeClick);
@@ -30,20 +31,31 @@ const onUploadButtonClick = () => {
 
 uploadImage.addEventListener('change', onUploadButtonClick);
 
-
-const hashtag = /^#[a-zа-яё0-9]{1,19}$/i;
-// console.log(hashtag.test('#azs@'))
-
-const pristine = new Pristine(uploadForm);
-
-const checkHashtag = () => {
-  return hashtag.test(hashTagInput.value);
+const onFocusedElement = (element) => {
+  element.addEventListener('keydown', (evt) => {
+    if (isEscapeKey(evt)) {
+      evt.stopPropagation();
+    }
+  });
 }
 
-pristine.addValidator(hashTagInput, checkHashtag, 'неверный hashtag');
+onFocusedElement(hashTagInput);
+onFocusedElement(commentField);
 
-uploadForm.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  pristine.validate();
-});
+
+// const hashtag = /^#[a-zа-яё0-9]{1,19}$/i;
+// // console.log(hashtag.test('#azs@'))
+//
+// const pristine = new Pristine(uploadForm);
+//
+// const checkHashtag = () => {
+//   return hashtag.test(hashTagInput.value);
+// }
+//
+// pristine.addValidator(hashTagInput, checkHashtag, 'неверный hashtag');
+//
+// uploadForm.addEventListener('submit', (evt) => {
+//   evt.preventDefault();
+//   pristine.validate();
+// });
 
