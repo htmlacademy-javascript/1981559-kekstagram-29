@@ -1,36 +1,43 @@
 import {isEscapeKey, isFocusedElement} from './util.js';
 
 const uploadForm = document.querySelector('.img-upload__form');
-const uploadImage = uploadForm.querySelector('.img-upload__input');
+const uploadImageInput = uploadForm.querySelector('.img-upload__input');
 const uploadOverlay = uploadForm.querySelector('.img-upload__overlay');
 const cancelUploadButton = uploadForm.querySelector('.img-upload__cancel');
 const hashTagInput = uploadForm.querySelector('.text__hashtags');
 const commentField = uploadForm.querySelector('.text__description');
 
-const onEscapeClick = (evt) => {
-  if (isEscapeKey(evt)) {
-    evt.preventDefault();
-    doAfterClose();
-  }
+const startUpload = () => {
+  uploadOverlay.classList.remove('hidden');
+  document.body.classList.add('modal-open');
 };
 
-const doAfterClose = () => {
-  document.removeEventListener('keydown', onEscapeClick);
-  cancelUploadButton.removeEventListener('click', doAfterClose);
+const cancelUpload = () => {
   uploadOverlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
   uploadForm.reset();
   pristine.reset();
 };
 
-const onUploadButtonClick = () => {
-  document.body.classList.add('modal-open');
-  uploadOverlay.classList.remove('hidden');
-  cancelUploadButton.addEventListener('click', doAfterClose);
-  document.addEventListener('keydown', onEscapeClick);
+const cancelByEscapeActivate = () => {
+  document.addEventListener('keydown', (evt) => {
+    if (isEscapeKey(evt)) {
+      evt.preventDefault();
+      uploadOverlay.classList.add('hidden');
+      document.body.classList.remove('modal-open');
+      uploadForm.reset();
+      pristine.reset();
+    }
+  });
 };
 
-uploadImage.addEventListener('change', onUploadButtonClick);
+const uploadImage = () => {
+  startUpload();
+  cancelUploadButton.addEventListener('click', cancelUpload);
+  cancelByEscapeActivate();
+};
+
+uploadImageInput.addEventListener('change', uploadImage);
 
 isFocusedElement(hashTagInput);
 isFocusedElement(commentField);
