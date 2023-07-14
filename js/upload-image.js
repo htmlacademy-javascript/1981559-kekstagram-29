@@ -1,6 +1,6 @@
 import {isFocusedElement, checkRepeat} from './util.js';
 import {createUploadImageHandler} from './upload-img-listeners.js';
-import {MAX_AVAILABLE_HASHTAGS} from './data.js';
+import {MAX_AVAILABLE_HASHTAGS, MAX_COMMENT_WORDS} from './data.js';
 
 const uploadForm = document.querySelector('.img-upload__form');
 const uploadImageInput = uploadForm.querySelector('.img-upload__input');
@@ -15,9 +15,9 @@ isFocusedElement(commentField);
 const hashtag = /^#[a-zа-яё0-9]{1,19}$/i;
 
 const defaultConfig = {
-  classTo: 'img-upload__form',
-  errorClass: 'img-upload__form--error',
-  successClass: 'img-upload__form--success',
+  classTo: 'img-upload__field-wrapper',
+  errorClass: 'img-upload__field-wrapper--error',
+  successClass: 'img-upload__field-wrapper--valid',
   errorTextParent: 'img-upload__field-wrapper',
   errorTextTag: 'div',
   errorTextClass: 'img-upload__help'
@@ -49,9 +49,12 @@ const isHashtagRepeat = () => {
   return checkRepeat(inputArray);
 };
 
+const checkCommentFieldLength = () => commentField.value.length <= MAX_COMMENT_WORDS;
+
 pristine.addValidator(hashTagInput, checkMaxHashtags, `Указано больше ${MAX_AVAILABLE_HASHTAGS} хэштэгов`, 3, true);
 pristine.addValidator(hashTagInput, checkAllHashtags, 'Проверьте правильность хэштегов', 2, true);
 pristine.addValidator(hashTagInput, isHashtagRepeat, 'Хэштэги повторяются', 1, true);
+pristine.addValidator(commentField, checkCommentFieldLength, `Разрешено не более ${MAX_COMMENT_WORDS} символов`);
 
 uploadForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
