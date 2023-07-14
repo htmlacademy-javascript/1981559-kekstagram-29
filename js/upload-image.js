@@ -12,9 +12,13 @@ const startUpload = () => {
   document.body.classList.add('modal-open');
 };
 
-const cancelUpload = () => {
+const hideOverlay = () => {
   uploadOverlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
+};
+
+const cancelUpload = () => {
+  hideOverlay();
   uploadForm.reset();
   pristine.reset();
 };
@@ -23,8 +27,7 @@ const cancelByEscapeActivate = () => {
   document.addEventListener('keydown', (evt) => {
     if (isEscapeKey(evt)) {
       evt.preventDefault();
-      uploadOverlay.classList.add('hidden');
-      document.body.classList.remove('modal-open');
+      hideOverlay();
       uploadForm.reset();
       pristine.reset();
     }
