@@ -28,9 +28,7 @@ const uploadImage = createUploadImageHandler(uploadOverlay, uploadForm, pristine
 
 uploadImageInput.addEventListener('change', uploadImage);
 
-const checkHashtag = (hashtagElement) => {
-  return hashtag.test(hashtagElement);
-};
+const checkHashtag = (hashtagElement) => hashtag.test(hashtagElement);
 
 const checkAllHashtags = () => {
   const inputArray = hashTagInput.value.trim().split(' ');
