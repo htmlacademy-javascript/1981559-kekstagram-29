@@ -15,4 +15,9 @@ const isFocusedElement = (element) => {
   });
 };
 
-export {getRandomValue, isEscapeKey, isFocusedElement};
+const checkRepeat = (arr) => {
+  const uniqueArr = new Set(arr);
+  return arr.length === uniqueArr.size;
+};
+
+export {getRandomValue, isEscapeKey, isFocusedElement, checkRepeat};
