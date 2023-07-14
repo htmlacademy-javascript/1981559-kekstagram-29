@@ -1,5 +1,6 @@
 import {isFocusedElement, checkRepeat} from './util.js';
 import {createUploadImageHandler} from './upload-img-listeners.js';
+import {MAX_AVAILABLE_HASHTAGS} from './data.js';
 
 const uploadForm = document.querySelector('.img-upload__form');
 const uploadImageInput = uploadForm.querySelector('.img-upload__input');
@@ -30,6 +31,11 @@ uploadImageInput.addEventListener('change', uploadImage);
 
 const checkHashtag = (hashtagElement) => hashtag.test(hashtagElement);
 
+const checkMaxHashtags = () => {
+  const inputArray = hashTagInput.value.trim().split(' ');
+  return inputArray.length <= MAX_AVAILABLE_HASHTAGS;
+};
+
 const checkAllHashtags = () => {
   const inputArray = hashTagInput.value.trim().split(' ');
   return inputArray.every(checkHashtag);
@@ -40,6 +46,7 @@ const isHashtagRepeat = () => {
   return checkRepeat(inputArray);
 };
 
+pristine.addValidator(hashTagInput, checkMaxHashtags, `Указано больше ${MAX_AVAILABLE_HASHTAGS} хэштэгов`, 3, true);
 pristine.addValidator(hashTagInput, checkAllHashtags, 'Проверьте правильность хэштегов', 2, true);
 pristine.addValidator(hashTagInput, isHashtagRepeat, 'Хэштэги повторяются', 1, true);
 
