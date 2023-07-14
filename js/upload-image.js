@@ -1,4 +1,5 @@
-import {isEscapeKey, isFocusedElement} from './util.js';
+import {isFocusedElement} from './util.js';
+import {createUploadImageHandler} from './upload-img-listeners.js';
 
 const uploadForm = document.querySelector('.img-upload__form');
 const uploadImageInput = uploadForm.querySelector('.img-upload__input');
@@ -6,44 +7,6 @@ const uploadOverlay = uploadForm.querySelector('.img-upload__overlay');
 const cancelUploadButton = uploadForm.querySelector('.img-upload__cancel');
 const hashTagInput = uploadForm.querySelector('.text__hashtags');
 const commentField = uploadForm.querySelector('.text__description');
-
-const startUpload = () => {
-  uploadOverlay.classList.remove('hidden');
-  document.body.classList.add('modal-open');
-};
-
-const resetForm = () => {
-  uploadForm.reset();
-  pristine.reset();
-};
-
-const hideOverlay = () => {
-  uploadOverlay.classList.add('hidden');
-  document.body.classList.remove('modal-open');
-};
-
-const cancelUpload = () => {
-  hideOverlay();
-  resetForm();
-};
-
-const cancelByEscapeActivate = () => {
-  document.addEventListener('keydown', (evt) => {
-    if (isEscapeKey(evt)) {
-      evt.preventDefault();
-      hideOverlay();
-      resetForm();
-    }
-  });
-};
-
-const uploadImage = () => {
-  startUpload();
-  cancelUploadButton.addEventListener('click', cancelUpload);
-  cancelByEscapeActivate();
-};
-
-uploadImageInput.addEventListener('change', uploadImage);
 
 isFocusedElement(hashTagInput);
 isFocusedElement(commentField);
@@ -60,6 +23,10 @@ const defaultConfig = {
 };
 
 const pristine = new Pristine(uploadForm, defaultConfig);
+
+const uploadImage = createUploadImageHandler(uploadOverlay, uploadForm, pristine, cancelUploadButton);
+
+uploadImageInput.addEventListener('change', uploadImage);
 
 const checkHashtag = (hashtagElement) => {
   if (hashtag.test(hashtagElement)) {
