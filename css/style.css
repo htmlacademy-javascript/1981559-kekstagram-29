@@ -682,11 +682,14 @@ main {
   border: none;
 }
 
+.img-upload__field-wrapper {
+  margin-bottom: 20px;
+}
+
 .text__hashtags {
   width: 450px;
 
   margin: 0 auto;
-  margin-bottom: 20px;
   padding: 5px 10px;
 
   font-family: "Open Sans", "Arial", sans-serif;
@@ -1407,4 +1410,10 @@ main {
 
 .hidden {
   display: none;
+}
+
+.img-upload__help {
+  background-color: #f44336;
+  width: 450px;
+  margin: 0 auto;
 }
