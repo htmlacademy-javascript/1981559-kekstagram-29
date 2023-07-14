@@ -13,7 +13,7 @@ const createClosePictureHandle = (pictureContainer, closeButton) => {
     closeButton.removeEventListener('click', doAfterClose);
     pictureContainer.classList.add('hidden');
     document.body.classList.remove('modal-open');
-  }
+  };
 
   const onEscapeClick = (evt) => {
     if (isEscapeKey(evt)) {
@@ -27,8 +27,8 @@ const createClosePictureHandle = (pictureContainer, closeButton) => {
     pictureContainer.classList.remove('hidden');
     closeButton.addEventListener('click', doAfterClose);
     document.addEventListener('keydown', onEscapeClick);
-  }
-}
+  };
+};
 
 const isFocusedElement = (element) => {
   element.addEventListener('keydown', (evt) => {
@@ -36,6 +36,6 @@ const isFocusedElement = (element) => {
       evt.stopPropagation();
     }
   });
-}
+};
 
 export {getRandomValue, isEscapeKey, createClosePictureHandle, isFocusedElement};
