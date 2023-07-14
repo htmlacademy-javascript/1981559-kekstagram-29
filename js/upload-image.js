@@ -1,4 +1,4 @@
-import {isEscapeKey} from "./util.js";
+import {isEscapeKey, isFocusedElement} from "./util.js";
 
 const uploadForm = document.querySelector('.img-upload__form');
 const uploadImage = uploadForm.querySelector('.img-upload__input');
@@ -31,16 +31,8 @@ const onUploadButtonClick = () => {
 
 uploadImage.addEventListener('change', onUploadButtonClick);
 
-const onFocusedElement = (element) => {
-  element.addEventListener('keydown', (evt) => {
-    if (isEscapeKey(evt)) {
-      evt.stopPropagation();
-    }
-  });
-}
-
-onFocusedElement(hashTagInput);
-onFocusedElement(commentField);
+isFocusedElement(hashTagInput);
+isFocusedElement(commentField);
 
 
 // const hashtag = /^#[a-zа-яё0-9]{1,19}$/i;

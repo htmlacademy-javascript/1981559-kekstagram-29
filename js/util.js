@@ -30,4 +30,12 @@ const createClosePictureHandle = (pictureContainer, closeButton) => {
   }
 }
 
-export {getRandomValue, isEscapeKey, createClosePictureHandle};
+const isFocusedElement = (element) => {
+  element.addEventListener('keydown', (evt) => {
+    if (isEscapeKey(evt)) {
+      evt.stopPropagation();
+    }
+  });
+}
+
+export {getRandomValue, isEscapeKey, createClosePictureHandle, isFocusedElement};
