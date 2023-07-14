@@ -1,4 +1,4 @@
-import {createClosePictureHandle} from './util.js';
+import {createClosePictureHandle} from './close-picture.js';
 import {newArrayOfObjects, DEFAULT_SHOWN_COMMENTS} from './data.js';
 import {createFullPhotoCard} from './full-photo-creator.js';
 import {generateComments} from './full-photo-comments-creator.js';
