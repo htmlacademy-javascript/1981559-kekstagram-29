@@ -38,7 +38,7 @@ const onCardClickCreate = (evt) => {
       bigPictureData.commentsCounter.textContent = pluralize(messagesArrayLength, commentsWordsArray);
     }
 
-    const onClickShowMore = () => {
+    const onClickShownMore = () => {
       if (initialSownCommentsValue + DEFAULT_SHOWN_COMMENTS < messagesArrayLength) {
         initialSownCommentsValue += DEFAULT_SHOWN_COMMENTS;
       } else {
@@ -51,14 +51,14 @@ const onCardClickCreate = (evt) => {
       generateComments(initialSownCommentsValue, selectedPictureId);
       if (initialSownCommentsValue === messagesArrayLength) {
         showMoreButton.classList.add('hidden');
-        showMoreButton.removeEventListener('click', onClickShowMore);
+        showMoreButton.removeEventListener('click', onClickShownMore);
       }
     };
 
     generateComments(DEFAULT_SHOWN_COMMENTS, selectedPictureId);
 
     if (messagesArrayLength > DEFAULT_SHOWN_COMMENTS) {
-      showMoreButton.addEventListener('click', onClickShowMore);
+      showMoreButton.addEventListener('click', onClickShownMore);
     }
   }
 };
