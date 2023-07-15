@@ -30,6 +30,25 @@ const onCardClickCreate = (evt) => {
       showMoreButton.classList.add('hidden');
     } else {
       showMoreButton.classList.remove('hidden');
+
+      const onClickShownMore = () => {
+        if (currentSownCommentsValue + DEFAULT_SHOWN_COMMENTS < messagesArrayLength) {
+          currentSownCommentsValue += DEFAULT_SHOWN_COMMENTS;
+        } else {
+          while (currentSownCommentsValue < messagesArrayLength) {
+            currentSownCommentsValue++;
+          }
+        }
+
+        bigPictureData.commentsCounter.innerHTML = `${currentSownCommentsValue} из <span class="comments-count">${String(messagesArrayLength)}</span> комментариев`;
+        generateComments(currentSownCommentsValue, selectedPictureId);
+        if (currentSownCommentsValue === messagesArrayLength) {
+          showMoreButton.classList.add('hidden');
+          showMoreButton.removeEventListener('click', onClickShownMore);
+        }
+      };
+
+      showMoreButton.addEventListener('click', onClickShownMore);
     }
 
     createFullPhotoCard(bigPictureData, selectedPictureId);
@@ -38,28 +57,7 @@ const onCardClickCreate = (evt) => {
       bigPictureData.commentsCounter.textContent = pluralize(messagesArrayLength, commentsWordsArray);
     }
 
-    const onClickShownMore = () => {
-      if (currentSownCommentsValue + DEFAULT_SHOWN_COMMENTS < messagesArrayLength) {
-        currentSownCommentsValue += DEFAULT_SHOWN_COMMENTS;
-      } else {
-        while (currentSownCommentsValue < messagesArrayLength) {
-          currentSownCommentsValue++;
-        }
-      }
-
-      bigPictureData.commentsCounter.innerHTML = `${currentSownCommentsValue} из <span class="comments-count">${String(messagesArrayLength)}</span> комментариев`;
-      generateComments(currentSownCommentsValue, selectedPictureId);
-      if (currentSownCommentsValue === messagesArrayLength) {
-        showMoreButton.classList.add('hidden');
-        showMoreButton.removeEventListener('click', onClickShownMore);
-      }
-    };
-
     generateComments(DEFAULT_SHOWN_COMMENTS, selectedPictureId);
-
-    if (messagesArrayLength > DEFAULT_SHOWN_COMMENTS) {
-      showMoreButton.addEventListener('click', onClickShownMore);
-    }
   }
 };
 
