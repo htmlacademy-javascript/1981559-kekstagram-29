@@ -11,6 +11,7 @@ const MIN_AVATAR_ID = 1;
 const MAX_AVATAR_ID = 6;
 const MIN_RANDOM_MESSAGES = 1;
 const MAX_RANDOM_MESSAGES = 2;
+const DEFAULT_SHOWN_COMMENTS = 5;
 const NAMES = [
   'Иван',
   'Хуан Себастьян',
@@ -93,4 +94,4 @@ const createObject = () => {
 
 const newArrayOfObjects = Array.from({length: OBJECTS_NUMBER}, createObject);
 
-export {newArrayOfObjects};
+export {newArrayOfObjects, DEFAULT_SHOWN_COMMENTS};
