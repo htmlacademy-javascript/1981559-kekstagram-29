@@ -2,6 +2,7 @@ import {createClosePictureHandle} from './close-picture.js';
 import {newArrayOfObjects, DEFAULT_SHOWN_COMMENTS} from './data.js';
 import {createFullPhotoCard} from './full-photo-creator.js';
 import {generateComments} from './full-photo-comments-creator.js';
+import {pluralize} from './util.js';
 
 const cardPictureWall = document.querySelector('.pictures');
 const bigPicture = document.querySelector('.big-picture');
@@ -14,6 +15,7 @@ const bigPictureData = {
   description: bigPicture.querySelector('.social__caption'),
   commentsCounter: bigPicture.querySelector('.social__comment-count'),
 };
+const commentsWordsArray = ['комментарий', 'комментария', 'комментариев'];
 
 const closeImage = createClosePictureHandle(bigPicture, closeButton);
 
@@ -32,14 +34,8 @@ const onCardClickCreate = (evt) => {
 
     createFullPhotoCard(bigPictureData, selectedPictureId);
 
-    if (messagesArrayLength === 0) {
-      bigPictureData.commentsCounter.textContent = '0 комментариев';
-    } else if (messagesArrayLength === 1) {
-      bigPictureData.commentsCounter.textContent = '1 комментарий';
-    } else if (messagesArrayLength > 1 && messagesArrayLength < 5) {
-      bigPictureData.commentsCounter.textContent = `${messagesArrayLength} комментария`;
-    } else if (messagesArrayLength === DEFAULT_SHOWN_COMMENTS) {
-      bigPictureData.commentsCounter.textContent = `${DEFAULT_SHOWN_COMMENTS} комментариев`;
+    if (messagesArrayLength < DEFAULT_SHOWN_COMMENTS + 1) {
+      bigPictureData.commentsCounter.textContent = pluralize(messagesArrayLength, commentsWordsArray);
     }
 
     const onClickShowMore = () => {
