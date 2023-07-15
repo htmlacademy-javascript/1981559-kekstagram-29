@@ -32,7 +32,7 @@ const onCardClickCreate = (evt) => {
 
     createFullPhotoCard(bigPictureData, selectedPictureId);
 
-    if (!messagesArrayLength) {
+    if (messagesArrayLength === 0) {
       bigPictureData.commentsCounter.textContent = '0 комментариев';
     } else if (messagesArrayLength === 1) {
       bigPictureData.commentsCounter.textContent = '1 комментарий';
