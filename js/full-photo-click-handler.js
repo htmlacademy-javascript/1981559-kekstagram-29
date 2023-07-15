@@ -1,4 +1,3 @@
-import {createClosePictureHandle} from './close-picture.js';
 import {newArrayOfObjects, DEFAULT_SHOWN_COMMENTS} from './data.js';
 import {createFullPhotoCard} from './full-photo-creator.js';
 import {generateComments} from './full-photo-comments-creator.js';
@@ -6,7 +5,6 @@ import {pluralize} from './util.js';
 
 const cardPictureWall = document.querySelector('.pictures');
 const bigPicture = document.querySelector('.big-picture');
-const closeButton = bigPicture.querySelector('.big-picture__cancel');
 const bigPictureCommentsList = bigPicture.querySelector('.social__comments');
 const showMoreButton = bigPicture.querySelector('.comments-loader');
 const bigPictureData = {
@@ -16,8 +14,6 @@ const bigPictureData = {
   commentsCounter: bigPicture.querySelector('.social__comment-count'),
 };
 const commentsWordsArray = ['комментарий', 'комментария', 'комментариев'];
-
-const closeImage = createClosePictureHandle(bigPicture, closeButton);
 
 const onCardClickCreate = (evt) => {
   if (evt.target.closest('.picture')) {
@@ -63,4 +59,4 @@ const onCardClickCreate = (evt) => {
 
 cardPictureWall.addEventListener('click', onCardClickCreate);
 
-export {closeImage, bigPictureCommentsList, showMoreButton};
+export {bigPicture, bigPictureCommentsList, showMoreButton};
