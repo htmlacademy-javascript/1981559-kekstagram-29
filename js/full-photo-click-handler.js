@@ -24,7 +24,7 @@ const onCardClickCreate = (evt) => {
     evt.preventDefault();
     const selectedPictureId = evt.target.closest('.picture').dataset.pictureId;
     const messagesArrayLength = newArrayOfObjects[selectedPictureId - 1].comments.length;
-    let initialSownCommentsValue = DEFAULT_SHOWN_COMMENTS;
+    let currentSownCommentsValue = DEFAULT_SHOWN_COMMENTS;
 
     if (messagesArrayLength <= DEFAULT_SHOWN_COMMENTS) {
       showMoreButton.classList.add('hidden');
@@ -39,17 +39,17 @@ const onCardClickCreate = (evt) => {
     }
 
     const onClickShownMore = () => {
-      if (initialSownCommentsValue + DEFAULT_SHOWN_COMMENTS < messagesArrayLength) {
-        initialSownCommentsValue += DEFAULT_SHOWN_COMMENTS;
+      if (currentSownCommentsValue + DEFAULT_SHOWN_COMMENTS < messagesArrayLength) {
+        currentSownCommentsValue += DEFAULT_SHOWN_COMMENTS;
       } else {
-        while (initialSownCommentsValue < messagesArrayLength) {
-          initialSownCommentsValue++;
+        while (currentSownCommentsValue < messagesArrayLength) {
+          currentSownCommentsValue++;
         }
       }
 
-      bigPictureData.commentsCounter.innerHTML = `${initialSownCommentsValue} из <span class="comments-count">${String(messagesArrayLength)}</span> комментариев`;
-      generateComments(initialSownCommentsValue, selectedPictureId);
-      if (initialSownCommentsValue === messagesArrayLength) {
+      bigPictureData.commentsCounter.innerHTML = `${currentSownCommentsValue} из <span class="comments-count">${String(messagesArrayLength)}</span> комментариев`;
+      generateComments(currentSownCommentsValue, selectedPictureId);
+      if (currentSownCommentsValue === messagesArrayLength) {
         showMoreButton.classList.add('hidden');
         showMoreButton.removeEventListener('click', onClickShownMore);
       }
