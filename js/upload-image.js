@@ -1,4 +1,4 @@
-import {isFocusedElement, checkRepeat} from './util.js';
+import {disableEscHandling, checkRepeat} from './util.js';
 import {createUploadImageHandler} from './upload-img-listeners.js';
 import {MAX_AVAILABLE_HASHTAGS, MAX_COMMENT_WORDS} from './data.js';
 
@@ -9,8 +9,8 @@ const cancelUploadButton = uploadForm.querySelector('.img-upload__cancel');
 const hashTagInput = uploadForm.querySelector('.text__hashtags');
 const commentField = uploadForm.querySelector('.text__description');
 
-isFocusedElement(hashTagInput);
-isFocusedElement(commentField);
+disableEscHandling(hashTagInput);
+disableEscHandling(commentField);
 
 const hashtag = /^#[a-zа-яё0-9]{1,19}$/i;
 

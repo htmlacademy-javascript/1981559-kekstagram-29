@@ -12,7 +12,7 @@ const pluralize = (count, words) => {
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
-const isFocusedElement = (element) => {
+const disableEscHandling = (element) => {
   element.addEventListener('keydown', (evt) => {
     if (isEscapeKey(evt)) {
       evt.stopPropagation();
@@ -25,4 +25,4 @@ const checkRepeat = (arr) => {
   return arr.length === uniqueArr.size;
 };
 
-export {getRandomValue, isEscapeKey, isFocusedElement, checkRepeat, pluralize};
+export {getRandomValue, isEscapeKey, disableEscHandling, checkRepeat, pluralize};
