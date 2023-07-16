@@ -81,10 +81,9 @@ const scaleControlValue = scaleContainer.querySelector('.scale__control--value')
 const imageToUpload = uploadForm.querySelector('.img-upload__preview img');
 
 scaleControlValue.value = `${SCALE_IMAGE_DEFAULT}%`
+let currentValue = parseInt(scaleControlValue.value, 10);
 
 const decreaseValue = () => {
-  let currentValue = parseInt(scaleControlValue.value, 10);
-
   if (currentValue <= SCALE_IMAGE_DEFAULT && currentValue > SCALE_IMAGE_MIN) {
     currentValue -= SCALE_IMAGE_STEP;
     scaleControlValue.value = `${currentValue}%`;
@@ -93,8 +92,6 @@ const decreaseValue = () => {
 };
 
 const increaseValue = () => {
-  let currentValue = parseInt(scaleControlValue.value, 10);
-
   if (currentValue >= SCALE_IMAGE_MIN && currentValue < SCALE_IMAGE_MAX) {
     currentValue += SCALE_IMAGE_STEP;
     scaleControlValue.value = `${currentValue}%`;
