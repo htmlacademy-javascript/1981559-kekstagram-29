@@ -80,7 +80,7 @@ const increaseScaleButton = scaleContainer.querySelector('.scale__control--bigge
 const scaleControlValue = scaleContainer.querySelector('.scale__control--value');
 const imageToUpload = uploadForm.querySelector('.img-upload__preview img');
 
-scaleControlValue.value = `${SCALE_IMAGE_DEFAULT}%`
+scaleControlValue.value = `${SCALE_IMAGE_DEFAULT}%`;
 let currentValue = parseInt(scaleControlValue.value, 10);
 
 const decreaseValue = () => {
@@ -101,6 +101,4 @@ const increaseValue = () => {
 
 decreaseScaleButton.addEventListener('click', decreaseValue);
 increaseScaleButton.addEventListener('click', increaseValue);
-
-
 
