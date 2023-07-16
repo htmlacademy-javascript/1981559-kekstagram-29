@@ -1,90 +1,62 @@
-import {isEscapeKey} from './util.js';
 import {newArrayOfObjects, DEFAULT_SHOWN_COMMENTS} from './data.js';
-import {createFullPhotoCard} from './full-photo-creator.js';
+import {fillFullPhotoCardData} from './full-photo-creator.js';
 import {generateComments} from './full-photo-comments-creator.js';
+import {pluralize} from './util.js';
 
 const cardPictureWall = document.querySelector('.pictures');
 const bigPicture = document.querySelector('.big-picture');
-const closeButton = bigPicture.querySelector('.big-picture__cancel');
 const bigPictureCommentsList = bigPicture.querySelector('.social__comments');
 const showMoreButton = bigPicture.querySelector('.comments-loader');
-const BigPictureData = {
+const bigPictureData = {
   image: bigPicture.querySelector('.big-picture__img img'),
   likes: bigPicture.querySelector('.likes-count'),
   description: bigPicture.querySelector('.social__caption'),
   commentsCounter: bigPicture.querySelector('.social__comment-count'),
 };
+const commentsWordsArray = ['комментарий', 'комментария', 'комментариев'];
 
-const onEscapeClick = (evt) => {
-  if (isEscapeKey(evt)) {
-    evt.preventDefault();
-    document.removeEventListener('keydown', onEscapeClick);
-    bigPicture.classList.add('hidden');
-    document.body.classList.remove('modal-open');
-  }
-};
-
-const onPictureClick = () => {
-  bigPicture.classList.remove('hidden');
-  closeButton.addEventListener('click', () => {
-    document.removeEventListener('keydown', onEscapeClick);
-    bigPicture.classList.add('hidden');
-    document.body.classList.remove('modal-open');
-  });
-  document.addEventListener('keydown', onEscapeClick);
-};
-
-const onCardClickCreate = (evt) => {
+const onCardClick = (evt) => {
   if (evt.target.closest('.picture')) {
+    evt.preventDefault();
     const selectedPictureId = evt.target.closest('.picture').dataset.pictureId;
     const messagesArrayLength = newArrayOfObjects[selectedPictureId - 1].comments.length;
-    let initialSownCommentsValue = DEFAULT_SHOWN_COMMENTS;
+    let currentShownCommentsValue = DEFAULT_SHOWN_COMMENTS;
 
     if (messagesArrayLength <= DEFAULT_SHOWN_COMMENTS) {
       showMoreButton.classList.add('hidden');
     } else {
       showMoreButton.classList.remove('hidden');
-    }
 
-    createFullPhotoCard(BigPictureData, selectedPictureId);
-
-    if (!messagesArrayLength) {
-      BigPictureData.commentsCounter.textContent = '0 комментариев';
-    } else if (messagesArrayLength === 1) {
-      BigPictureData.commentsCounter.textContent = '1 комментарий';
-    } else if (messagesArrayLength > 1 && messagesArrayLength < 5) {
-      BigPictureData.commentsCounter.textContent = `${messagesArrayLength} комментария`;
-    } else if (messagesArrayLength === DEFAULT_SHOWN_COMMENTS) {
-      BigPictureData.commentsCounter.textContent = `${DEFAULT_SHOWN_COMMENTS} комментариев`;
-    }
-
-    const onClickShowMore = () => {
-      if (initialSownCommentsValue + DEFAULT_SHOWN_COMMENTS < messagesArrayLength) {
-        initialSownCommentsValue += DEFAULT_SHOWN_COMMENTS;
-      } else {
-        while (initialSownCommentsValue < messagesArrayLength) {
-          initialSownCommentsValue++;
+      const onClickShownMore = () => {
+        if (currentShownCommentsValue + DEFAULT_SHOWN_COMMENTS < messagesArrayLength) {
+          currentShownCommentsValue += DEFAULT_SHOWN_COMMENTS;
+        } else {
+          while (currentShownCommentsValue < messagesArrayLength) {
+            currentShownCommentsValue++;
+          }
         }
-      }
 
-      BigPictureData.commentsCounter.innerHTML = `${initialSownCommentsValue} из <span class="comments-count">${String(messagesArrayLength)}</span> комментариев`;
-      generateComments(initialSownCommentsValue, selectedPictureId);
-      if (initialSownCommentsValue === messagesArrayLength) {
-        showMoreButton.classList.add('hidden');
-        showMoreButton.removeEventListener('click', onClickShowMore);
-      }
-    };
+        bigPictureData.commentsCounter.textContent = `${currentShownCommentsValue} из ${String(messagesArrayLength)} комментариев`;
+        generateComments(currentShownCommentsValue, selectedPictureId);
+        if (currentShownCommentsValue === messagesArrayLength) {
+          showMoreButton.classList.add('hidden');
+          showMoreButton.removeEventListener('click', onClickShownMore);
+        }
+      };
 
-    document.body.classList.add('modal-open');
+      showMoreButton.addEventListener('click', onClickShownMore);
+    }
+
+    fillFullPhotoCardData(bigPictureData, selectedPictureId);
+
+    if (messagesArrayLength < DEFAULT_SHOWN_COMMENTS + 1) {
+      bigPictureData.commentsCounter.textContent = pluralize(messagesArrayLength, commentsWordsArray);
+    }
 
     generateComments(DEFAULT_SHOWN_COMMENTS, selectedPictureId);
-
-    if (messagesArrayLength > DEFAULT_SHOWN_COMMENTS) {
-      showMoreButton.addEventListener('click', onClickShowMore);
-    }
   }
 };
 
-cardPictureWall.addEventListener('click', onCardClickCreate);
+cardPictureWall.addEventListener('click', onCardClick);
 
-export {onPictureClick, bigPictureCommentsList, showMoreButton};
+export {bigPicture, bigPictureCommentsList, showMoreButton};

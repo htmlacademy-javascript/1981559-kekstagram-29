@@ -473,6 +473,7 @@ main {
 
   border: solid rgba(255, 255, 255, 0.5);
   border-width: 0 2px;
+  cursor: default;
 }
 
 .scale__control--bigger {
@@ -682,11 +683,14 @@ main {
   border: none;
 }
 
+.img-upload__field-wrapper {
+  margin-bottom: 20px;
+}
+
 .text__hashtags {
   width: 450px;
 
   margin: 0 auto;
-  margin-bottom: 20px;
   padding: 5px 10px;
 
   font-family: "Open Sans", "Arial", sans-serif;
@@ -708,6 +712,7 @@ main {
   color: #000000;
 
   border-radius: 5px;
+  resize: none;
 }
 
 
@@ -1407,4 +1412,10 @@ main {
 
 .hidden {
   display: none;
+}
+
+.img-upload__help {
+  background-color: #f44336;
+  width: 450px;
+  margin: 0 auto;
 }

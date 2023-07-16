@@ -1,10 +1,10 @@
 import {newArrayOfObjects, DEFAULT_SHOWN_COMMENTS} from './data.js';
 
-const createFullPhotoCard = (PictureData, pictureId) => {
+const fillFullPhotoCardData = (PictureData, pictureId) => {
   PictureData.image.src = `./photos/${pictureId}.jpg`;
   PictureData.likes.textContent = String(newArrayOfObjects[pictureId - 1].likes);
   PictureData.description.textContent = newArrayOfObjects[pictureId - 1].description;
-  PictureData.commentsCounter.innerHTML = `${DEFAULT_SHOWN_COMMENTS} из <span class="comments-count">${String(newArrayOfObjects[pictureId - 1].comments.length)}</span> комментариев`;
+  PictureData.commentsCounter.textContent = `${DEFAULT_SHOWN_COMMENTS} из ${String(newArrayOfObjects[pictureId - 1].comments.length)} комментариев`;
 };
 
-export {createFullPhotoCard};
+export {fillFullPhotoCardData};

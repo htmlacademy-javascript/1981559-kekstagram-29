@@ -12,6 +12,12 @@ const MAX_AVATAR_ID = 6;
 const MIN_RANDOM_MESSAGES = 1;
 const MAX_RANDOM_MESSAGES = 2;
 const DEFAULT_SHOWN_COMMENTS = 5;
+const MAX_AVAILABLE_HASHTAGS = 5;
+const MAX_COMMENT_WORDS = 140;
+const SCALE_IMAGE_DEFAULT = 100;
+const SCALE_IMAGE_STEP = 25;
+const SCALE_IMAGE_MAX = 100;
+const SCALE_IMAGE_MIN = 25;
 const NAMES = [
   'Иван',
   'Хуан Себастьян',
@@ -94,4 +100,13 @@ const createObject = () => {
 
 const newArrayOfObjects = Array.from({length: OBJECTS_NUMBER}, createObject);
 
-export {newArrayOfObjects, DEFAULT_SHOWN_COMMENTS};
+export {
+  newArrayOfObjects,
+  DEFAULT_SHOWN_COMMENTS,
+  MAX_AVAILABLE_HASHTAGS,
+  MAX_COMMENT_WORDS,
+  SCALE_IMAGE_MAX,
+  SCALE_IMAGE_MIN,
+  SCALE_IMAGE_STEP,
+  SCALE_IMAGE_DEFAULT
+};
