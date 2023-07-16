@@ -52,7 +52,7 @@ const isHashtagRepeat = () => {
 const checkCommentFieldLength = () => commentField.value.length <= MAX_COMMENT_WORDS;
 
 pristine.addValidator(hashTagInput, checkMaxHashtags, `Указано больше ${MAX_AVAILABLE_HASHTAGS} хэштэгов`, 3, true);
-pristine.addValidator(hashTagInput, checkAllHashtags, 'Проверьте правильность хэштегов', 2, true);
+pristine.addValidator(hashTagInput, checkAllHashtags, 'Хэштэги должны состоять из букв и/или цифр', 2, true);
 pristine.addValidator(hashTagInput, isHashtagRepeat, 'Хэштэги повторяются', 1, true);
 pristine.addValidator(commentField, checkCommentFieldLength, `Разрешено не более ${MAX_COMMENT_WORDS} символов`);
 
