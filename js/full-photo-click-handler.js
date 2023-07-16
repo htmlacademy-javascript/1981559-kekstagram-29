@@ -1,5 +1,5 @@
 import {newArrayOfObjects, DEFAULT_SHOWN_COMMENTS} from './data.js';
-import {createFullPhotoCard} from './full-photo-creator.js';
+import {fillFullPhotoCardData} from './full-photo-creator.js';
 import {generateComments} from './full-photo-comments-creator.js';
 import {pluralize} from './util.js';
 
@@ -47,7 +47,7 @@ const onCardClick = (evt) => {
       showMoreButton.addEventListener('click', onClickShownMore);
     }
 
-    createFullPhotoCard(bigPictureData, selectedPictureId);
+    fillFullPhotoCardData(bigPictureData, selectedPictureId);
 
     if (messagesArrayLength < DEFAULT_SHOWN_COMMENTS + 1) {
       bigPictureData.commentsCounter.textContent = pluralize(messagesArrayLength, commentsWordsArray);
