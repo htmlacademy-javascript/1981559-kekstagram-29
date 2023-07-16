@@ -36,7 +36,7 @@ const onCardClickCreate = (evt) => {
           }
         }
 
-        bigPictureData.commentsCounter.innerHTML = `${currentSownCommentsValue} из <span class="comments-count">${String(messagesArrayLength)}</span> комментариев`;
+        bigPictureData.commentsCounter.textContent = `${currentSownCommentsValue} из ${String(messagesArrayLength)} комментариев`;
         generateComments(currentSownCommentsValue, selectedPictureId);
         if (currentSownCommentsValue === messagesArrayLength) {
           showMoreButton.classList.add('hidden');
