@@ -15,12 +15,12 @@ const bigPictureData = {
 };
 const commentsWordsArray = ['комментарий', 'комментария', 'комментариев'];
 
-const onCardClickCreate = (evt) => {
+const onCardClick = (evt) => {
   if (evt.target.closest('.picture')) {
     evt.preventDefault();
     const selectedPictureId = evt.target.closest('.picture').dataset.pictureId;
     const messagesArrayLength = newArrayOfObjects[selectedPictureId - 1].comments.length;
-    let currentSownCommentsValue = DEFAULT_SHOWN_COMMENTS;
+    let currentShownCommentsValue = DEFAULT_SHOWN_COMMENTS;
 
     if (messagesArrayLength <= DEFAULT_SHOWN_COMMENTS) {
       showMoreButton.classList.add('hidden');
@@ -28,17 +28,17 @@ const onCardClickCreate = (evt) => {
       showMoreButton.classList.remove('hidden');
 
       const onClickShownMore = () => {
-        if (currentSownCommentsValue + DEFAULT_SHOWN_COMMENTS < messagesArrayLength) {
-          currentSownCommentsValue += DEFAULT_SHOWN_COMMENTS;
+        if (currentShownCommentsValue + DEFAULT_SHOWN_COMMENTS < messagesArrayLength) {
+          currentShownCommentsValue += DEFAULT_SHOWN_COMMENTS;
         } else {
-          while (currentSownCommentsValue < messagesArrayLength) {
-            currentSownCommentsValue++;
+          while (currentShownCommentsValue < messagesArrayLength) {
+            currentShownCommentsValue++;
           }
         }
 
-        bigPictureData.commentsCounter.textContent = `${currentSownCommentsValue} из ${String(messagesArrayLength)} комментариев`;
-        generateComments(currentSownCommentsValue, selectedPictureId);
-        if (currentSownCommentsValue === messagesArrayLength) {
+        bigPictureData.commentsCounter.textContent = `${currentShownCommentsValue} из ${String(messagesArrayLength)} комментариев`;
+        generateComments(currentShownCommentsValue, selectedPictureId);
+        if (currentShownCommentsValue === messagesArrayLength) {
           showMoreButton.classList.add('hidden');
           showMoreButton.removeEventListener('click', onClickShownMore);
         }
@@ -57,6 +57,6 @@ const onCardClickCreate = (evt) => {
   }
 };
 
-cardPictureWall.addEventListener('click', onCardClickCreate);
+cardPictureWall.addEventListener('click', onCardClick);
 
 export {bigPicture, bigPictureCommentsList, showMoreButton};
