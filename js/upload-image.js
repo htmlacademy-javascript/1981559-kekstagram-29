@@ -1,6 +1,13 @@
 import {disableEscHandling, checkRepeat} from './util.js';
 import {createUploadImageHandler} from './upload-img-listeners.js';
-import {MAX_AVAILABLE_HASHTAGS, MAX_COMMENT_WORDS} from './data.js';
+import {
+  MAX_AVAILABLE_HASHTAGS,
+  MAX_COMMENT_WORDS,
+  SCALE_IMAGE_MAX,
+  SCALE_IMAGE_MIN,
+  SCALE_IMAGE_STEP,
+  SCALE_IMAGE_DEFAULT
+} from './data.js';
 
 const uploadForm = document.querySelector('.img-upload__form');
 const uploadImageInput = uploadForm.querySelector('.img-upload__input');
@@ -66,5 +73,32 @@ uploadForm.addEventListener('submit', (evt) => {
   //   console.log('Форма невалидна');
   // }
 });
+
+const scaleContainer = document.querySelector('.img-upload__scale');
+const decreaseScaleButton = scaleContainer.querySelector('.scale__control--smaller');
+const increaseScaleButton = scaleContainer.querySelector('.scale__control--bigger');
+const scaleControlValue = scaleContainer.querySelector('.scale__control--value');
+
+scaleControlValue.value = `${SCALE_IMAGE_DEFAULT}%`
+
+const decreaseValue = () => {
+  const currentValue = parseInt(scaleControlValue.value, 10);
+
+  if (currentValue <= SCALE_IMAGE_DEFAULT && currentValue > SCALE_IMAGE_MIN) {
+    scaleControlValue.value = `${parseInt(scaleControlValue.value, 10) - SCALE_IMAGE_STEP}%`;
+  }
+};
+
+const increaseValue = () => {
+  const currentValue = parseInt(scaleControlValue.value, 10);
+
+  if (currentValue >= SCALE_IMAGE_MIN && currentValue < SCALE_IMAGE_MAX) {
+    scaleControlValue.value = `${parseInt(scaleControlValue.value, 10) + SCALE_IMAGE_STEP}%`;
+  }
+};
+
+decreaseScaleButton.addEventListener('click', decreaseValue);
+increaseScaleButton.addEventListener('click', increaseValue);
+
 
 
