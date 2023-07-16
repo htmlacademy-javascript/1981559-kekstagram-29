@@ -78,22 +78,27 @@ const scaleContainer = document.querySelector('.img-upload__scale');
 const decreaseScaleButton = scaleContainer.querySelector('.scale__control--smaller');
 const increaseScaleButton = scaleContainer.querySelector('.scale__control--bigger');
 const scaleControlValue = scaleContainer.querySelector('.scale__control--value');
+const imageToUpload = uploadForm.querySelector('.img-upload__preview img');
 
 scaleControlValue.value = `${SCALE_IMAGE_DEFAULT}%`
 
 const decreaseValue = () => {
-  const currentValue = parseInt(scaleControlValue.value, 10);
+  let currentValue = parseInt(scaleControlValue.value, 10);
 
   if (currentValue <= SCALE_IMAGE_DEFAULT && currentValue > SCALE_IMAGE_MIN) {
-    scaleControlValue.value = `${parseInt(scaleControlValue.value, 10) - SCALE_IMAGE_STEP}%`;
+    currentValue -= SCALE_IMAGE_STEP;
+    scaleControlValue.value = `${currentValue}%`;
+    imageToUpload.style.transform = `scale(${currentValue / 100})`;
   }
 };
 
 const increaseValue = () => {
-  const currentValue = parseInt(scaleControlValue.value, 10);
+  let currentValue = parseInt(scaleControlValue.value, 10);
 
   if (currentValue >= SCALE_IMAGE_MIN && currentValue < SCALE_IMAGE_MAX) {
-    scaleControlValue.value = `${parseInt(scaleControlValue.value, 10) + SCALE_IMAGE_STEP}%`;
+    currentValue += SCALE_IMAGE_STEP;
+    scaleControlValue.value = `${currentValue}%`;
+    imageToUpload.style.transform = `scale(${currentValue / 100})`;
   }
 };
 
