@@ -110,7 +110,7 @@ const sliderControlContainer = uploadForm.querySelector('.effect-level');
 const effectsList = uploadForm.querySelector('.effects__list');
 const effectValue = uploadForm.querySelector('.effect-level__value');
 
-const createNoUiSlider = (sliderVisibleState, minValue, maxValue, step) => {
+const createNoUiSlider = (sliderVisibleState, minValue, maxValue, step, filter, unit = '') => {
   if (sliderVisibleState) {
     sliderControlContainer.classList.remove('hidden');
     noUiSlider.create(sliderControlContainer, {
@@ -132,7 +132,10 @@ const createNoUiSlider = (sliderVisibleState, minValue, maxValue, step) => {
     });
 
     sliderControlContainer.noUiSlider.on('update', () => {
-      console.log(sliderControlContainer.noUiSlider.get());
+      effectValue.value = sliderControlContainer.noUiSlider.get();
+      imageToUpload.style.filter = `${filter}(${effectValue.value}${unit})`;
+      console.log(effectValue.value + unit);
+      console.log(`${filter}(${effectValue.value})${unit}`);
     });
   }
 };
@@ -156,23 +159,23 @@ const onEffectClick = (evt) => {
         break;
 
       case 'effect-chrome':
-        createNoUiSlider(sliderHiddenState, 0, 1, 0.1);
+        createNoUiSlider(sliderHiddenState, 0, 1, 0.1, 'grayscale');
         break;
 
       case 'effect-sepia':
-        createNoUiSlider(sliderHiddenState, 0, 1, 0.1);
+        createNoUiSlider(sliderHiddenState, 0, 1, 0.1, 'sepia');
         break;
 
       case 'effect-marvin':
-        createNoUiSlider(sliderHiddenState, 0, 100, 1);
+        createNoUiSlider(sliderHiddenState, 0, 100, 1, 'invert', '%');
         break;
 
       case 'effect-phobos':
-        createNoUiSlider(sliderHiddenState, 0, 3, 0.1);
+        createNoUiSlider(sliderHiddenState, 0, 3, 0.1, 'blur', 'px');
         break;
 
       case 'effect-heat':
-        createNoUiSlider(sliderHiddenState, 1, 3, 0.1);
+        createNoUiSlider(sliderHiddenState, 1, 3,0.1, 'brightness');
         break;
     }
   }
