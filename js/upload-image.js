@@ -137,7 +137,6 @@ const createNoUiSlider = (sliderVisibleState, minValue, maxValue, step, filter, 
     sliderControlContainer.noUiSlider.on('update', () => {
       effectValue.value = sliderControlContainer.noUiSlider.get();
       imageToUpload.style.filter = `${filter}(${effectValue.value}${unit})`;
-      console.log(`${filter}(${effectValue.value}${unit})`);
     });
   }
 };
@@ -159,6 +158,7 @@ const onEffectClick = (evt) => {
       case 'effect-none':
         sliderControlContainer.classList.add('hidden');
         imageToUpload.style.filter = 'none';
+        effectValue.value = '';
         break;
 
       case 'effect-chrome':
@@ -182,6 +182,6 @@ const onEffectClick = (evt) => {
         break;
     }
   }
-}
+};
 
-effectsList.addEventListener('click', onEffectClick)
+effectsList.addEventListener('click', onEffectClick);
