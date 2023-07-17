@@ -74,6 +74,8 @@ uploadForm.addEventListener('submit', (evt) => {
   // }
 });
 
+// кнопка масштаба
+
 const scaleContainer = document.querySelector('.img-upload__scale');
 const decreaseScaleButton = scaleContainer.querySelector('.scale__control--smaller');
 const increaseScaleButton = scaleContainer.querySelector('.scale__control--bigger');
@@ -102,34 +104,81 @@ const increaseValue = () => {
 decreaseScaleButton.addEventListener('click', decreaseValue);
 increaseScaleButton.addEventListener('click', increaseValue);
 
+//Управление эффектами
+
 const sliderControlContainer = uploadForm.querySelector('.effect-level');
-
-noUiSlider.create(sliderControlContainer, {
-  range: {
-    min: 0,
-    max: 100,
-  },
-  start: 0,
-  step: 1,
-  connect: 'lower',
-});
-
 const effectsList = uploadForm.querySelector('.effects__list');
-// sliderControlContainer.classList.add('hidden');
+const effectValue = uploadForm.querySelector('.effect-level__value');
 
-const onEffectClick = (evt) => {
-  const selectedEffect = evt.target.closest('.effects__label');
-
-  if (selectedEffect) {
-    const nameOfEffect = selectedEffect.getAttribute('for');
-
-    if (nameOfEffect === 'effect-none') {
-      sliderControlContainer.noUiSlider.destroy();
-      sliderControlContainer.classList.add('hidden');
-    }
-    console.log(nameOfEffect)
-
+const createNoUiSlider = (sliderVisibleState, minValue, maxValue, step) => {
+  if (sliderVisibleState) {
+    sliderControlContainer.classList.remove('hidden');
+    noUiSlider.create(sliderControlContainer, {
+      range: {
+        min: minValue,
+        max: maxValue,
+      },
+      start: 0,
+      step: step,
+      connect: 'lower',
+      format: {
+        to(value) {
+          return value;
+        },
+        from(value) {
+          return parseFloat(value);
+        },
+      },
+    });
   }
 };
+
+const onEffectClick = (evt) => {
+  const selectedEffectInput = evt.target.closest('.effects__radio');
+  const sliderHiddenState = sliderControlContainer.classList.contains('hidden');
+  const sliderShownState = !sliderHiddenState;
+
+  if (sliderShownState) {
+    sliderControlContainer.noUiSlider.destroy();
+    sliderControlContainer.classList.add('hidden');
+  }
+
+  if (selectedEffectInput) {
+    const nameOfEffect = selectedEffectInput.getAttribute('id');
+
+    switch (nameOfEffect) {
+      case 'effect-none':
+        if (sliderShownState) {
+          sliderControlContainer.classList.add('hidden');
+          sliderControlContainer.noUiSlider.destroy();
+        }
+        break;
+
+      case 'effect-chrome':
+        createNoUiSlider(sliderHiddenState, 0, 1, 0.1);
+        break;
+
+      case 'effect-sepia':
+        createNoUiSlider(sliderHiddenState, 0, 1, 0.1);
+        break;
+
+      case 'effect-marvin':
+        createNoUiSlider(sliderHiddenState, 0, 100, 1);
+        break;
+
+      case 'effect-phobos':
+        createNoUiSlider(sliderHiddenState, 0, 3, 0.1);
+        break;
+
+      case 'effect-heat':
+        createNoUiSlider(sliderHiddenState, 1, 3, 0.1);
+        break;
+    }
+
+    sliderControlContainer.noUiSlider.on('update', () => {
+      console.log(sliderControlContainer.noUiSlider.get());
+    });
+  }
+}
 
 effectsList.addEventListener('click', onEffectClick)
