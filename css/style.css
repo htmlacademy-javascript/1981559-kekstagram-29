@@ -586,6 +586,7 @@ main {
   height: 32px;
   right: -23px;
   top: 0;
+  cursor: pointer;
 }
 
 .effect-level .noUi-handle:before {

@@ -115,11 +115,19 @@ noUiSlider.create(sliderControlContainer, {
 });
 
 const effectsList = uploadForm.querySelector('.effects__list');
+// sliderControlContainer.classList.add('hidden');
 
 const onEffectClick = (evt) => {
   const selectedEffect = evt.target.closest('.effects__label');
+
   if (selectedEffect) {
     const nameOfEffect = selectedEffect.getAttribute('for');
+
+    if (nameOfEffect === 'effect-none') {
+      sliderControlContainer.noUiSlider.destroy();
+      sliderControlContainer.classList.add('hidden');
+    }
+    console.log(nameOfEffect)
 
   }
 };
