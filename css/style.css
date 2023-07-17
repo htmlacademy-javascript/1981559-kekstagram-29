@@ -551,8 +551,9 @@ main {
           transform: translateX(-50%);
 }
 
-.effect-level .noUi-target {
+.effect-level.noUi-target {
   border-radius: 16px;
+  box-shadow: none;
 }
 
 .effect-level .noUi-connects {
@@ -564,6 +565,26 @@ main {
 }
 
 .effect-level__value {
+  display: none;
+}
+
+.effect-level .noUi-base {
+  width: 95%;
+  margin: 0 auto;
+}
+
+.effect-level .noUi-handle {
+  border-radius: 16px;
+  width: 46px;
+  height: 30px;
+  right: -23px;
+}
+
+.effect-level .noUi-handle:before {
+  display: none;
+}
+
+.effect-level .noUi-handle:after {
   display: none;
 }
 

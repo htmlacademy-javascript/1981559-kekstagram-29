@@ -102,3 +102,13 @@ const increaseValue = () => {
 decreaseScaleButton.addEventListener('click', decreaseValue);
 increaseScaleButton.addEventListener('click', increaseValue);
 
+const sliderControlContainer = uploadForm.querySelector('.effect-level');
+
+noUiSlider.create(sliderControlContainer, {
+  range: {
+    min: 0,
+    max: 100,
+  },
+  start: 80,
+});
+
