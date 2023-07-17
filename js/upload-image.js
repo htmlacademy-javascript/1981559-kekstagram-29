@@ -130,6 +130,10 @@ const createNoUiSlider = (sliderVisibleState, minValue, maxValue, step) => {
         },
       },
     });
+
+    sliderControlContainer.noUiSlider.on('update', () => {
+      console.log(sliderControlContainer.noUiSlider.get());
+    });
   }
 };
 
@@ -148,10 +152,7 @@ const onEffectClick = (evt) => {
 
     switch (nameOfEffect) {
       case 'effect-none':
-        if (sliderShownState) {
-          sliderControlContainer.classList.add('hidden');
-          sliderControlContainer.noUiSlider.destroy();
-        }
+        sliderControlContainer.classList.add('hidden');
         break;
 
       case 'effect-chrome':
@@ -174,10 +175,6 @@ const onEffectClick = (evt) => {
         createNoUiSlider(sliderHiddenState, 1, 3, 0.1);
         break;
     }
-
-    sliderControlContainer.noUiSlider.on('update', () => {
-      console.log(sliderControlContainer.noUiSlider.get());
-    });
   }
 }
 
