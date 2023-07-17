@@ -158,6 +158,7 @@ const onEffectClick = (evt) => {
     switch (nameOfEffect) {
       case 'effect-none':
         sliderControlContainer.classList.add('hidden');
+        imageToUpload.style.filter = 'none';
         break;
 
       case 'effect-chrome':
