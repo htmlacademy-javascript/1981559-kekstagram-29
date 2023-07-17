@@ -109,6 +109,19 @@ noUiSlider.create(sliderControlContainer, {
     min: 0,
     max: 100,
   },
-  start: 80,
+  start: 0,
+  step: 1,
+  connect: 'lower',
 });
 
+const effectsList = uploadForm.querySelector('.effects__list');
+
+const onEffectClick = (evt) => {
+  const selectedEffect = evt.target.closest('.effects__label');
+  if (selectedEffect) {
+    const nameOfEffect = selectedEffect.getAttribute('for');
+
+  }
+};
+
+effectsList.addEventListener('click', onEffectClick)
