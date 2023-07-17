@@ -123,7 +123,10 @@ const createNoUiSlider = (sliderVisibleState, minValue, maxValue, step, filter, 
       connect: 'lower',
       format: {
         to(value) {
-          return value;
+          if (Number.isInteger(value)) {
+            return value.toFixed(0);
+          }
+          return value.toFixed(1);
         },
         from(value) {
           return parseFloat(value);
@@ -134,8 +137,7 @@ const createNoUiSlider = (sliderVisibleState, minValue, maxValue, step, filter, 
     sliderControlContainer.noUiSlider.on('update', () => {
       effectValue.value = sliderControlContainer.noUiSlider.get();
       imageToUpload.style.filter = `${filter}(${effectValue.value}${unit})`;
-      console.log(effectValue.value + unit);
-      console.log(`${filter}(${effectValue.value})${unit}`);
+      console.log(`${filter}(${effectValue.value}${unit})`);
     });
   }
 };
