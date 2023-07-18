@@ -19,6 +19,9 @@ const sliderControlContainer = uploadForm.querySelector('.effect-level');
 const effectsList = uploadForm.querySelector('.effects__list');
 const effectValue = uploadForm.querySelector('.effect-level__value');
 
+createScaleControlling(scaleControlValue, imageToUpload, decreaseScaleButton, increaseScaleButton);
+addEffectsControl(sliderControlContainer, effectValue, imageToUpload, effectsList);
+
 disableEscHandling(hashTagInput);
 disableEscHandling(commentField);
 
@@ -49,7 +52,3 @@ uploadForm.addEventListener('submit', (evt) => {
   //   console.log('Форма невалидна');
   // }
 });
-
-createScaleControlling(scaleControlValue, imageToUpload, decreaseScaleButton, increaseScaleButton);
-
-addEffectsControl(sliderControlContainer, effectValue, imageToUpload, effectsList);
