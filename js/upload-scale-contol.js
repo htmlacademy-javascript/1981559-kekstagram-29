@@ -11,7 +11,7 @@ const createScaleControlling = (controlValue, image, increase, decrease) => {
   transformImage(image, currentValue);
 
   const decreaseValue = () => {
-    if (currentValue <= SCALE_IMAGE_MAX && currentValue > SCALE_IMAGE_MIN) {
+    if (currentValue > SCALE_IMAGE_MIN) {
       currentValue -= SCALE_IMAGE_STEP;
       controlValue.value = `${currentValue}%`;
       transformImage(image, currentValue);
@@ -19,7 +19,7 @@ const createScaleControlling = (controlValue, image, increase, decrease) => {
   };
 
   const increaseValue = () => {
-    if (currentValue >= SCALE_IMAGE_MIN && currentValue < SCALE_IMAGE_MAX) {
+    if (currentValue < SCALE_IMAGE_MAX) {
       currentValue += SCALE_IMAGE_STEP;
       controlValue.value = `${currentValue}%`;
       transformImage(image, currentValue);
