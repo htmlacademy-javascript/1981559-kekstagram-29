@@ -1,6 +1,6 @@
 const addEffectsControl = (container, adjustingEffectResult, image, containerItems) => {
-  const createNoUiSlider = (sliderVisibleState, minValue, maxValue, step, filter, unit = '') => {
-    if (sliderVisibleState) {
+  const createNoUiSlider = (isSliderVisibleState, minValue, maxValue, step, filter, unit = '') => {
+    if (isSliderVisibleState) {
       container.classList.remove('hidden');
       noUiSlider.create(container, {
         range: {
@@ -32,8 +32,8 @@ const addEffectsControl = (container, adjustingEffectResult, image, containerIte
 
   const onEffectClick = (evt) => {
     const selectedEffectInput = evt.target.closest('.effects__radio');
-    const sliderHiddenState = container.classList.contains('hidden');
-    const sliderShownState = !sliderHiddenState;
+    const isSliderHiddenState = container.classList.contains('hidden');
+    const sliderShownState = !isSliderHiddenState;
 
     if (sliderShownState) {
       container.noUiSlider.destroy();
@@ -51,23 +51,23 @@ const addEffectsControl = (container, adjustingEffectResult, image, containerIte
           break;
 
         case 'effect-chrome':
-          createNoUiSlider(sliderHiddenState, 0, 1, 0.1, 'grayscale');
+          createNoUiSlider(isSliderHiddenState, 0, 1, 0.1, 'grayscale');
           break;
 
         case 'effect-sepia':
-          createNoUiSlider(sliderHiddenState, 0, 1, 0.1, 'sepia');
+          createNoUiSlider(isSliderHiddenState, 0, 1, 0.1, 'sepia');
           break;
 
         case 'effect-marvin':
-          createNoUiSlider(sliderHiddenState, 0, 100, 1, 'invert', '%');
+          createNoUiSlider(isSliderHiddenState, 0, 100, 1, 'invert', '%');
           break;
 
         case 'effect-phobos':
-          createNoUiSlider(sliderHiddenState, 0, 3, 0.1, 'blur', 'px');
+          createNoUiSlider(isSliderHiddenState, 0, 3, 0.1, 'blur', 'px');
           break;
 
         case 'effect-heat':
-          createNoUiSlider(sliderHiddenState, 1, 3,0.1, 'brightness');
+          createNoUiSlider(isSliderHiddenState, 1, 3,0.1, 'brightness');
           break;
       }
     }
