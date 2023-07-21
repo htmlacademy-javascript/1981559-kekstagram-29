@@ -1,14 +1,20 @@
 import {SCALE_IMAGE_DEFAULT, SCALE_IMAGE_MAX, SCALE_IMAGE_MIN, SCALE_IMAGE_STEP} from './constatnt.js';
 
+const transformImage = (scalableImage, scalingValue) => {
+  const percentToMath = 100;
+  scalableImage.style.transform = `scale(${scalingValue / percentToMath})`;
+};
+
 const createScaleControlling = (controlValue, image, increase, decrease) => {
   controlValue.value = `${SCALE_IMAGE_DEFAULT}%`;
   let currentValue = parseInt(controlValue.value, 10);
+  transformImage(image, currentValue);
 
   const decreaseValue = () => {
-    if (currentValue <= SCALE_IMAGE_DEFAULT && currentValue > SCALE_IMAGE_MIN) {
+    if (currentValue <= SCALE_IMAGE_MAX && currentValue > SCALE_IMAGE_MIN) {
       currentValue -= SCALE_IMAGE_STEP;
       controlValue.value = `${currentValue}%`;
-      image.style.transform = `scale(${currentValue / 100})`;
+      transformImage(image, currentValue);
     }
   };
 
@@ -16,7 +22,7 @@ const createScaleControlling = (controlValue, image, increase, decrease) => {
     if (currentValue >= SCALE_IMAGE_MIN && currentValue < SCALE_IMAGE_MAX) {
       currentValue += SCALE_IMAGE_STEP;
       controlValue.value = `${currentValue}%`;
-      image.style.transform = `scale(${currentValue / 100})`;
+      transformImage(image, currentValue);
     }
   };
 
