@@ -551,8 +551,21 @@ main {
           transform: translateX(-50%);
 }
 
-.effect-level .noUi-target {
+.effect-level.noUi-target {
+  padding: 0 22px;
   border-radius: 16px;
+  box-shadow: none;
+}
+
+.effect-level.noUi-target:before {
+  position: absolute;
+  content: '';
+  width: 46px;
+  height: 101%;
+  left: -1px;
+  top: 0;
+  background-color: #ffe753;
+  border-radius: 15px;
 }
 
 .effect-level .noUi-connects {
@@ -564,6 +577,23 @@ main {
 }
 
 .effect-level__value {
+  display: none;
+}
+
+.effect-level .noUi-handle {
+  border-radius: 16px;
+  width: 46px;
+  height: 32px;
+  right: -23px;
+  top: 0;
+  cursor: pointer;
+}
+
+.effect-level .noUi-handle:before {
+  display: none;
+}
+
+.effect-level .noUi-handle:after {
   display: none;
 }
 
