@@ -3,6 +3,9 @@ import {newArrayOfObjects} from './data.js';
 import './upload-image.js';
 import {createLoader} from './load.js';
 
-renderPhotoArray(newArrayOfObjects);
-const loadData = createLoader(console.log, console.error);
+const loadData = createLoader();
 loadData();
+
+renderPhotoArray(newArrayOfObjects);
+
+

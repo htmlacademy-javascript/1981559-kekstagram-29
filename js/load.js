@@ -1,4 +1,4 @@
-const createLoader = (onSuccess, onError) => () => fetch(
+const createLoader = () => () => fetch(
   'https://29.javascript.pages.academy/kekstagram/data',
   {
     method: 'get',
@@ -13,10 +13,11 @@ const createLoader = (onSuccess, onError) => () => fetch(
     throw new Error(`${response.status} ${response.statusText}`);
   })
   .then((data) => {
-    onSuccess(data);
+    console.log(data);
+    return data;
   })
   .catch((err) => {
-    onError(err);
+    alert(err);
   });
 
 export {createLoader};
