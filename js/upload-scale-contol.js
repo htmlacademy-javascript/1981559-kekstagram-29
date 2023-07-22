@@ -1,4 +1,4 @@
-import {SCALE_IMAGE_DEFAULT, SCALE_IMAGE_MAX, SCALE_IMAGE_MIN, SCALE_IMAGE_STEP} from './constatnt.js';
+import {SCALE_IMAGE_DEFAULT, SCALE_IMAGE_MAX, SCALE_IMAGE_MIN, SCALE_IMAGE_STEP} from './constats.js';
 
 const transformImage = (scalableImage, scalingValue) => {
   const percentToMath = 100;

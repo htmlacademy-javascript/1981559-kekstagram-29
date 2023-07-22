@@ -1,5 +1,5 @@
 import {newArrayOfObjects} from './data.js';
-import {DEFAULT_SHOWN_COMMENTS} from './constatnt.js';
+import {DEFAULT_SHOWN_COMMENTS} from './constats.js';
 
 const fillFullPhotoCardData = (PictureData, pictureId) => {
   PictureData.image.src = `./photos/${pictureId}.jpg`;

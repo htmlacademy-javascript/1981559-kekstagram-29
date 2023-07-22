@@ -1,4 +1,4 @@
-import {MAX_AVAILABLE_HASHTAGS, MAX_COMMENT_WORDS} from './constatnt.js';
+import {MAX_AVAILABLE_HASHTAGS, MAX_COMMENT_WORDS} from './constats.js';
 import {checkRepeat} from './util.js';
 
 const hashtag = /^#[a-zа-яё0-9]{1,19}$/i;

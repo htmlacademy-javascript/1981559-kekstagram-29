@@ -1,5 +1,5 @@
 import {newArrayOfObjects} from './data.js';
-import {DEFAULT_SHOWN_COMMENTS} from './constatnt.js';
+import {DEFAULT_SHOWN_COMMENTS} from './constats.js';
 import {fillFullPhotoCardData} from './full-photo-creator.js';
 import {generateComments} from './full-photo-comments-creator.js';
 import {pluralize} from './util.js';
