@@ -3,6 +3,7 @@ import {createUploadImageHandler} from './upload-img-listeners.js';
 import {createValidation} from './upload-validation.js';
 import {createScaleControlling} from './upload-scale-contol.js';
 import {addEffectsControl} from './upload-effects.js';
+import {sendData} from './load-data.js';
 
 const uploadForm = document.querySelector('.img-upload__form');
 const uploadImageInput = uploadForm.querySelector('.img-upload__input');
@@ -18,6 +19,12 @@ const imageToUpload = uploadForm.querySelector('.img-upload__preview img');
 const sliderControlContainer = uploadForm.querySelector('.effect-level');
 const effectsList = uploadForm.querySelector('.effects__list');
 const effectValue = uploadForm.querySelector('.effect-level__value');
+const submitButton = uploadForm.querySelector('.img-upload__submit');
+
+const SubmitButtonText = {
+  IDLE: 'Опубликовать',
+  SENDING: 'Опубликовываю...'
+};
 
 createScaleControlling(scaleControlValue, imageToUpload, decreaseScaleButton, increaseScaleButton);
 addEffectsControl(sliderControlContainer, effectValue, imageToUpload, effectsList);
@@ -42,13 +49,36 @@ uploadImageInput.addEventListener('change', uploadImage);
 
 createValidation(hashTagInput, commentField, pristine);
 
-uploadForm.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  pristine.valueOf();
-  // const isValid = pristine.validate();
-  // if (isValid) {
-  //   console.log('Можно отправлять');
-  // } else {
-  //   console.log('Форма невалидна');
-  // }
-});
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
+  submitButton.textContent = SubmitButtonText.SENDING;
+};
+
+const unblockSubmitButton = () => {
+  submitButton.disabled = false;
+  submitButton.textContent = SubmitButtonText.IDLE;
+};
+
+
+const setUserFormSubmit = (onSuccess) => {
+  uploadForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+
+    const isValid = pristine.validate();
+    if (isValid) {
+      blockSubmitButton();
+      sendData(new FormData(evt.target))
+        .then(onSuccess)
+        .catch(
+          (err) => {
+            alert(err.message);
+          }
+        )
+        .finally(unblockSubmitButton);
+    } else {
+      console.log('Форма невалидна');
+    }
+  });
+}
+
+export {setUserFormSubmit};

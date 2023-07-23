@@ -1,4 +1,4 @@
-import {getData, sendData} from './load-data.js';
+import {getData} from './load-data.js';
 import {showAlert} from './util.js';
 import {renderPhotoArray} from './rendering.js';
 import {createClickHandler} from './full-photo-click-handler.js';
@@ -14,3 +14,5 @@ getData()
       showAlert(err.message);
     }
   );
+
+setUserFormSubmit(closeUserModal);
