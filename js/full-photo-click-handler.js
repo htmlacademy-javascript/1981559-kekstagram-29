@@ -1,7 +1,7 @@
 import {DEFAULT_SHOWN_COMMENTS} from './constats.js';
 import {fillFullPhotoCardData} from './full-photo-creator.js';
 import {generateComments} from './full-photo-comments-creator.js';
-import {pluralize} from './util.js';
+import {isEscapeKey, pluralize} from './util.js';
 
 const cardPictureWall = document.querySelector('.pictures');
 const bigPicture = document.querySelector('.big-picture');
@@ -20,6 +20,31 @@ const createClickHandler = (arrayOfObjects) => {
   const onCardClick = (evt) => {
     if (evt.target.closest('.picture')) {
       evt.preventDefault();
+
+      document.body.classList.add('modal-open');
+      bigPicture.classList.remove('hidden');
+
+      const onEscapeClick = (event) => {
+        if (isEscapeKey(event)) {
+          event.preventDefault();
+          document.body.classList.remove('modal-open');
+          bigPicture.classList.add('hidden');
+          document.removeEventListener('keydown', onEscapeClick);
+          closeButton.removeEventListener('click', hideBigPicture);
+        }
+      };
+
+      const hideBigPicture = () => {
+        document.body.classList.remove('modal-open');
+        bigPicture.classList.add('hidden');
+        closeButton.removeEventListener('click', hideBigPicture);
+        document.removeEventListener('keydown', onEscapeClick);
+      };
+
+      closeButton.addEventListener('click', hideBigPicture);
+      document.addEventListener('keydown', onEscapeClick);
+
+
       const selectedPictureId = evt.target.closest('.picture').dataset.pictureId;
       const messagesArrayLength = arrayOfObjects[selectedPictureId].comments.length;
       let currentShownCommentsValue = DEFAULT_SHOWN_COMMENTS;
@@ -49,14 +74,14 @@ const createClickHandler = (arrayOfObjects) => {
 
         showMoreButton.addEventListener('click', onClickShownMore);
 
-        const removeShowMoreListener = () => {
+        const removeShowMoreListeners = () => {
           showMoreButton.removeEventListener('click', onClickShownMore);
-          closeButton.removeEventListener('click', removeShowMoreListener);
-          document.removeEventListener('keydown', removeShowMoreListener);
+          closeButton.removeEventListener('click', removeShowMoreListeners);
+          document.removeEventListener('keydown', removeShowMoreListeners);
         };
 
-        closeButton.addEventListener('click', removeShowMoreListener);
-        document.addEventListener('keydown', removeShowMoreListener);
+        closeButton.addEventListener('click', removeShowMoreListeners);
+        document.addEventListener('keydown', removeShowMoreListeners);
       }
 
       fillFullPhotoCardData(bigPictureData, selectedPictureId, arrayOfObjects);
