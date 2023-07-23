@@ -22,7 +22,6 @@ const createClickHandler = (arrayOfObjects) => {
     if (evt.target.closest('.picture')) {
       evt.preventDefault();
       createBigPictureListeners(closeButton);
-
       const selectedPictureId = evt.target.closest('.picture').dataset.pictureId;
       const messagesArrayLength = arrayOfObjects[selectedPictureId].comments.length;
       let currentShownCommentsValue = DEFAULT_SHOWN_COMMENTS;
