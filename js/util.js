@@ -27,6 +27,7 @@ const pluralize = (count, words) => {
 };
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
+const isClick = (evt) => evt.type === 'click';
 
 const disableEscHandling = (element) => {
   element.addEventListener('keydown', (evt) => {
@@ -41,4 +42,4 @@ const checkRepeat = (arr) => {
   return arr.length === uniqueArr.size;
 };
 
-export {isEscapeKey, disableEscHandling, checkRepeat, pluralize, showAlert};
+export {isEscapeKey, isClick, disableEscHandling, checkRepeat, pluralize, showAlert};

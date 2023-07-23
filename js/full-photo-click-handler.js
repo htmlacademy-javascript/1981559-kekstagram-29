@@ -1,7 +1,7 @@
 import {DEFAULT_SHOWN_COMMENTS} from './constats.js';
 import {fillFullPhotoCardData} from './full-photo-creator.js';
 import {generateComments} from './full-photo-comments-creator.js';
-import {isEscapeKey, pluralize} from './util.js';
+import {isClick, isEscapeKey, pluralize} from './util.js';
 
 const cardPictureWall = document.querySelector('.pictures');
 const bigPicture = document.querySelector('.big-picture');
@@ -24,18 +24,21 @@ const createClickHandler = (arrayOfObjects) => {
       document.body.classList.add('modal-open');
       bigPicture.classList.remove('hidden');
 
-      const hideBigPicture = (event) => {
+      const removeBigPictureListeners = () => {
         document.body.classList.remove('modal-open');
         bigPicture.classList.add('hidden');
         document.removeEventListener('keydown', hideBigPicture);
         closeButton.removeEventListener('click', hideBigPicture);
+      };
+
+      const hideBigPicture = (event) => {
+        if (isClick(event)) {
+          removeBigPictureListeners();
+        }
 
         if (isEscapeKey(event)) {
           event.preventDefault();
-          document.body.classList.remove('modal-open');
-          bigPicture.classList.add('hidden');
-          document.removeEventListener('keydown', hideBigPicture);
-          closeButton.removeEventListener('click', hideBigPicture);
+          removeBigPictureListeners();
         }
       };
 
