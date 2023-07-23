@@ -1,41 +1,31 @@
-import {isEscapeKey} from './util.js';
+import {isClick, isEscapeKey} from './util.js';
 
-const createUploadImageHandler = (uploadContainer, form, pristineReset, cancel) => {
-  const startUpload = () => {
-    uploadContainer.classList.remove('hidden');
-    document.body.classList.add('modal-open');
-  };
+const createUploadImageHandler = (uploadContainer, form, pristineReset, cancel) => () => {
+  document.body.classList.add('modal-open');
+  uploadContainer.classList.remove('hidden');
+  form.reset();
+  pristineReset.reset();
 
-  const resetForm = () => {
-    form.reset();
-    pristineReset.reset();
-  };
-
-  const hideOverlay = () => {
-    uploadContainer.classList.add('hidden');
+  const removeOverlayListeners = (hideContainer) => {
     document.body.classList.remove('modal-open');
+    uploadContainer.classList.add('hidden');
+    document.removeEventListener('keydown', hideContainer);
+    cancel.removeEventListener('click', hideContainer);
   };
 
-  const cancelUpload = () => {
-    hideOverlay();
-    resetForm();
+  const hideOverlay = (evt) => {
+    if (isClick(evt)) {
+      removeOverlayListeners(hideOverlay);
+    }
+
+    if (isEscapeKey(evt)) {
+      evt.preventDefault();
+      removeOverlayListeners(hideOverlay);
+    }
   };
 
-  const cancelByEscapeActivate = () => {
-    document.addEventListener('keydown', (evt) => {
-      if (isEscapeKey(evt)) {
-        evt.preventDefault();
-        hideOverlay();
-        resetForm();
-      }
-    });
-  };
-
-  return () => {
-    startUpload();
-    cancel.addEventListener('click', cancelUpload);
-    cancelByEscapeActivate();
-  };
-};
+  cancel.addEventListener('click', hideOverlay);
+  document.addEventListener('keydown', hideOverlay);
+}
 
 export {createUploadImageHandler};
