@@ -2,7 +2,7 @@ import {newArrayOfObjects} from './data.js';
 import {bigPictureCommentsList} from './full-photo-click-handler.js';
 
 const generateComments = (valueOfShownComments, pictureId) => {
-  const messagesArray = newArrayOfObjects[pictureId - 1].comments;
+  const messagesArray = newArrayOfObjects[pictureId].comments;
   bigPictureCommentsList.innerHTML = '';
 
   const messagesFragment = document.createDocumentFragment();
