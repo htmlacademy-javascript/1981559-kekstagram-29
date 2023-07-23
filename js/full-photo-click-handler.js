@@ -56,9 +56,7 @@ const createClickHandler = (arrayOfObjects) => {
         };
 
         closeButton.addEventListener('click', removeShowMoreListener);
-
         document.addEventListener('keydown', removeShowMoreListener);
-
       }
 
       fillFullPhotoCardData(bigPictureData, selectedPictureId, arrayOfObjects);
