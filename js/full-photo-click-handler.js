@@ -1,7 +1,8 @@
 import {DEFAULT_SHOWN_COMMENTS} from './constats.js';
 import {fillFullPhotoCardData} from './full-photo-creator.js';
 import {generateComments} from './full-photo-comments-creator.js';
-import {isClick, isEscapeKey, pluralize} from './util.js';
+import {createBigPictureListeners} from './full-photo-close-listeners.js';
+import {pluralize} from './util.js';
 
 const cardPictureWall = document.querySelector('.pictures');
 const bigPicture = document.querySelector('.big-picture');
@@ -20,31 +21,7 @@ const createClickHandler = (arrayOfObjects) => {
   const onCardClick = (evt) => {
     if (evt.target.closest('.picture')) {
       evt.preventDefault();
-
-      document.body.classList.add('modal-open');
-      bigPicture.classList.remove('hidden');
-
-      const removeBigPictureListeners = () => {
-        document.body.classList.remove('modal-open');
-        bigPicture.classList.add('hidden');
-        document.removeEventListener('keydown', hideBigPicture);
-        closeButton.removeEventListener('click', hideBigPicture);
-      };
-
-      const hideBigPicture = (event) => {
-        if (isClick(event)) {
-          removeBigPictureListeners();
-        }
-
-        if (isEscapeKey(event)) {
-          event.preventDefault();
-          removeBigPictureListeners();
-        }
-      };
-
-      closeButton.addEventListener('click', hideBigPicture);
-      document.addEventListener('keydown', hideBigPicture);
-
+      createBigPictureListeners(closeButton);
 
       const selectedPictureId = evt.target.closest('.picture').dataset.pictureId;
       const messagesArrayLength = arrayOfObjects[selectedPictureId].comments.length;
