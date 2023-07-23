@@ -2,7 +2,6 @@ import {getData} from './load-data.js';
 import {showAlert} from './util.js';
 import {renderPhotoArray} from './rendering.js';
 import {createClickHandler} from './full-photo-click-handler.js';
-// import './upload-image.js';
 import {setUserFormSubmit} from './upload-image.js';
 
 getData()

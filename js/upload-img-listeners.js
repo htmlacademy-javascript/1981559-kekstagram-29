@@ -3,14 +3,14 @@ import {isClick, isEscapeKey} from './util.js';
 const createUploadImageHandler = (uploadContainer, form, pristineReset, cancel) => () => {
   document.body.classList.add('modal-open');
   uploadContainer.classList.remove('hidden');
-  form.reset();
-  pristineReset.reset();
 
   const removeOverlayListeners = (hideContainer) => {
     document.body.classList.remove('modal-open');
     uploadContainer.classList.add('hidden');
     document.removeEventListener('keydown', hideContainer);
     cancel.removeEventListener('click', hideContainer);
+    form.reset();
+    pristineReset.reset();
   };
 
   const hideOverlay = (evt) => {
