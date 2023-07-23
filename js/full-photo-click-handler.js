@@ -38,7 +38,7 @@ const createClickHandler = (arrayOfObjects) => {
           }
 
           bigPictureData.commentsCounter.textContent = `${currentShownCommentsValue} из ${String(messagesArrayLength)} комментариев`;
-          generateComments(currentShownCommentsValue, selectedPictureId);
+          generateComments(currentShownCommentsValue, selectedPictureId, arrayOfObjects);
           if (currentShownCommentsValue === messagesArrayLength) {
             showMoreButton.classList.add('hidden');
             showMoreButton.removeEventListener('click', onClickShownMore);
@@ -54,7 +54,7 @@ const createClickHandler = (arrayOfObjects) => {
         bigPictureData.commentsCounter.textContent = pluralize(messagesArrayLength, commentsWordsArray);
       }
 
-      generateComments(DEFAULT_SHOWN_COMMENTS, selectedPictureId);
+      generateComments(DEFAULT_SHOWN_COMMENTS, selectedPictureId, arrayOfObjects);
     }
   };
 
