@@ -24,25 +24,23 @@ const createClickHandler = (arrayOfObjects) => {
       document.body.classList.add('modal-open');
       bigPicture.classList.remove('hidden');
 
-      const onEscapeClick = (event) => {
+      const hideBigPicture = (event) => {
+        document.body.classList.remove('modal-open');
+        bigPicture.classList.add('hidden');
+        document.removeEventListener('keydown', hideBigPicture);
+        closeButton.removeEventListener('click', hideBigPicture);
+
         if (isEscapeKey(event)) {
           event.preventDefault();
           document.body.classList.remove('modal-open');
           bigPicture.classList.add('hidden');
-          document.removeEventListener('keydown', onEscapeClick);
+          document.removeEventListener('keydown', hideBigPicture);
           closeButton.removeEventListener('click', hideBigPicture);
         }
       };
 
-      const hideBigPicture = () => {
-        document.body.classList.remove('modal-open');
-        bigPicture.classList.add('hidden');
-        closeButton.removeEventListener('click', hideBigPicture);
-        document.removeEventListener('keydown', onEscapeClick);
-      };
-
       closeButton.addEventListener('click', hideBigPicture);
-      document.addEventListener('keydown', onEscapeClick);
+      document.addEventListener('keydown', hideBigPicture);
 
 
       const selectedPictureId = evt.target.closest('.picture').dataset.pictureId;
