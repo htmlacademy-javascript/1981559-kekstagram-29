@@ -78,6 +78,6 @@ const setUserFormSubmit = (onSuccess) => {
       console.log('Форма невалидна');
     }
   });
-}
+};
 
 export {setUserFormSubmit};

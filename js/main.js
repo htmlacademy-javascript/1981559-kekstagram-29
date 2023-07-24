@@ -32,6 +32,6 @@ const closeUserModal = () => {
     pristineReset.reset();
   };
    */
-}
+};
 
 setUserFormSubmit(closeUserModal);
