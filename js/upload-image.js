@@ -1,4 +1,4 @@
-import {disableEscHandling} from './util.js';
+import {disableEscHandling, showAlert} from './util.js';
 import {createUploadImageHandler} from './upload-img-listeners.js';
 import {createValidation} from './upload-validation.js';
 import {createScaleControlling} from './upload-scale-contol.js';
@@ -70,7 +70,7 @@ const setUserFormSubmit = (onSuccess) => {
         .then(onSuccess)
         .catch(
           (err) => {
-            alert(err.message);
+            showAlert(err.message);
           }
         )
         .finally(unblockSubmitButton);
