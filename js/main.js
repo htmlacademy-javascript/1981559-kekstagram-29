@@ -35,3 +35,18 @@ const closeUserModal = () => {
 };
 
 setUserFormSubmit(closeUserModal);
+
+// const uploadForm = document.querySelector('.img-upload__form');
+//
+// uploadForm.onsubmit = async (e) => {
+//   e.preventDefault();
+//
+//   let response = await fetch('https://29.javascript.pages.academy/kekstagram', {
+//     method: 'POST',
+//     body: new FormData(uploadForm)
+//   });
+//
+//   let result = await response.json();
+//
+//   alert(result.message);
+// };
