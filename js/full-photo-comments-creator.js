@@ -1,4 +1,4 @@
-import {bigPictureCommentsList} from './full-photo-click-handler.js';
+import {bigPictureCommentsList} from './mini-photo-click-handler.js';
 
 const commentElement = document.querySelector('#big-picture').querySelector('[data-comment-item]');
 

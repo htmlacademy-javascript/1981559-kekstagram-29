@@ -1,5 +1,5 @@
 import {isEscapeKey} from './util.js';
-import {bigPicture} from './full-photo-click-handler.js';
+import {bigPicture} from './mini-photo-click-handler.js';
 let hideBigPicture = () => {};
 const hideBigPictureByKeydown = (evt) => {
   if (isEscapeKey(evt)) {
