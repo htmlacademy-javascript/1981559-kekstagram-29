@@ -46,6 +46,8 @@ const onCardClick = (evt, pictures) => {
   const selectedPictureElement = evt.target.closest('.picture');
   if (selectedPictureElement !== null) {
     evt.preventDefault();
+    currentShownCommentsValue = DEFAULT_SHOWN_COMMENTS;
+    totalShownCommentsValue = 0;
     document.body.classList.add('modal-open');
     bigPicture.classList.remove('hidden');
     document.addEventListener('keydown', hideBigPictureByKeydown);
