@@ -1,4 +1,4 @@
-import {disableEscHandling, showAlert} from './util.js';
+import {disableEscHandling} from './util.js';
 import {createUploadImageHandler} from './upload-img-listeners.js';
 import {createValidation} from './upload-validation.js';
 import {createScaleControlling} from './upload-scale-contol.js';
@@ -26,11 +26,6 @@ const SubmitButtonText = {
   SENDING: 'Опубликовываю...'
 };
 
-createScaleControlling(scaleControlValue, imageToUpload, decreaseScaleButton, increaseScaleButton);
-addEffectsControl(sliderControlContainer, effectValue, imageToUpload, effectsList);
-
-disableEscHandling(hashTagInput);
-disableEscHandling(commentField);
 
 const defaultConfig = {
   classTo: 'img-upload__field-wrapper',
@@ -40,14 +35,6 @@ const defaultConfig = {
   errorTextTag: 'div',
   errorTextClass: 'img-upload__help'
 };
-
-const pristine = new Pristine(uploadForm, defaultConfig);
-
-const uploadImage = createUploadImageHandler(uploadOverlay, uploadForm, pristine, cancelUploadButton);
-
-uploadImageInput.addEventListener('change', uploadImage);
-
-createValidation(hashTagInput, commentField, pristine);
 
 const blockSubmitButton = () => {
   submitButton.disabled = true;
@@ -59,7 +46,38 @@ const unblockSubmitButton = () => {
   submitButton.textContent = SubmitButtonText.IDLE;
 };
 
-const setUserFormSubmit = (onSuccess) => {
+const closeUploadFormModal = () => {
+  document.body.classList.remove('modal-open');
+  uploadOverlay.classList.add('hidden');
+
+  /*
+  Как сюда добавить?
+    const removeOverlayListeners = (hideContainer) => {
+    document.body.classList.remove('modal-open');
+    uploadContainer.classList.add('hidden');
+    document.removeEventListener('keydown', hideContainer);
+    cancel.removeEventListener('click', hideContainer);
+    form.reset();
+    pristineReset.reset();
+  };
+   */
+};
+
+// const setUserFormSubmit = () => {
+
+const initUploadImageForm = () => {
+  createScaleControlling(scaleControlValue, imageToUpload, decreaseScaleButton, increaseScaleButton);
+  addEffectsControl(sliderControlContainer, effectValue, imageToUpload, effectsList);
+
+  disableEscHandling(hashTagInput);
+  disableEscHandling(commentField);
+  const pristine = new Pristine(uploadForm, defaultConfig);
+
+  const uploadImage = createUploadImageHandler(uploadOverlay, uploadForm, pristine, cancelUploadButton);
+
+  uploadImageInput.addEventListener('change', uploadImage);
+
+  createValidation(hashTagInput, commentField, pristine);
   uploadForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
 
@@ -67,10 +85,10 @@ const setUserFormSubmit = (onSuccess) => {
     if (isValid) {
       blockSubmitButton();
       sendData(new FormData(evt.target))
-        .then(onSuccess)
+        .then(closeUploadFormModal)
         .catch(
           (err) => {
-            showAlert(err.message);
+            alert(err.message);
           }
         )
         .finally(unblockSubmitButton);
@@ -80,4 +98,4 @@ const setUserFormSubmit = (onSuccess) => {
   });
 };
 
-export {setUserFormSubmit};
+export {initUploadImageForm};
