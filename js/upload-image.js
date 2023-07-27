@@ -20,6 +20,10 @@ const sliderControlContainer = uploadForm.querySelector('.effect-level');
 const effectsList = uploadForm.querySelector('.effects__list');
 const effectValue = uploadForm.querySelector('.effect-level__value');
 const submitButton = uploadForm.querySelector('.img-upload__submit');
+const uploadWrapper = uploadForm.querySelector('.img-upload__wrapper');
+const errorTemplate = document.querySelector('#error')
+  .content
+  .querySelector('.error');
 
 const SubmitButtonText = {
   IDLE: 'Опубликовать',
@@ -78,17 +82,36 @@ const initUploadImageForm = () => {
   uploadImageInput.addEventListener('change', uploadImage);
 
   createValidation(hashTagInput, commentField, pristine);
+
+  const showErrorMessage = (message) => {
+    const errorElement = errorTemplate.cloneNode(true);
+    const errorTitle = errorElement.querySelector('.error__title');
+    const errorButton = errorElement.querySelector('.error__button');
+    errorTitle.textContent = message;
+    uploadWrapper.classList.add('hidden');
+
+    const removeErrorMessage = () => {
+      errorButton.removeEventListener('click', removeErrorMessage);
+      uploadWrapper.classList.remove('hidden');
+      errorElement.remove();
+    };
+
+    errorButton.addEventListener('click', removeErrorMessage);
+
+    uploadOverlay.appendChild(errorElement);
+  };
+
   uploadForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
 
     const isValid = pristine.validate();
     if (isValid) {
       blockSubmitButton();
-      sendData(new FormData(evt.target))
+      sendData(new FormData(evt.targe))
         .then(closeUploadFormModal)
         .catch(
           (err) => {
-            alert(err.message);
+            showErrorMessage(err.message);
           }
         )
         .finally(unblockSubmitButton);
