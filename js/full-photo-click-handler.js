@@ -27,10 +27,8 @@ const onClickShowMore = () => {
   if (currentShownCommentsValue + DEFAULT_SHOWN_COMMENTS < totalShownCommentsValue) {
     currentShownCommentsValue += DEFAULT_SHOWN_COMMENTS;
   } else {
-    // Можно использовать дельту между общим и текущим значением
-    while (currentShownCommentsValue < totalShownCommentsValue) {
-      currentShownCommentsValue++;
-    }
+    const delta = totalShownCommentsValue - currentShownCommentsValue;
+    currentShownCommentsValue += delta;
   }
 
   bigPictureData.commentsCounter.textContent = `${currentShownCommentsValue} из ${String(totalShownCommentsValue)} комментариев`;
