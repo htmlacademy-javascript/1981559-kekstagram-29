@@ -7,28 +7,20 @@ const generateComments = (valueOfShownComments, pictureId, comments) => {
 
   const messagesFragment = document.createDocumentFragment();
   comments.some((comment, index) => {
-    const currentComment = commentElement.cloneNode(true);
     if (index + 1 > valueOfShownComments) {
       return true;
     }
+    const currentComment = commentElement.cloneNode(true);
+    const avatar = currentComment.querySelector('img');
+    avatar.src = comment.avatar;
+    avatar.alt = comment.name;
+    avatar.width = 35;
+    avatar.height = 35;
 
-    const newElement = document.createElement('li');
-    newElement.classList.add('social__comment');
+    const commentContent = currentComment.querySelector('p');
+    commentContent.textContent = comment.message;
 
-    const newAvatar = document.createElement('img');
-    newAvatar.classList.add('social__picture');
-    newAvatar.src = comment.avatar;
-    newAvatar.alt = comment.name;
-    newAvatar.width = 35;
-    newAvatar.height = 35;
-    newElement.appendChild(newAvatar);
-
-    const newCommentContent = document.createElement('p');
-    newCommentContent.classList.add('social__text');
-    newCommentContent.textContent = comment.message;
-    newElement.appendChild(newCommentContent);
-
-    messagesFragment.appendChild(newElement);
+    messagesFragment.appendChild(currentComment);
     return false;
   });
 
