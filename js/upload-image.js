@@ -21,6 +21,9 @@ const effectsList = uploadForm.querySelector('.effects__list');
 const effectValue = uploadForm.querySelector('.effect-level__value');
 const submitButton = uploadForm.querySelector('.img-upload__submit');
 const uploadWrapper = uploadForm.querySelector('.img-upload__wrapper');
+const successTemplate = document.querySelector('#success')
+  .content
+  .querySelector('.success');
 const errorTemplate = document.querySelector('#error')
   .content
   .querySelector('.error');
@@ -50,25 +53,6 @@ const unblockSubmitButton = () => {
   submitButton.textContent = SubmitButtonText.IDLE;
 };
 
-const closeUploadFormModal = () => {
-  document.body.classList.remove('modal-open');
-  uploadOverlay.classList.add('hidden');
-
-  /*
-  Как сюда добавить?
-    const removeOverlayListeners = (hideContainer) => {
-    document.body.classList.remove('modal-open');
-    uploadContainer.classList.add('hidden');
-    document.removeEventListener('keydown', hideContainer);
-    cancel.removeEventListener('click', hideContainer);
-    form.reset();
-    pristineReset.reset();
-  };
-   */
-};
-
-// const setUserFormSubmit = () => {
-
 const initUploadImageForm = () => {
   createScaleControlling(scaleControlValue, imageToUpload, decreaseScaleButton, increaseScaleButton);
   addEffectsControl(sliderControlContainer, effectValue, imageToUpload, effectsList);
@@ -83,7 +67,25 @@ const initUploadImageForm = () => {
 
   createValidation(hashTagInput, commentField, pristine);
 
-  const showErrorMessage = (message) => {
+  const showSuccess = () => {
+    const successElement = successTemplate.cloneNode(true);
+    // const successTitle = successElement.querySelector('.success__title');
+    const successButton = successElement.querySelector('.success__button');
+    // successTitle.textContent = message;
+    uploadWrapper.classList.add('hidden');
+
+    const removeSuccessMessage = () => {
+      successButton.removeEventListener('click', removeSuccessMessage);
+      uploadWrapper.classList.remove('hidden');
+      successElement.remove();
+    };
+
+    successButton.addEventListener('click', removeSuccessMessage);
+
+    uploadOverlay.appendChild(successElement);
+  };
+
+  const showError = (message) => {
     const errorElement = errorTemplate.cloneNode(true);
     const errorTitle = errorElement.querySelector('.error__title');
     const errorButton = errorElement.querySelector('.error__button');
@@ -107,16 +109,25 @@ const initUploadImageForm = () => {
     const isValid = pristine.validate();
     if (isValid) {
       blockSubmitButton();
-      sendData(new FormData(evt.targe))
-        .then(closeUploadFormModal)
+      sendData(new FormData(evt.target))
+        .then(
+          () => {
+            showSuccess();
+          }
+        )
         .catch(
           (err) => {
-            showErrorMessage(err.message);
+            showError(err.message);
           }
         )
         .finally(unblockSubmitButton);
     } else {
       console.log('Форма невалидна');
+      /*
+      Остановился на добавлении окна показывющим успех отправки картинки.
+https://up.htmlacademy.ru/profession/frontender-extended/2/javascript/29/project/kekstagram#kekstagram-3-3
+Доработать форму закрытия. 3.5
+       */
     }
   });
 };
