@@ -140,24 +140,23 @@ const showError = (message) => {
   errorTitle.textContent = message;
   uploadWrapper.classList.add('hidden');
   document.removeEventListener('keydown', cancelUploadByKeydown);
-
-  let returnToForm = () => {};
+  let returnToFormOnEscapeClick = () => {};
 
   const removeErrorMessage = () => {
     errorButton.removeEventListener('click', removeErrorMessage);
+    document.removeEventListener('keydown', returnToFormOnEscapeClick);
+    document.addEventListener('keydown', cancelUploadByKeydown);
     uploadWrapper.classList.remove('hidden');
     errorElement.remove();
-    document.removeEventListener('keydown', returnToForm);
-    document.addEventListener('keydown', cancelUploadByKeydown);
   };
 
-  returnToForm = (evt) => {
+  returnToFormOnEscapeClick = (evt) => {
     if (isEscapeKey(evt)) {
       removeErrorMessage();
     }
   };
 
-  document.addEventListener('keydown', returnToForm);
+  document.addEventListener('keydown', returnToFormOnEscapeClick);
 
   const onOutsideErrorContainerClick = (evt) => {
     const outsideErrorContainerClick = evt.composedPath().includes(errorInnerContainer) === false;
@@ -168,7 +167,6 @@ const showError = (message) => {
   };
 
   document.addEventListener('click', onOutsideErrorContainerClick);
-
   errorButton.addEventListener('click', removeErrorMessage);
 
   uploadOverlay.appendChild(errorElement);
