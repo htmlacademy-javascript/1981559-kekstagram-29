@@ -1,5 +1,4 @@
-import {disableEscHandling} from './util.js';
-import {createUploadImageHandler} from './upload-img-listeners.js';
+import {disableEscHandling, isEscapeKey} from './util.js';
 import {createValidation} from './upload-validation.js';
 import {createScaleControlling} from './upload-scale-contol.js';
 import {addEffectsControl} from './upload-effects.js';
@@ -33,16 +32,6 @@ const SubmitButtonText = {
   SENDING: 'Опубликовываю...'
 };
 
-
-const defaultConfig = {
-  classTo: 'img-upload__field-wrapper',
-  errorClass: 'img-upload__field-wrapper--error',
-  successClass: 'img-upload__field-wrapper--valid',
-  errorTextParent: 'img-upload__field-wrapper',
-  errorTextTag: 'div',
-  errorTextClass: 'img-upload__help'
-};
-
 const blockSubmitButton = () => {
   submitButton.disabled = true;
   submitButton.textContent = SubmitButtonText.SENDING;
@@ -53,19 +42,47 @@ const unblockSubmitButton = () => {
   submitButton.textContent = SubmitButtonText.IDLE;
 };
 
+const defaultConfig = {
+  classTo: 'img-upload__field-wrapper',
+  errorClass: 'img-upload__field-wrapper--error',
+  successClass: 'img-upload__field-wrapper--valid',
+  errorTextParent: 'img-upload__field-wrapper',
+  errorTextTag: 'div',
+  errorTextClass: 'img-upload__help'
+};
+
+const pristine = new Pristine(uploadForm, defaultConfig);
+createValidation(hashTagInput, commentField, pristine);
+
+let cancelUpload = () => {};
+const cancelUploadByKeydown = (evt) => {
+  if (isEscapeKey(evt)) {
+    cancelUpload();
+  }
+};
+
+const uploadImage = () => {
+  document.body.classList.add('modal-open');
+  uploadOverlay.classList.remove('hidden');
+  document.addEventListener('keydown', cancelUploadByKeydown);
+};
+
+cancelUpload = () => {
+  document.body.classList.remove('modal-open');
+  uploadOverlay.classList.add('hidden');
+  uploadForm.reset();
+  pristine.reset();
+};
+
+uploadImageInput.addEventListener('change', uploadImage);
+cancelUploadButton.addEventListener('click', cancelUpload);
+
 const initUploadImageForm = () => {
   createScaleControlling(scaleControlValue, imageToUpload, decreaseScaleButton, increaseScaleButton);
   addEffectsControl(sliderControlContainer, effectValue, imageToUpload, effectsList);
 
   disableEscHandling(hashTagInput);
   disableEscHandling(commentField);
-  const pristine = new Pristine(uploadForm, defaultConfig);
-
-  const uploadImage = createUploadImageHandler(uploadOverlay, uploadForm, pristine, cancelUploadButton);
-
-  uploadImageInput.addEventListener('change', uploadImage);
-
-  createValidation(hashTagInput, commentField, pristine);
 
   const showSuccess = () => {
     const successElement = successTemplate.cloneNode(true);
