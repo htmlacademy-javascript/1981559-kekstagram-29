@@ -1,6 +1,6 @@
 import {disableEscHandling, isEscapeKey} from './util.js';
 import {createValidation} from './upload-validation.js';
-import {addEffectsControl} from './upload-effects.js';
+// import {addEffectsControl} from './upload-effects.js';
 import {sendData} from './load-data.js';
 import {SCALE_IMAGE_DEFAULT, SCALE_IMAGE_MAX, SCALE_IMAGE_MIN, SCALE_IMAGE_STEP} from './constats.js';
 
@@ -172,10 +172,91 @@ const showError = (message) => {
   uploadOverlay.appendChild(errorElement);
 };
 
-const initUploadImageForm = () => {
-  // это улучшить
-  addEffectsControl(sliderControlContainer, effectValue, imageToUpload, effectsList);
+// addEffectsControl(sliderControlContainer, effectValue, imageToUpload, effectsList);
+let selectedEffectValueName = '';
+const createNoUiSlider = (isSliderVisibleState, minValue, maxValue, start, step, filter, unit = '') => {
+  if (isSliderVisibleState) {
+    sliderControlContainer.classList.remove('hidden');
+    noUiSlider.create(sliderControlContainer, {
+      range: {
+        min: minValue,
+        max: maxValue,
+      },
+      start: start,
+      step: step,
+      connect: 'lower',
+      format: {
+        to(value) {
+          if (Number.isInteger(value)) {
+            return value.toFixed(0);
+          }
+          return value.toFixed(1);
+        },
+        from(value) {
+          return parseFloat(value);
+        },
+      },
+    });
 
+    sliderControlContainer.noUiSlider.on('update', () => {
+      effectValue.value = sliderControlContainer.noUiSlider.get();
+      imageToUpload.style.filter = `${filter}(${effectValue.value}${unit})`;
+    });
+  }
+};
+
+
+const onEffectClick = (evt) => {
+  const selectedEffect = evt.target.closest('.effects__radio');
+  if (selectedEffect !== null && selectedEffectValueName !== selectedEffect.getAttribute('id')) {
+    const isSliderHiddenState = sliderControlContainer.classList.contains('hidden');
+    const sliderShownState = !isSliderHiddenState;
+
+    if (sliderShownState) {
+      sliderControlContainer.noUiSlider.destroy();
+      sliderControlContainer.classList.add('hidden');
+    }
+
+    if (selectedEffect) {
+      const nameOfEffect = selectedEffect.getAttribute('id');
+
+      switch (nameOfEffect) {
+        case 'effect-none':
+          sliderControlContainer.classList.add('hidden');
+          imageToUpload.style.filter = 'none';
+          effectValue.value = '';
+          selectedEffectValueName = 'effect-none';
+          break;
+
+        case 'effect-chrome':
+          createNoUiSlider(isSliderHiddenState, 0, 1, 1, 0.1, 'grayscale');
+          selectedEffectValueName = 'effect-chrome';
+          break;
+
+        case 'effect-sepia':
+          createNoUiSlider(isSliderHiddenState, 0, 1, 1, 0.1, 'sepia');
+          selectedEffectValueName = 'effect-sepia';
+          break;
+
+        case 'effect-marvin':
+          createNoUiSlider(isSliderHiddenState, 0, 100, 100, 1, 'invert', '%');
+          break;
+
+        case 'effect-phobos':
+          createNoUiSlider(isSliderHiddenState, 0, 3, 3, 0.1, 'blur', 'px');
+          break;
+
+        case 'effect-heat':
+          createNoUiSlider(isSliderHiddenState, 1, 3, 3,0.1, 'brightness');
+          break;
+      }
+    }
+  }
+};
+
+effectsList.addEventListener('click', onEffectClick);
+
+const initUploadImageForm = () => {
   disableEscHandling(hashTagInput);
   disableEscHandling(commentField);
 
