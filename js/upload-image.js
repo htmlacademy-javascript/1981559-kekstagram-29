@@ -33,22 +33,22 @@ const transformImage = (scalableImage, scalingValue) => {
 };
 
 scaleControlValue.value = `${SCALE_IMAGE_DEFAULT}%`;
-let currentValue = parseInt(scaleControlValue.value, 10);
-transformImage(imageToUpload, currentValue);
+let currentScaleValue = parseInt(scaleControlValue.value, 10);
+transformImage(imageToUpload, currentScaleValue);
 
 const decreaseValue = () => {
-  if (currentValue > SCALE_IMAGE_MIN) {
-    currentValue -= SCALE_IMAGE_STEP;
-    scaleControlValue.value = `${currentValue}%`;
-    transformImage(imageToUpload, currentValue);
+  if (currentScaleValue > SCALE_IMAGE_MIN) {
+    currentScaleValue -= SCALE_IMAGE_STEP;
+    scaleControlValue.value = `${currentScaleValue}%`;
+    transformImage(imageToUpload, currentScaleValue);
   }
 };
 
 const increaseValue = () => {
-  if (currentValue < SCALE_IMAGE_MAX) {
-    currentValue += SCALE_IMAGE_STEP;
-    scaleControlValue.value = `${currentValue}%`;
-    transformImage(imageToUpload, currentValue);
+  if (currentScaleValue < SCALE_IMAGE_MAX) {
+    currentScaleValue += SCALE_IMAGE_STEP;
+    scaleControlValue.value = `${currentScaleValue}%`;
+    transformImage(imageToUpload, currentScaleValue);
   }
 };
 
@@ -90,7 +90,7 @@ const cancelUploadByKeydown = (evt) => {
 };
 
 const uploadImage = () => {
-  currentValue = SCALE_IMAGE_DEFAULT;
+  currentScaleValue = SCALE_IMAGE_DEFAULT;
   document.body.classList.add('modal-open');
   uploadOverlay.classList.remove('hidden');
   document.addEventListener('keydown', cancelUploadByKeydown);
@@ -162,6 +162,7 @@ const initUploadImageForm = () => {
       sendData(new FormData(evt.target))
         .then(
           () => {
+            // сюда добавить обнуление формы
             showSuccess();
           }
         )
