@@ -1,8 +1,9 @@
 import {disableEscHandling, isEscapeKey} from './util.js';
 import {createValidation} from './upload-validation.js';
-import {createScaleControlling} from './upload-scale-contol.js';
+// import {createScaleControlling} from './upload-scale-contol.js';
 import {addEffectsControl} from './upload-effects.js';
 import {sendData} from './load-data.js';
+import {SCALE_IMAGE_DEFAULT, SCALE_IMAGE_MAX, SCALE_IMAGE_MIN, SCALE_IMAGE_STEP} from './constats.js';
 
 const uploadForm = document.querySelector('.img-upload__form');
 const uploadImageInput = uploadForm.querySelector('.img-upload__input');
@@ -11,8 +12,8 @@ const cancelUploadButton = uploadForm.querySelector('.img-upload__cancel');
 const hashTagInput = uploadForm.querySelector('.text__hashtags');
 const commentField = uploadForm.querySelector('.text__description');
 const scaleContainer = uploadForm.querySelector('.img-upload__scale');
-const decreaseScaleButton = scaleContainer.querySelector('.scale__control--smaller');
 const increaseScaleButton = scaleContainer.querySelector('.scale__control--bigger');
+const decreaseScaleButton = scaleContainer.querySelector('.scale__control--smaller');
 const scaleControlValue = scaleContainer.querySelector('.scale__control--value');
 const imageToUpload = uploadForm.querySelector('.img-upload__preview img');
 const sliderControlContainer = uploadForm.querySelector('.effect-level');
@@ -26,6 +27,34 @@ const successTemplate = document.querySelector('#success')
 const errorTemplate = document.querySelector('#error')
   .content
   .querySelector('.error');
+
+const transformImage = (scalableImage, scalingValue) => {
+  const percentToMath = 100;
+  scalableImage.style.transform = `scale(${scalingValue / percentToMath})`;
+};
+
+scaleControlValue.value = `${SCALE_IMAGE_DEFAULT}%`;
+let currentValue = parseInt(scaleControlValue.value, 10);
+transformImage(imageToUpload, currentValue);
+
+const decreaseValue = () => {
+  if (currentValue > SCALE_IMAGE_MIN) {
+    currentValue -= SCALE_IMAGE_STEP;
+    scaleControlValue.value = `${currentValue}%`;
+    transformImage(imageToUpload, currentValue);
+  }
+};
+
+const increaseValue = () => {
+  if (currentValue < SCALE_IMAGE_MAX) {
+    currentValue += SCALE_IMAGE_STEP;
+    scaleControlValue.value = `${currentValue}%`;
+    transformImage(imageToUpload, currentValue);
+  }
+};
+
+increaseScaleButton.addEventListener('click', increaseValue);
+decreaseScaleButton.addEventListener('click', decreaseValue);
 
 const SubmitButtonText = {
   IDLE: 'Опубликовать',
@@ -62,6 +91,7 @@ const cancelUploadByKeydown = (evt) => {
 };
 
 const uploadImage = () => {
+  currentValue = SCALE_IMAGE_DEFAULT;
   document.body.classList.add('modal-open');
   uploadOverlay.classList.remove('hidden');
   document.addEventListener('keydown', cancelUploadByKeydown);
@@ -119,7 +149,7 @@ const showError = (message) => {
 };
 
 const initUploadImageForm = () => {
-  createScaleControlling(scaleControlValue, imageToUpload, decreaseScaleButton, increaseScaleButton);
+  // createScaleControlling(scaleControlValue, imageToUpload, decreaseScaleButton, increaseScaleButton);
   addEffectsControl(sliderControlContainer, effectValue, imageToUpload, effectsList);
 
   disableEscHandling(hashTagInput);
