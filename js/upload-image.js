@@ -69,9 +69,7 @@ const initUploadImageForm = () => {
 
   const showSuccess = () => {
     const successElement = successTemplate.cloneNode(true);
-    // const successTitle = successElement.querySelector('.success__title');
     const successButton = successElement.querySelector('.success__button');
-    // successTitle.textContent = message;
     uploadWrapper.classList.add('hidden');
 
     const removeSuccessMessage = () => {
@@ -122,7 +120,7 @@ const initUploadImageForm = () => {
         )
         .finally(unblockSubmitButton);
     } else {
-      console.log('Форма невалидна');
+      showError('Форма не валидна');
       /*
       Остановился на добавлении окна показывющим успех отправки картинки.
 https://up.htmlacademy.ru/profession/frontender-extended/2/javascript/29/project/kekstagram#kekstagram-3-3
