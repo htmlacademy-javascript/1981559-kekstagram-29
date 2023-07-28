@@ -121,11 +121,6 @@ const initUploadImageForm = () => {
         .finally(unblockSubmitButton);
     } else {
       showError('Форма не валидна');
-      /*
-      Остановился на добавлении окна показывющим успех отправки картинки.
-https://up.htmlacademy.ru/profession/frontender-extended/2/javascript/29/project/kekstagram#kekstagram-3-3
-Доработать форму закрытия. 3.5
-       */
     }
   });
 };
