@@ -138,12 +138,23 @@ const showError = (message) => {
   const errorButton = errorElement.querySelector('.error__button');
   errorTitle.textContent = message;
   uploadWrapper.classList.add('hidden');
+  document.removeEventListener('keydown', cancelUploadByKeydown);
+  let returnToForm = () => {};
 
   const removeErrorMessage = () => {
     errorButton.removeEventListener('click', removeErrorMessage);
     uploadWrapper.classList.remove('hidden');
     errorElement.remove();
+    document.removeEventListener('keydown', returnToForm);
+    document.addEventListener('keydown', cancelUploadByKeydown);
   };
+
+  returnToForm = (evt) => {
+    if (isEscapeKey(evt)) {
+      removeErrorMessage();
+    }
+  };
+  document.addEventListener('keydown', returnToForm);
 
   errorButton.addEventListener('click', removeErrorMessage);
 
@@ -151,6 +162,7 @@ const showError = (message) => {
 };
 
 const initUploadImageForm = () => {
+  // это улучшить
   addEffectsControl(sliderControlContainer, effectValue, imageToUpload, effectsList);
 
   disableEscHandling(hashTagInput);
