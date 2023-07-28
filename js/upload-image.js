@@ -106,6 +106,7 @@ const uploadImage = () => {
 cancelUpload = () => {
   document.body.classList.remove('modal-open');
   uploadOverlay.classList.add('hidden');
+  document.removeEventListener('keydown', cancelUploadByKeydown);
   uploadForm.reset();
   pristine.reset();
 };
@@ -162,7 +163,6 @@ const initUploadImageForm = () => {
       sendData(new FormData(evt.target))
         .then(
           () => {
-            // сюда добавить обнуление формы
             showSuccess();
           }
         )
