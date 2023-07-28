@@ -65,6 +65,13 @@ const uploadImage = () => {
   document.body.classList.add('modal-open');
   uploadOverlay.classList.remove('hidden');
   document.addEventListener('keydown', cancelUploadByKeydown);
+  imageToUpload.style.filter = 'none';
+  imageToUpload.style.transform = 'none';
+
+  const isSliderControlShown = sliderControlContainer.classList.contains('hidden') === false;
+  if (isSliderControlShown) {
+    sliderControlContainer.classList.add('hidden');
+  }
 };
 
 cancelUpload = () => {
