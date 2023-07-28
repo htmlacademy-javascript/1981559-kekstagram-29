@@ -1,5 +1,5 @@
 const addEffectsControl = (container, adjustingEffectResult, image, containerItems) => {
-  const createNoUiSlider = (isSliderVisibleState, minValue, maxValue, step, filter, unit = '') => {
+  const createNoUiSlider = (isSliderVisibleState, minValue, maxValue, start, step, filter, unit = '') => {
     if (isSliderVisibleState) {
       container.classList.remove('hidden');
       noUiSlider.create(container, {
@@ -7,7 +7,7 @@ const addEffectsControl = (container, adjustingEffectResult, image, containerIte
           min: minValue,
           max: maxValue,
         },
-        start: 0,
+        start: start,
         step: step,
         connect: 'lower',
         format: {
@@ -51,23 +51,23 @@ const addEffectsControl = (container, adjustingEffectResult, image, containerIte
           break;
 
         case 'effect-chrome':
-          createNoUiSlider(isSliderHiddenState, 0, 1, 0.1, 'grayscale');
+          createNoUiSlider(isSliderHiddenState, 0, 1, 1, 0.1, 'grayscale');
           break;
 
         case 'effect-sepia':
-          createNoUiSlider(isSliderHiddenState, 0, 1, 0.1, 'sepia');
+          createNoUiSlider(isSliderHiddenState, 0, 1, 1, 0.1, 'sepia');
           break;
 
         case 'effect-marvin':
-          createNoUiSlider(isSliderHiddenState, 0, 100, 1, 'invert', '%');
+          createNoUiSlider(isSliderHiddenState, 0, 100, 100, 1, 'invert', '%');
           break;
 
         case 'effect-phobos':
-          createNoUiSlider(isSliderHiddenState, 0, 3, 0.1, 'blur', 'px');
+          createNoUiSlider(isSliderHiddenState, 0, 3, 3, 0.1, 'blur', 'px');
           break;
 
         case 'effect-heat':
-          createNoUiSlider(isSliderHiddenState, 1, 3,0.1, 'brightness');
+          createNoUiSlider(isSliderHiddenState, 1, 3, 3,0.1, 'brightness');
           break;
       }
     }
