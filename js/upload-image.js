@@ -134,11 +134,13 @@ const showSuccess = () => {
 
 const showError = (message) => {
   const errorElement = errorTemplate.cloneNode(true);
+  const errorInnerContainer = errorElement.querySelector('.error__inner');
   const errorTitle = errorElement.querySelector('.error__title');
   const errorButton = errorElement.querySelector('.error__button');
   errorTitle.textContent = message;
   uploadWrapper.classList.add('hidden');
   document.removeEventListener('keydown', cancelUploadByKeydown);
+
   let returnToForm = () => {};
 
   const removeErrorMessage = () => {
@@ -154,7 +156,18 @@ const showError = (message) => {
       removeErrorMessage();
     }
   };
+
   document.addEventListener('keydown', returnToForm);
+
+  const onOutsideErrorContainerClick = (evt) => {
+    const outsideErrorContainerClick = evt.composedPath().includes(errorInnerContainer) === false;
+    if (outsideErrorContainerClick) {
+      removeErrorMessage();
+      document.removeEventListener('click', onOutsideErrorContainerClick);
+    }
+  };
+
+  document.addEventListener('click', onOutsideErrorContainerClick);
 
   errorButton.addEventListener('click', removeErrorMessage);
 
