@@ -1,6 +1,5 @@
 import {disableEscHandling, isEscapeKey} from './util.js';
 import {createValidation} from './upload-validation.js';
-// import {createScaleControlling} from './upload-scale-contol.js';
 import {addEffectsControl} from './upload-effects.js';
 import {sendData} from './load-data.js';
 import {SCALE_IMAGE_DEFAULT, SCALE_IMAGE_MAX, SCALE_IMAGE_MIN, SCALE_IMAGE_STEP} from './constats.js';
@@ -149,7 +148,6 @@ const showError = (message) => {
 };
 
 const initUploadImageForm = () => {
-  // createScaleControlling(scaleControlValue, imageToUpload, decreaseScaleButton, increaseScaleButton);
   addEffectsControl(sliderControlContainer, effectValue, imageToUpload, effectsList);
 
   disableEscHandling(hashTagInput);

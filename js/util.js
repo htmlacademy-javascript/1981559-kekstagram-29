@@ -1,8 +1,5 @@
 const ALERT_SHOW_TIME = 5000;
 
-/**
- * @param {string} message
- */
 const showAlert = (message) => {
   const alertContainer = document.createElement('div');
   alertContainer.style.zIndex = '100';
@@ -30,7 +27,6 @@ const pluralize = (count, words) => {
 };
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
-const isClick = (evt) => evt.type === 'click';
 
 const disableEscHandling = (element) => {
   element.addEventListener('keydown', (evt) => {
@@ -45,4 +41,4 @@ const checkRepeat = (arr) => {
   return arr.length === uniqueArr.size;
 };
 
-export {isEscapeKey, isClick, disableEscHandling, checkRepeat, pluralize, showAlert};
+export {isEscapeKey, disableEscHandling, checkRepeat, pluralize, showAlert};
