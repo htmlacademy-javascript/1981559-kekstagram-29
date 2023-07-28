@@ -82,10 +82,10 @@ const defaultConfig = {
 const pristine = new Pristine(uploadForm, defaultConfig);
 createValidation(hashTagInput, commentField, pristine);
 
-let cancelUpload = () => {};
+let clearUpload = () => {};
 const cancelUploadByKeydown = (evt) => {
   if (isEscapeKey(evt)) {
-    cancelUpload();
+    clearUpload();
   }
 };
 
@@ -103,7 +103,7 @@ const uploadImage = () => {
   }
 };
 
-cancelUpload = () => {
+clearUpload = () => {
   document.body.classList.remove('modal-open');
   uploadOverlay.classList.add('hidden');
   document.removeEventListener('keydown', cancelUploadByKeydown);
@@ -112,7 +112,7 @@ cancelUpload = () => {
 };
 
 uploadImageInput.addEventListener('change', uploadImage);
-cancelUploadButton.addEventListener('click', cancelUpload);
+cancelUploadButton.addEventListener('click', clearUpload);
 
 const showSuccess = () => {
   const successElement = successTemplate.cloneNode(true);
@@ -123,6 +123,8 @@ const showSuccess = () => {
     successButton.removeEventListener('click', removeSuccessMessage);
     uploadWrapper.classList.remove('hidden');
     successElement.remove();
+    uploadImageInput.value = '';
+    clearUpload();
   };
 
   successButton.addEventListener('click', removeSuccessMessage);
