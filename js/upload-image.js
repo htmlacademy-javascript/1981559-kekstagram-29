@@ -77,46 +77,46 @@ cancelUpload = () => {
 uploadImageInput.addEventListener('change', uploadImage);
 cancelUploadButton.addEventListener('click', cancelUpload);
 
+const showSuccess = () => {
+  const successElement = successTemplate.cloneNode(true);
+  const successButton = successElement.querySelector('.success__button');
+  uploadWrapper.classList.add('hidden');
+
+  const removeSuccessMessage = () => {
+    successButton.removeEventListener('click', removeSuccessMessage);
+    uploadWrapper.classList.remove('hidden');
+    successElement.remove();
+  };
+
+  successButton.addEventListener('click', removeSuccessMessage);
+
+  uploadOverlay.appendChild(successElement);
+};
+
+const showError = (message) => {
+  const errorElement = errorTemplate.cloneNode(true);
+  const errorTitle = errorElement.querySelector('.error__title');
+  const errorButton = errorElement.querySelector('.error__button');
+  errorTitle.textContent = message;
+  uploadWrapper.classList.add('hidden');
+
+  const removeErrorMessage = () => {
+    errorButton.removeEventListener('click', removeErrorMessage);
+    uploadWrapper.classList.remove('hidden');
+    errorElement.remove();
+  };
+
+  errorButton.addEventListener('click', removeErrorMessage);
+
+  uploadOverlay.appendChild(errorElement);
+};
+
 const initUploadImageForm = () => {
   createScaleControlling(scaleControlValue, imageToUpload, decreaseScaleButton, increaseScaleButton);
   addEffectsControl(sliderControlContainer, effectValue, imageToUpload, effectsList);
 
   disableEscHandling(hashTagInput);
   disableEscHandling(commentField);
-
-  const showSuccess = () => {
-    const successElement = successTemplate.cloneNode(true);
-    const successButton = successElement.querySelector('.success__button');
-    uploadWrapper.classList.add('hidden');
-
-    const removeSuccessMessage = () => {
-      successButton.removeEventListener('click', removeSuccessMessage);
-      uploadWrapper.classList.remove('hidden');
-      successElement.remove();
-    };
-
-    successButton.addEventListener('click', removeSuccessMessage);
-
-    uploadOverlay.appendChild(successElement);
-  };
-
-  const showError = (message) => {
-    const errorElement = errorTemplate.cloneNode(true);
-    const errorTitle = errorElement.querySelector('.error__title');
-    const errorButton = errorElement.querySelector('.error__button');
-    errorTitle.textContent = message;
-    uploadWrapper.classList.add('hidden');
-
-    const removeErrorMessage = () => {
-      errorButton.removeEventListener('click', removeErrorMessage);
-      uploadWrapper.classList.remove('hidden');
-      errorElement.remove();
-    };
-
-    errorButton.addEventListener('click', removeErrorMessage);
-
-    uploadOverlay.appendChild(errorElement);
-  };
 
   uploadForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
