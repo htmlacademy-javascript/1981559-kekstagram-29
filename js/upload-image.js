@@ -173,83 +173,102 @@ const showError = (message) => {
 };
 
 // addEffectsControl(sliderControlContainer, effectValue, imageToUpload, effectsList);
-let selectedEffectValueName = '';
-const createNoUiSlider = (isSliderVisibleState, minValue, maxValue, start, step, filter, unit = '') => {
-  if (isSliderVisibleState) {
-    sliderControlContainer.classList.remove('hidden');
-    noUiSlider.create(sliderControlContainer, {
-      range: {
-        min: minValue,
-        max: maxValue,
-      },
-      start: start,
-      step: step,
-      connect: 'lower',
-      format: {
-        to(value) {
-          if (Number.isInteger(value)) {
-            return value.toFixed(0);
-          }
-          return value.toFixed(1);
-        },
-        from(value) {
-          return parseFloat(value);
-        },
-      },
-    });
+// const createNoUiSlider = () => {
+//   sliderControlContainer.classList.remove('hidden');
+//   noUiSlider.create(sliderControlContainer, {
+//     range: {
+//       min: minValue,
+//       max: maxValue,
+//     },
+//     start: start,
+//     step: step,
+//     connect: 'lower',
+//     format: {
+//       to(value) {
+//         if (Number.isInteger(value)) {
+//           return value.toFixed(0);
+//         }
+//         return value.toFixed(1);
+//       },
+//       from(value) {
+//         return parseFloat(value);
+//       },
+//     },
+//   });
+//
+//   sliderControlContainer.noUiSlider.on('update', () => {
+//     effectValue.value = sliderControlContainer.noUiSlider.get();
+//     imageToUpload.style.filter = `${filter}(${effectValue.value}${unit})`;
+//   });
+// };
 
-    sliderControlContainer.noUiSlider.on('update', () => {
-      effectValue.value = sliderControlContainer.noUiSlider.get();
-      imageToUpload.style.filter = `${filter}(${effectValue.value}${unit})`;
-    });
-  }
-};
+noUiSlider.create(sliderControlContainer, {
+  connect: 'lower',
+  range: {
+    'min': 0,
+    'max': 0
+  },
+  start: 0,
+  step: 0,
+  format: {
+    to(value) {
+      if (Number.isInteger(value)) {
+        return value.toFixed(0);
+      }
+      return value.toFixed(1);
+    },
+    from(value) {
+      return parseFloat(value);
+    },
+  },
+});
 
+sliderControlContainer.noUiSlider.on('update', () => {
+  effectValue.value = sliderControlContainer.noUiSlider.get();
+  console.log(effectValue.value);
+});
 
 const onEffectClick = (evt) => {
   const selectedEffect = evt.target.closest('.effects__radio');
-  if (selectedEffect !== null && selectedEffectValueName !== selectedEffect.getAttribute('id')) {
-    const isSliderHiddenState = sliderControlContainer.classList.contains('hidden');
-    const sliderShownState = !isSliderHiddenState;
+  if (selectedEffect !== null) {
+    const nameOfEffect = selectedEffect.getAttribute('id');
+    switch (nameOfEffect) {
+      case 'effect-none':
+        sliderControlContainer.classList.add('hidden');
+        console.log('none');
+        break;
 
-    if (sliderShownState) {
-      sliderControlContainer.noUiSlider.destroy();
-      sliderControlContainer.classList.add('hidden');
-    }
+      case 'effect-chrome':
+        sliderControlContainer.classList.remove('hidden');
 
-    if (selectedEffect) {
-      const nameOfEffect = selectedEffect.getAttribute('id');
+        sliderControlContainer.noUiSlider.updateOptions({
+          range: {
+            'min': 20,
+            'max': 50
+          },
+          step: 2,
+        });
 
-      switch (nameOfEffect) {
-        case 'effect-none':
-          sliderControlContainer.classList.add('hidden');
-          imageToUpload.style.filter = 'none';
-          effectValue.value = '';
-          selectedEffectValueName = 'effect-none';
-          break;
+        break;
 
-        case 'effect-chrome':
-          createNoUiSlider(isSliderHiddenState, 0, 1, 1, 0.1, 'grayscale');
-          selectedEffectValueName = 'effect-chrome';
-          break;
+      case 'effect-sepia':
+        sliderControlContainer.classList.remove('hidden');
+        sliderControlContainer.noUiSlider.updateOptions({
+          range: {
+            'min': 1,
+            'max': 10
+          }
+        });
+        break;
 
-        case 'effect-sepia':
-          createNoUiSlider(isSliderHiddenState, 0, 1, 1, 0.1, 'sepia');
-          selectedEffectValueName = 'effect-sepia';
-          break;
+      case 'effect-marvin':
+        break;
 
-        case 'effect-marvin':
-          createNoUiSlider(isSliderHiddenState, 0, 100, 100, 1, 'invert', '%');
-          break;
+      case 'effect-phobos':
+        break;
 
-        case 'effect-phobos':
-          createNoUiSlider(isSliderHiddenState, 0, 3, 3, 0.1, 'blur', 'px');
-          break;
-
-        case 'effect-heat':
-          createNoUiSlider(isSliderHiddenState, 1, 3, 3,0.1, 'brightness');
-          break;
-      }
+      case 'effect-heat':
+        break;
     }
   }
 };
