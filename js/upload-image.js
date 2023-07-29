@@ -27,7 +27,6 @@ const uploadWrapper = uploadForm.querySelector('.img-upload__wrapper');
 addScalingController(scaleControlInput, imageToUpload, increaseScaleButton, decreaseScaleButton);
 
 const pristine = new Pristine(uploadForm, pristineDefaultConfig);
-createValidation(hashTagInput, commentField, pristine);
 
 let clearUpload = () => {};
 const cancelUploadByKeydown = (evt) => {
@@ -100,7 +99,7 @@ const initUploadImageForm = () => {
 
   uploadForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
-
+    createValidation(hashTagInput, commentField, pristine);
     const isValid = pristine.validate();
     if (isValid) {
       blockSubmitButton();
@@ -116,8 +115,6 @@ const initUploadImageForm = () => {
           }
         )
         .finally(unblockSubmitButton);
-    } else {
-      showError('Форма не валидна');
     }
   });
 };
