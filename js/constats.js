@@ -1,7 +1,6 @@
 const DEFAULT_SHOWN_COMMENTS = 5;
 const MAX_AVAILABLE_HASHTAGS = 5;
 const MAX_COMMENT_WORDS = 140;
-const SCALE_IMAGE_DEFAULT = 100;
 const SCALE_IMAGE_STEP = 25;
 const SCALE_IMAGE_MAX = 100;
 const SCALE_IMAGE_MIN = 25;
@@ -57,7 +56,6 @@ export {
   SCALE_IMAGE_MAX,
   SCALE_IMAGE_MIN,
   SCALE_IMAGE_STEP,
-  SCALE_IMAGE_DEFAULT,
   chromeValues,
   sepiaValues,
   marvinValues,
