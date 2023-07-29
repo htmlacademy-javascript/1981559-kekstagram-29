@@ -551,16 +551,15 @@ main {
           transform: translateX(-50%);
 }
 
-.effect-level.noUi-target {
-  padding: 0 22px;
-  border-radius: 16px;
-  box-shadow: none;
+.effect-level {
+  padding: 0;
+  border: none;
 }
 
-.effect-level.noUi-target:before {
+.effect-level__slider:before {
   position: absolute;
   content: '';
-  width: 46px;
+  width: 44px;
   height: 101%;
   left: -1px;
   top: 0;
@@ -568,8 +567,13 @@ main {
   border-radius: 15px;
 }
 
-.effect-level .noUi-connects {
-  border-radius: 13px;
+.effect-level__slider.noUi-target {
+  height: 100%;
+  border-radius: 16px;
+  border: none;
+  padding: 0 22px;
+  background-color: #646464;
+  box-shadow: none;
 }
 
 .effect-level .noUi-connect {
@@ -583,7 +587,7 @@ main {
 .effect-level .noUi-handle {
   border-radius: 16px;
   width: 46px;
-  height: 32px;
+  height: 34px;
   right: -23px;
   top: 0;
   cursor: pointer;
