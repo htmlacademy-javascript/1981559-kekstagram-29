@@ -18,7 +18,8 @@ const increaseScaleButton = scaleContainer.querySelector('.scale__control--bigge
 const decreaseScaleButton = scaleContainer.querySelector('.scale__control--smaller');
 const scaleControlInput = scaleContainer.querySelector('.scale__control--value');
 const imageToUpload = uploadForm.querySelector('.img-upload__preview img');
-const sliderControlContainer = uploadForm.querySelector('.effect-level');
+const sliderWrapper = uploadForm.querySelector('.effect-level');
+const sliderControlContainer = uploadForm.querySelector('.effect-level__slider');
 const effectsList = uploadForm.querySelector('.effects__list');
 const effectValue = uploadForm.querySelector('.effect-level__value').value;
 const submitButton = uploadForm.querySelector('.img-upload__submit');
@@ -46,6 +47,7 @@ const uploadImage = () => {
   const isSliderControlShown = sliderControlContainer.classList.contains('hidden') === false;
   if (isSliderControlShown) {
     sliderControlContainer.classList.add('hidden');
+    sliderWrapper.classList.add('hidden');
   }
 };
 
@@ -81,7 +83,7 @@ noUiSlider.create(sliderControlContainer, {
   },
 });
 
-addEffectsSetting(sliderControlContainer, effectValue, imageToUpload, effectsList);
+addEffectsSetting(sliderControlContainer, effectValue, imageToUpload, effectsList, sliderWrapper);
 
 const blockSubmitButton = () => {
   submitButton.disabled = true;

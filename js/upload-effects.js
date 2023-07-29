@@ -6,7 +6,7 @@ import {
   heatValues
 } from './constats.js';
 
-const addEffectsSetting = (container, value, image, list) => {
+const addEffectsSetting = (container, value, image, list, wrapper) => {
   let nameOfFilterEffect = '';
   let unitOfFilterEffect = '';
 
@@ -19,6 +19,7 @@ const addEffectsSetting = (container, value, image, list) => {
   const updateImageEffect = (valuesOfEffect) => {
     if (nameOfFilterEffect !== valuesOfEffect.effect) {
       container.classList.remove('hidden');
+      wrapper.classList.remove('hidden');
       nameOfFilterEffect = valuesOfEffect.effect;
       unitOfFilterEffect = valuesOfEffect.unit;
       container.noUiSlider.updateOptions({
@@ -39,6 +40,7 @@ const addEffectsSetting = (container, value, image, list) => {
       switch (nameOfEffect) {
         case 'effect-none':
           container.classList.add('hidden');
+          wrapper.classList.add('hidden');
           image.style.removeProperty('filter');
           nameOfFilterEffect = '';
           unitOfFilterEffect = '';
