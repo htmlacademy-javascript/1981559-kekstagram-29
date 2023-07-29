@@ -5,14 +5,16 @@ import {
   phobosValues,
   heatValues
 } from './constats.js';
+import {uploadForm} from './upload-image.js';
 
-const addEffectsSetting = (container, value, image, list, wrapper) => {
+const addEffectsSetting = (container, image, list, wrapper) => {
+  const effectValue = uploadForm.querySelector('.effect-level__value');
   let nameOfFilterEffect = '';
   let unitOfFilterEffect = '';
 
   container.noUiSlider.on('update', () => {
-    value = container.noUiSlider.get();
-    image.style.filter = `${nameOfFilterEffect}(${value}${unitOfFilterEffect})`;
+    effectValue.value = container.noUiSlider.get();
+    image.style.filter = `${nameOfFilterEffect}(${effectValue}${unitOfFilterEffect})`;
   });
 
 

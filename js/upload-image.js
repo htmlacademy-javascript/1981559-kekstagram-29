@@ -21,7 +21,6 @@ const imageToUpload = uploadForm.querySelector('.img-upload__preview img');
 const sliderWrapper = uploadForm.querySelector('.effect-level');
 const sliderControlContainer = uploadForm.querySelector('.effect-level__slider');
 const effectsList = uploadForm.querySelector('.effects__list');
-const effectValue = uploadForm.querySelector('.effect-level__value').value;
 const submitButton = uploadForm.querySelector('.img-upload__submit');
 const uploadWrapper = uploadForm.querySelector('.img-upload__wrapper');
 
@@ -73,9 +72,9 @@ noUiSlider.create(sliderControlContainer, {
   format: {
     to(value) {
       if (Number.isInteger(value)) {
-        return value.toFixed(0);
+        return value.toFixed(2);
       }
-      return value.toFixed(1);
+      return value.toFixed(2);
     },
     from(value) {
       return parseFloat(value);
@@ -83,7 +82,7 @@ noUiSlider.create(sliderControlContainer, {
   },
 });
 
-addEffectsSetting(sliderControlContainer, effectValue, imageToUpload, effectsList, sliderWrapper);
+addEffectsSetting(sliderControlContainer, imageToUpload, effectsList, sliderWrapper);
 
 const blockSubmitButton = () => {
   submitButton.disabled = true;
@@ -129,5 +128,6 @@ export {
   cancelUploadByKeydown,
   uploadOverlay,
   clearUpload,
-  uploadImageInput
+  uploadImageInput,
+  uploadForm
 };
