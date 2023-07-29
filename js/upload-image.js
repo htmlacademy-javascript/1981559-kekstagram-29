@@ -4,6 +4,7 @@ import {addEffectsSetting} from './upload-effects.js';
 import {addScalingController} from './upload-scale-image.js';
 import {pristineDefaultConfig, SubmitButtonText} from './constats.js';
 import {showError} from './upload-error.js';
+import {showSuccess} from './upload-success.js';
 import {sendData} from './load-data.js';
 
 const uploadForm = document.querySelector('.img-upload__form');
@@ -22,9 +23,6 @@ const effectsList = uploadForm.querySelector('.effects__list');
 const effectValue = uploadForm.querySelector('.effect-level__value').value;
 const submitButton = uploadForm.querySelector('.img-upload__submit');
 const uploadWrapper = uploadForm.querySelector('.img-upload__wrapper');
-const successTemplate = document.querySelector('#success')
-  .content
-  .querySelector('.success');
 
 addScalingController(scaleControlInput, imageToUpload, increaseScaleButton, decreaseScaleButton);
 
@@ -61,24 +59,6 @@ clearUpload = () => {
 
 uploadImageInput.addEventListener('change', uploadImage);
 cancelUploadButton.addEventListener('click', clearUpload);
-
-const showSuccess = () => {
-  const successElement = successTemplate.cloneNode(true);
-  const successButton = successElement.querySelector('.success__button');
-  uploadWrapper.classList.add('hidden');
-
-  const removeSuccessMessage = () => {
-    successButton.removeEventListener('click', removeSuccessMessage);
-    uploadWrapper.classList.remove('hidden');
-    successElement.remove();
-    uploadImageInput.value = '';
-    clearUpload();
-  };
-
-  successButton.addEventListener('click', removeSuccessMessage);
-
-  uploadOverlay.appendChild(successElement);
-};
 
 noUiSlider.create(sliderControlContainer, {
   connect: 'lower',
@@ -141,4 +121,11 @@ const initUploadImageForm = () => {
   });
 };
 
-export {initUploadImageForm, uploadWrapper, cancelUploadByKeydown, uploadOverlay};
+export {
+  initUploadImageForm,
+  uploadWrapper,
+  cancelUploadByKeydown,
+  uploadOverlay,
+  clearUpload,
+  uploadImageInput
+};
