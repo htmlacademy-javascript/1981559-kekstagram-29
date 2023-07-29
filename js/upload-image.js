@@ -2,7 +2,11 @@ import {disableEscHandling, isEscapeKey} from './util.js';
 import {createValidation} from './upload-validation.js';
 // import {addEffectsControl} from './upload-effects.js';
 import {sendData} from './load-data.js';
-import {SCALE_IMAGE_DEFAULT, SCALE_IMAGE_MAX, SCALE_IMAGE_MIN, SCALE_IMAGE_STEP} from './constats.js';
+import {SCALE_IMAGE_DEFAULT, SCALE_IMAGE_MAX, SCALE_IMAGE_MIN, SCALE_IMAGE_STEP, chromeValues,
+  sepiaValues,
+  marvinValues,
+  phobosValues,
+  heatValues} from './constats.js';
 
 const uploadForm = document.querySelector('.img-upload__form');
 const uploadImageInput = uploadForm.querySelector('.img-upload__input');
@@ -172,36 +176,6 @@ const showError = (message) => {
   uploadOverlay.appendChild(errorElement);
 };
 
-// addEffectsControl(sliderControlContainer, effectValue, imageToUpload, effectsList);
-// const createNoUiSlider = () => {
-//   sliderControlContainer.classList.remove('hidden');
-//   noUiSlider.create(sliderControlContainer, {
-//     range: {
-//       min: minValue,
-//       max: maxValue,
-//     },
-//     start: start,
-//     step: step,
-//     connect: 'lower',
-//     format: {
-//       to(value) {
-//         if (Number.isInteger(value)) {
-//           return value.toFixed(0);
-//         }
-//         return value.toFixed(1);
-//       },
-//       from(value) {
-//         return parseFloat(value);
-//       },
-//     },
-//   });
-//
-//   sliderControlContainer.noUiSlider.on('update', () => {
-//     effectValue.value = sliderControlContainer.noUiSlider.get();
-//     imageToUpload.style.filter = `${filter}(${effectValue.value}${unit})`;
-//   });
-// };
-
 noUiSlider.create(sliderControlContainer, {
   connect: 'lower',
   range: {
@@ -231,18 +205,19 @@ sliderControlContainer.noUiSlider.on('update', () => {
   imageToUpload.style.filter = `${nameOfFilterEffect}(${effectValue.value}${unitOfFilterEffect})`;
 });
 
-const updateImageEffect = (min, max, start, step, effect, unit = '') => {
-  if (nameOfFilterEffect !== effect) {
+
+const updateImageEffect = (valuesOfEffect) => {
+  if (nameOfFilterEffect !== valuesOfEffect.effect) {
     sliderControlContainer.classList.remove('hidden');
-    nameOfFilterEffect = effect;
-    unitOfFilterEffect = unit;
+    nameOfFilterEffect = valuesOfEffect.effect;
+    unitOfFilterEffect = valuesOfEffect.unit;
     sliderControlContainer.noUiSlider.updateOptions({
       range: {
-        'min': min,
-        'max': max
+        'min': valuesOfEffect.min,
+        'max': valuesOfEffect.max
       },
-      start: start,
-      step: step,
+      start: valuesOfEffect.start,
+      step: valuesOfEffect.step,
     });
   }
 };
@@ -260,23 +235,23 @@ const onEffectClick = (evt) => {
         break;
 
       case 'effect-chrome':
-        updateImageEffect(0, 1, 1, 0.1, 'grayscale');
+        updateImageEffect(chromeValues);
         break;
 
       case 'effect-sepia':
-        updateImageEffect(0, 1, 1, 0.1, 'sepia');
+        updateImageEffect(sepiaValues);
         break;
 
       case 'effect-marvin':
-        updateImageEffect(0, 100, 100, 1, 'invert', '%');
+        updateImageEffect(marvinValues);
         break;
 
       case 'effect-phobos':
-        updateImageEffect(0, 3, 3, 0.1, 'blur', 'px');
+        updateImageEffect(phobosValues);
         break;
 
       case 'effect-heat':
-        updateImageEffect(1, 3, 3, 0.1, 'brightness');
+        updateImageEffect(heatValues);
         break;
     }
   }
