@@ -33,8 +33,8 @@ const showError = (message) => {
   const onOutsideErrorContainerClick = (evt) => {
     const outsideErrorContainerClick = evt.composedPath().includes(errorInnerContainer) === false;
     if (outsideErrorContainerClick) {
-      removeErrorMessage();
       document.removeEventListener('click', onOutsideErrorContainerClick);
+      removeErrorMessage();
     }
   };
 

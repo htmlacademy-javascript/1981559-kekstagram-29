@@ -5,6 +5,7 @@ const successTemplate = document.querySelector('#success')
 
 const showSuccess = () => {
   const successElement = successTemplate.cloneNode(true);
+  const successInnerContainer = successElement.querySelector('.success__inner');
   const successButton = successElement.querySelector('.success__button');
   uploadWrapper.classList.add('hidden');
 
@@ -17,6 +18,16 @@ const showSuccess = () => {
   };
 
   successButton.addEventListener('click', removeSuccessMessage);
+
+  const onOutsideErrorContainerClick = (evt) => {
+    const outsideErrorContainerClick = evt.composedPath().includes(successInnerContainer) === false;
+    if (outsideErrorContainerClick) {
+      document.removeEventListener('click', onOutsideErrorContainerClick);
+      removeSuccessMessage();
+    }
+  };
+
+  document.addEventListener('click', onOutsideErrorContainerClick);
 
   uploadOverlay.appendChild(successElement);
 };
