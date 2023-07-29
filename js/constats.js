@@ -4,6 +4,14 @@ const MAX_COMMENT_WORDS = 140;
 const SCALE_IMAGE_STEP = 25;
 const SCALE_IMAGE_MAX = 100;
 const SCALE_IMAGE_MIN = 25;
+const pristineDefaultConfig = {
+  classTo: 'img-upload__field-wrapper',
+  errorClass: 'img-upload__field-wrapper--error',
+  successClass: 'img-upload__field-wrapper--valid',
+  errorTextParent: 'img-upload__field-wrapper',
+  errorTextTag: 'div',
+  errorTextClass: 'img-upload__help'
+};
 const chromeValues = {
   min: 0,
   max: 1,
@@ -48,6 +56,10 @@ const heatValues = {
   effect: 'brightness',
   unit: ''
 };
+const SubmitButtonText = {
+  IDLE: 'Опубликовать',
+  SENDING: 'Опубликовываю...'
+};
 
 export {
   DEFAULT_SHOWN_COMMENTS,
@@ -56,9 +68,11 @@ export {
   SCALE_IMAGE_MAX,
   SCALE_IMAGE_MIN,
   SCALE_IMAGE_STEP,
+  pristineDefaultConfig,
   chromeValues,
   sepiaValues,
   marvinValues,
   phobosValues,
-  heatValues
+  heatValues,
+  SubmitButtonText
 };

@@ -2,6 +2,7 @@ import {disableEscHandling, isEscapeKey} from './util.js';
 import {createValidation} from './upload-validation.js';
 import {addEffectsSetting} from './upload-effects.js';
 import {addScalingController} from './upload-scale-image.js';
+import {pristineDefaultConfig, SubmitButtonText} from './constats.js';
 import {sendData} from './load-data.js';
 
 const uploadForm = document.querySelector('.img-upload__form');
@@ -29,31 +30,7 @@ const errorTemplate = document.querySelector('#error')
 
 addScalingController(scaleControlInput, imageToUpload, increaseScaleButton, decreaseScaleButton);
 
-const SubmitButtonText = {
-  IDLE: 'Опубликовать',
-  SENDING: 'Опубликовываю...'
-};
-
-const blockSubmitButton = () => {
-  submitButton.disabled = true;
-  submitButton.textContent = SubmitButtonText.SENDING;
-};
-
-const unblockSubmitButton = () => {
-  submitButton.disabled = false;
-  submitButton.textContent = SubmitButtonText.IDLE;
-};
-
-const defaultConfig = {
-  classTo: 'img-upload__field-wrapper',
-  errorClass: 'img-upload__field-wrapper--error',
-  successClass: 'img-upload__field-wrapper--valid',
-  errorTextParent: 'img-upload__field-wrapper',
-  errorTextTag: 'div',
-  errorTextClass: 'img-upload__help'
-};
-
-const pristine = new Pristine(uploadForm, defaultConfig);
+const pristine = new Pristine(uploadForm, pristineDefaultConfig);
 createValidation(hashTagInput, commentField, pristine);
 
 let clearUpload = () => {};
@@ -167,6 +144,16 @@ noUiSlider.create(sliderControlContainer, {
 });
 
 addEffectsSetting(sliderControlContainer, effectValue, imageToUpload, effectsList);
+
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
+  submitButton.textContent = SubmitButtonText.SENDING;
+};
+
+const unblockSubmitButton = () => {
+  submitButton.disabled = false;
+  submitButton.textContent = SubmitButtonText.IDLE;
+};
 
 const initUploadImageForm = () => {
   disableEscHandling(hashTagInput);
