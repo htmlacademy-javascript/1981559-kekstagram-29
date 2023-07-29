@@ -223,9 +223,12 @@ noUiSlider.create(sliderControlContainer, {
   },
 });
 
+let nameOfFilterEffect = 'none';
+
 sliderControlContainer.noUiSlider.on('update', () => {
   effectValue.value = sliderControlContainer.noUiSlider.get();
   console.log(effectValue.value);
+  console.log(nameOfFilterEffect);
 });
 
 const onEffectClick = (evt) => {
@@ -236,11 +239,12 @@ const onEffectClick = (evt) => {
       case 'effect-none':
         sliderControlContainer.classList.add('hidden');
         console.log('none');
+        nameOfFilterEffect = 'none';
         break;
 
       case 'effect-chrome':
         sliderControlContainer.classList.remove('hidden');
-
+        nameOfFilterEffect = 'chrome';
         sliderControlContainer.noUiSlider.updateOptions({
           range: {
             'min': 20,
@@ -253,6 +257,7 @@ const onEffectClick = (evt) => {
 
       case 'effect-sepia':
         sliderControlContainer.classList.remove('hidden');
+        nameOfFilterEffect = 'chrome';
         sliderControlContainer.noUiSlider.updateOptions({
           range: {
             'min': 1,
