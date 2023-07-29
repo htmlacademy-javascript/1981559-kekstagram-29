@@ -1,12 +1,8 @@
 import {disableEscHandling, isEscapeKey} from './util.js';
 import {createValidation} from './upload-validation.js';
-// import {addEffectsControl} from './upload-effects.js';
+import {addEffectsSetting} from './upload-effects.js';
 import {sendData} from './load-data.js';
-import {SCALE_IMAGE_DEFAULT, SCALE_IMAGE_MAX, SCALE_IMAGE_MIN, SCALE_IMAGE_STEP, chromeValues,
-  sepiaValues,
-  marvinValues,
-  phobosValues,
-  heatValues} from './constats.js';
+import {SCALE_IMAGE_DEFAULT, SCALE_IMAGE_MAX, SCALE_IMAGE_MIN, SCALE_IMAGE_STEP} from './constats.js';
 
 const uploadForm = document.querySelector('.img-upload__form');
 const uploadImageInput = uploadForm.querySelector('.img-upload__input');
@@ -21,7 +17,7 @@ const scaleControlValue = scaleContainer.querySelector('.scale__control--value')
 const imageToUpload = uploadForm.querySelector('.img-upload__preview img');
 const sliderControlContainer = uploadForm.querySelector('.effect-level');
 const effectsList = uploadForm.querySelector('.effects__list');
-const effectValue = uploadForm.querySelector('.effect-level__value');
+const effectValue = uploadForm.querySelector('.effect-level__value').value;
 const submitButton = uploadForm.querySelector('.img-upload__submit');
 const uploadWrapper = uploadForm.querySelector('.img-upload__wrapper');
 const successTemplate = document.querySelector('#success')
@@ -197,67 +193,7 @@ noUiSlider.create(sliderControlContainer, {
   },
 });
 
-let nameOfFilterEffect = '';
-let unitOfFilterEffect = '';
-
-sliderControlContainer.noUiSlider.on('update', () => {
-  effectValue.value = sliderControlContainer.noUiSlider.get();
-  imageToUpload.style.filter = `${nameOfFilterEffect}(${effectValue.value}${unitOfFilterEffect})`;
-});
-
-
-const updateImageEffect = (valuesOfEffect) => {
-  if (nameOfFilterEffect !== valuesOfEffect.effect) {
-    sliderControlContainer.classList.remove('hidden');
-    nameOfFilterEffect = valuesOfEffect.effect;
-    unitOfFilterEffect = valuesOfEffect.unit;
-    sliderControlContainer.noUiSlider.updateOptions({
-      range: {
-        'min': valuesOfEffect.min,
-        'max': valuesOfEffect.max
-      },
-      start: valuesOfEffect.start,
-      step: valuesOfEffect.step,
-    });
-  }
-};
-
-const onEffectClick = (evt) => {
-  const selectedEffect = evt.target.closest('.effects__radio');
-  if (selectedEffect !== null) {
-    const nameOfEffect = selectedEffect.getAttribute('id');
-    switch (nameOfEffect) {
-      case 'effect-none':
-        sliderControlContainer.classList.add('hidden');
-        imageToUpload.style.removeProperty('filter');
-        nameOfFilterEffect = '';
-        unitOfFilterEffect = '';
-        break;
-
-      case 'effect-chrome':
-        updateImageEffect(chromeValues);
-        break;
-
-      case 'effect-sepia':
-        updateImageEffect(sepiaValues);
-        break;
-
-      case 'effect-marvin':
-        updateImageEffect(marvinValues);
-        break;
-
-      case 'effect-phobos':
-        updateImageEffect(phobosValues);
-        break;
-
-      case 'effect-heat':
-        updateImageEffect(heatValues);
-        break;
-    }
-  }
-};
-
-effectsList.addEventListener('click', onEffectClick);
+addEffectsSetting(sliderControlContainer, effectValue, imageToUpload, effectsList);
 
 const initUploadImageForm = () => {
   disableEscHandling(hashTagInput);

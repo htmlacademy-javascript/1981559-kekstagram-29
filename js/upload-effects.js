@@ -1,79 +1,73 @@
-// const addEffectsControl = (container, adjustingEffectResult, image, containerItems) => {
-//   const createNoUiSlider = (isSliderVisibleState, minValue, maxValue, start, step, filter, unit = '') => {
-//     if (isSliderVisibleState) {
-//       container.classList.remove('hidden');
-//       noUiSlider.create(container, {
-//         range: {
-//           min: minValue,
-//           max: maxValue,
-//         },
-//         start: start,
-//         step: step,
-//         connect: 'lower',
-//         format: {
-//           to(value) {
-//             if (Number.isInteger(value)) {
-//               return value.toFixed(0);
-//             }
-//             return value.toFixed(1);
-//           },
-//           from(value) {
-//             return parseFloat(value);
-//           },
-//         },
-//       });
-//
-//       container.noUiSlider.on('update', () => {
-//         adjustingEffectResult.value = container.noUiSlider.get();
-//         image.style.filter = `${filter}(${adjustingEffectResult.value}${unit})`;
-//       });
-//     }
-//   };
-//
-//   const onEffectClick = (evt) => {
-//     const selectedEffectInput = evt.target.closest('.effects__radio');
-//     const isSliderHiddenState = container.classList.contains('hidden');
-//     const sliderShownState = !isSliderHiddenState;
-//
-//     if (sliderShownState) {
-//       container.noUiSlider.destroy();
-//       container.classList.add('hidden');
-//     }
-//
-//     if (selectedEffectInput) {
-//       const nameOfEffect = selectedEffectInput.getAttribute('id');
-//
-//       switch (nameOfEffect) {
-//         case 'effect-none':
-//           container.classList.add('hidden');
-//           image.style.filter = 'none';
-//           adjustingEffectResult.value = '';
-//           break;
-//
-//         case 'effect-chrome':
-//           createNoUiSlider(isSliderHiddenState, 0, 1, 1, 0.1, 'grayscale');
-//           break;
-//
-//         case 'effect-sepia':
-//           createNoUiSlider(isSliderHiddenState, 0, 1, 1, 0.1, 'sepia');
-//           break;
-//
-//         case 'effect-marvin':
-//           createNoUiSlider(isSliderHiddenState, 0, 100, 100, 1, 'invert', '%');
-//           break;
-//
-//         case 'effect-phobos':
-//           createNoUiSlider(isSliderHiddenState, 0, 3, 3, 0.1, 'blur', 'px');
-//           break;
-//
-//         case 'effect-heat':
-//           createNoUiSlider(isSliderHiddenState, 1, 3, 3,0.1, 'brightness');
-//           break;
-//       }
-//     }
-//   };
-//
-//   containerItems.addEventListener('click', onEffectClick);
-// };
-//
-// // export {addEffectsControl};
+import {
+  chromeValues,
+  sepiaValues,
+  marvinValues,
+  phobosValues,
+  heatValues
+} from './constats.js';
+
+const addEffectsSetting = (container, value, image, list) => {
+  let nameOfFilterEffect = '';
+  let unitOfFilterEffect = '';
+
+  container.noUiSlider.on('update', () => {
+    value = container.noUiSlider.get();
+    image.style.filter = `${nameOfFilterEffect}(${value}${unitOfFilterEffect})`;
+  });
+
+
+  const updateImageEffect = (valuesOfEffect) => {
+    if (nameOfFilterEffect !== valuesOfEffect.effect) {
+      container.classList.remove('hidden');
+      nameOfFilterEffect = valuesOfEffect.effect;
+      unitOfFilterEffect = valuesOfEffect.unit;
+      container.noUiSlider.updateOptions({
+        range: {
+          'min': valuesOfEffect.min,
+          'max': valuesOfEffect.max
+        },
+        start: valuesOfEffect.start,
+        step: valuesOfEffect.step,
+      });
+    }
+  };
+
+  const onEffectClick = (evt) => {
+    const selectedEffect = evt.target.closest('.effects__radio');
+    if (selectedEffect !== null) {
+      const nameOfEffect = selectedEffect.getAttribute('id');
+      switch (nameOfEffect) {
+        case 'effect-none':
+          container.classList.add('hidden');
+          image.style.removeProperty('filter');
+          nameOfFilterEffect = '';
+          unitOfFilterEffect = '';
+          break;
+
+        case 'effect-chrome':
+          updateImageEffect(chromeValues);
+          break;
+
+        case 'effect-sepia':
+          updateImageEffect(sepiaValues);
+          break;
+
+        case 'effect-marvin':
+          updateImageEffect(marvinValues);
+          break;
+
+        case 'effect-phobos':
+          updateImageEffect(phobosValues);
+          break;
+
+        case 'effect-heat':
+          updateImageEffect(heatValues);
+          break;
+      }
+    }
+  };
+
+  return list.addEventListener('click', onEffectClick);
+};
+
+export {addEffectsSetting};
