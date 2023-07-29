@@ -223,12 +223,12 @@ noUiSlider.create(sliderControlContainer, {
   },
 });
 
-let nameOfFilterEffect = 'none';
+let nameOfFilterEffect = '';
+let unitOfFilterEffect = '';
 
 sliderControlContainer.noUiSlider.on('update', () => {
   effectValue.value = sliderControlContainer.noUiSlider.get();
-  console.log(effectValue.value);
-  console.log(nameOfFilterEffect);
+  imageToUpload.style.filter = `${nameOfFilterEffect}(${effectValue.value}${unitOfFilterEffect})`;
 });
 
 const onEffectClick = (evt) => {
@@ -238,35 +238,53 @@ const onEffectClick = (evt) => {
     switch (nameOfEffect) {
       case 'effect-none':
         sliderControlContainer.classList.add('hidden');
+        imageToUpload.style.removeProperty('filter');
         console.log('none');
-        nameOfFilterEffect = 'none';
+        nameOfFilterEffect = '';
+        unitOfFilterEffect = '';
         break;
 
       case 'effect-chrome':
         sliderControlContainer.classList.remove('hidden');
-        nameOfFilterEffect = 'chrome';
+        nameOfFilterEffect = 'grayscale';
+        unitOfFilterEffect = '';
         sliderControlContainer.noUiSlider.updateOptions({
           range: {
-            'min': 20,
-            'max': 50
+            'min': 0,
+            'max': 1
           },
-          step: 2,
+          start: 1,
+          step: 0.1,
         });
 
         break;
 
       case 'effect-sepia':
         sliderControlContainer.classList.remove('hidden');
-        nameOfFilterEffect = 'chrome';
+        nameOfFilterEffect = 'sepia';
+        unitOfFilterEffect = '';
         sliderControlContainer.noUiSlider.updateOptions({
           range: {
-            'min': 1,
-            'max': 10
-          }
+            'min': 0,
+            'max': 1
+          },
+          start: 1,
+          step: 0.1,
         });
         break;
 
       case 'effect-marvin':
+        sliderControlContainer.classList.remove('hidden');
+        nameOfFilterEffect = 'invert';
+        unitOfFilterEffect = '%';
+        sliderControlContainer.noUiSlider.updateOptions({
+          range: {
+            'min': 0,
+            'max': 100
+          },
+          start: 100,
+          step: 1,
+        });
         break;
 
       case 'effect-phobos':
