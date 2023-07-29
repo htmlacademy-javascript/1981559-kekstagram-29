@@ -14,7 +14,7 @@ const addEffectsSetting = (container, image, list, wrapper) => {
 
   container.noUiSlider.on('update', () => {
     effectValue.value = container.noUiSlider.get();
-    image.style.filter = `${nameOfFilterEffect}(${effectValue}${unitOfFilterEffect})`;
+    image.style.filter = `${nameOfFilterEffect}(${effectValue.value}${unitOfFilterEffect})`;
   });
 
 
