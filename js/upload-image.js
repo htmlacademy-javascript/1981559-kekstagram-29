@@ -231,6 +231,22 @@ sliderControlContainer.noUiSlider.on('update', () => {
   imageToUpload.style.filter = `${nameOfFilterEffect}(${effectValue.value}${unitOfFilterEffect})`;
 });
 
+const updateImageEffect = (min, max, start, step, effect, unit = '') => {
+  if (nameOfFilterEffect !== effect) {
+    sliderControlContainer.classList.remove('hidden');
+    nameOfFilterEffect = effect;
+    unitOfFilterEffect = unit;
+    sliderControlContainer.noUiSlider.updateOptions({
+      range: {
+        'min': min,
+        'max': max
+      },
+      start: start,
+      step: step,
+    });
+  }
+};
+
 const onEffectClick = (evt) => {
   const selectedEffect = evt.target.closest('.effects__radio');
   if (selectedEffect !== null) {
@@ -239,58 +255,28 @@ const onEffectClick = (evt) => {
       case 'effect-none':
         sliderControlContainer.classList.add('hidden');
         imageToUpload.style.removeProperty('filter');
-        console.log('none');
         nameOfFilterEffect = '';
         unitOfFilterEffect = '';
         break;
 
       case 'effect-chrome':
-        sliderControlContainer.classList.remove('hidden');
-        nameOfFilterEffect = 'grayscale';
-        unitOfFilterEffect = '';
-        sliderControlContainer.noUiSlider.updateOptions({
-          range: {
-            'min': 0,
-            'max': 1
-          },
-          start: 1,
-          step: 0.1,
-        });
-
+        updateImageEffect(0, 1, 1, 0.1, 'grayscale');
         break;
 
       case 'effect-sepia':
-        sliderControlContainer.classList.remove('hidden');
-        nameOfFilterEffect = 'sepia';
-        unitOfFilterEffect = '';
-        sliderControlContainer.noUiSlider.updateOptions({
-          range: {
-            'min': 0,
-            'max': 1
-          },
-          start: 1,
-          step: 0.1,
-        });
+        updateImageEffect(0, 1, 1, 0.1, 'sepia');
         break;
 
       case 'effect-marvin':
-        sliderControlContainer.classList.remove('hidden');
-        nameOfFilterEffect = 'invert';
-        unitOfFilterEffect = '%';
-        sliderControlContainer.noUiSlider.updateOptions({
-          range: {
-            'min': 0,
-            'max': 100
-          },
-          start: 100,
-          step: 1,
-        });
+        updateImageEffect(0, 100, 100, 1, 'invert', '%');
         break;
 
       case 'effect-phobos':
+        updateImageEffect(0, 3, 3, 0.1, 'blur', 'px');
         break;
 
       case 'effect-heat':
+        updateImageEffect(1, 3, 3, 0.1, 'brightness');
         break;
     }
   }
