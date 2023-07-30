@@ -1,3 +1,4 @@
+import {UNIQUE_IMAGE_VALUE} from './constats.js';
 import {onCardClick} from './mini-photo-click-handler.js';
 import {getRandomValue} from './util.js';
 
@@ -30,7 +31,7 @@ const renderPhotoArray = (photoArray) => {
   const createUniqueIdArrayGenerator = () => {
     const newIdArray = [];
     return () => {
-      while (newIdArray.length < 10) {
+      while (newIdArray.length < UNIQUE_IMAGE_VALUE) {
         let newId = getRandomId();
         while (newIdArray.includes(newId)) {
           newId = getRandomId();
