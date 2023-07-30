@@ -1,79 +1,77 @@
-const addEffectsControl = (container, adjustingEffectResult, image, containerItems) => {
-  const createNoUiSlider = (isSliderVisibleState, minValue, maxValue, step, filter, unit = '') => {
-    if (isSliderVisibleState) {
-      container.classList.remove('hidden');
-      noUiSlider.create(container, {
-        range: {
-          min: minValue,
-          max: maxValue,
-        },
-        start: 0,
-        step: step,
-        connect: 'lower',
-        format: {
-          to(value) {
-            if (Number.isInteger(value)) {
-              return value.toFixed(0);
-            }
-            return value.toFixed(1);
-          },
-          from(value) {
-            return parseFloat(value);
-          },
-        },
-      });
+import {
+  chromeValues,
+  sepiaValues,
+  marvinValues,
+  phobosValues,
+  heatValues
+} from './constats.js';
+import {uploadForm} from './upload-image.js';
 
-      container.noUiSlider.on('update', () => {
-        adjustingEffectResult.value = container.noUiSlider.get();
-        image.style.filter = `${filter}(${adjustingEffectResult.value}${unit})`;
+const addEffectsSetting = (container, image, list, wrapper) => {
+  const effectValue = uploadForm.querySelector('.effect-level__value');
+  let nameOfFilterEffect = '';
+  let unitOfFilterEffect = '';
+
+  container.noUiSlider.on('update', () => {
+    effectValue.value = container.noUiSlider.get();
+    image.style.filter = `${nameOfFilterEffect}(${effectValue.value}${unitOfFilterEffect})`;
+  });
+
+
+  const updateImageEffect = (valuesOfEffect) => {
+    if (nameOfFilterEffect !== valuesOfEffect.effect) {
+      container.classList.remove('hidden');
+      wrapper.classList.remove('hidden');
+      nameOfFilterEffect = valuesOfEffect.effect;
+      unitOfFilterEffect = valuesOfEffect.unit;
+      container.noUiSlider.updateOptions({
+        range: {
+          'min': valuesOfEffect.min,
+          'max': valuesOfEffect.max
+        },
+        start: valuesOfEffect.start,
+        step: valuesOfEffect.step,
       });
     }
   };
 
   const onEffectClick = (evt) => {
-    const selectedEffectInput = evt.target.closest('.effects__radio');
-    const isSliderHiddenState = container.classList.contains('hidden');
-    const sliderShownState = !isSliderHiddenState;
-
-    if (sliderShownState) {
-      container.noUiSlider.destroy();
-      container.classList.add('hidden');
-    }
-
-    if (selectedEffectInput) {
-      const nameOfEffect = selectedEffectInput.getAttribute('id');
-
+    const selectedEffect = evt.target.closest('.effects__radio');
+    if (selectedEffect !== null) {
+      const nameOfEffect = selectedEffect.getAttribute('id');
       switch (nameOfEffect) {
         case 'effect-none':
           container.classList.add('hidden');
-          image.style.filter = 'none';
-          adjustingEffectResult.value = '';
+          wrapper.classList.add('hidden');
+          image.style.removeProperty('filter');
+          nameOfFilterEffect = '';
+          unitOfFilterEffect = '';
           break;
 
         case 'effect-chrome':
-          createNoUiSlider(isSliderHiddenState, 0, 1, 0.1, 'grayscale');
+          updateImageEffect(chromeValues);
           break;
 
         case 'effect-sepia':
-          createNoUiSlider(isSliderHiddenState, 0, 1, 0.1, 'sepia');
+          updateImageEffect(sepiaValues);
           break;
 
         case 'effect-marvin':
-          createNoUiSlider(isSliderHiddenState, 0, 100, 1, 'invert', '%');
+          updateImageEffect(marvinValues);
           break;
 
         case 'effect-phobos':
-          createNoUiSlider(isSliderHiddenState, 0, 3, 0.1, 'blur', 'px');
+          updateImageEffect(phobosValues);
           break;
 
         case 'effect-heat':
-          createNoUiSlider(isSliderHiddenState, 1, 3,0.1, 'brightness');
+          updateImageEffect(heatValues);
           break;
       }
     }
   };
 
-  containerItems.addEventListener('click', onEffectClick);
+  return list.addEventListener('click', onEffectClick);
 };
 
-export {addEffectsControl};
+export {addEffectsSetting};

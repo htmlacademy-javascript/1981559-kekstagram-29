@@ -1,8 +1,11 @@
-import {disableEscHandling} from './util.js';
-import {createUploadImageHandler} from './upload-img-listeners.js';
+import {disableEscHandling, isEscapeKey} from './util.js';
 import {createValidation} from './upload-validation.js';
-import {createScaleControlling} from './upload-scale-contol.js';
-import {addEffectsControl} from './upload-effects.js';
+import {addEffectsSetting} from './upload-effects.js';
+import {addScalingController} from './upload-scale-image.js';
+import {pristineDefaultConfig, SubmitButtonText} from './constats.js';
+import {showError} from './upload-error.js';
+import {showSuccess} from './upload-success.js';
+import {sendData} from './load-data.js';
 
 const uploadForm = document.querySelector('.img-upload__form');
 const uploadImageInput = uploadForm.querySelector('.img-upload__input');
@@ -11,44 +14,117 @@ const cancelUploadButton = uploadForm.querySelector('.img-upload__cancel');
 const hashTagInput = uploadForm.querySelector('.text__hashtags');
 const commentField = uploadForm.querySelector('.text__description');
 const scaleContainer = uploadForm.querySelector('.img-upload__scale');
-const decreaseScaleButton = scaleContainer.querySelector('.scale__control--smaller');
 const increaseScaleButton = scaleContainer.querySelector('.scale__control--bigger');
-const scaleControlValue = scaleContainer.querySelector('.scale__control--value');
+const decreaseScaleButton = scaleContainer.querySelector('.scale__control--smaller');
+const scaleControlInput = scaleContainer.querySelector('.scale__control--value');
 const imageToUpload = uploadForm.querySelector('.img-upload__preview img');
-const sliderControlContainer = uploadForm.querySelector('.effect-level');
+const sliderWrapper = uploadForm.querySelector('.effect-level');
+const sliderControlContainer = uploadForm.querySelector('.effect-level__slider');
 const effectsList = uploadForm.querySelector('.effects__list');
-const effectValue = uploadForm.querySelector('.effect-level__value');
+const submitButton = uploadForm.querySelector('.img-upload__submit');
+const uploadWrapper = uploadForm.querySelector('.img-upload__wrapper');
 
-createScaleControlling(scaleControlValue, imageToUpload, decreaseScaleButton, increaseScaleButton);
-addEffectsControl(sliderControlContainer, effectValue, imageToUpload, effectsList);
+addScalingController(scaleControlInput, imageToUpload, increaseScaleButton, decreaseScaleButton);
 
-disableEscHandling(hashTagInput);
-disableEscHandling(commentField);
+const pristine = new Pristine(uploadForm, pristineDefaultConfig);
 
-const defaultConfig = {
-  classTo: 'img-upload__field-wrapper',
-  errorClass: 'img-upload__field-wrapper--error',
-  successClass: 'img-upload__field-wrapper--valid',
-  errorTextParent: 'img-upload__field-wrapper',
-  errorTextTag: 'div',
-  errorTextClass: 'img-upload__help'
+let clearUpload = () => {};
+const cancelUploadByKeydown = (evt) => {
+  if (isEscapeKey(evt)) {
+    clearUpload();
+  }
 };
 
-const pristine = new Pristine(uploadForm, defaultConfig);
+const uploadImage = () => {
+  document.body.classList.add('modal-open');
+  uploadOverlay.classList.remove('hidden');
+  document.addEventListener('keydown', cancelUploadByKeydown);
+  imageToUpload.style.filter = 'none';
+  imageToUpload.style.transform = 'none';
 
-const uploadImage = createUploadImageHandler(uploadOverlay, uploadForm, pristine, cancelUploadButton);
+  const isSliderControlShown = sliderControlContainer.classList.contains('hidden') === false;
+  if (isSliderControlShown) {
+    sliderControlContainer.classList.add('hidden');
+    sliderWrapper.classList.add('hidden');
+  }
+};
+
+clearUpload = () => {
+  document.body.classList.remove('modal-open');
+  uploadOverlay.classList.add('hidden');
+  document.removeEventListener('keydown', cancelUploadByKeydown);
+  uploadForm.reset();
+  pristine.reset();
+};
 
 uploadImageInput.addEventListener('change', uploadImage);
+cancelUploadButton.addEventListener('click', clearUpload);
 
-createValidation(hashTagInput, commentField, pristine);
-
-uploadForm.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  pristine.valueOf();
-  // const isValid = pristine.validate();
-  // if (isValid) {
-  //   console.log('Можно отправлять');
-  // } else {
-  //   console.log('Форма невалидна');
-  // }
+noUiSlider.create(sliderControlContainer, {
+  connect: 'lower',
+  range: {
+    'min': 0,
+    'max': 0
+  },
+  start: 0,
+  step: 0,
+  format: {
+    to(value) {
+      if (Number.isInteger(value)) {
+        return value.toFixed(2);
+      }
+      return value.toFixed(2);
+    },
+    from(value) {
+      return parseFloat(value);
+    },
+  },
 });
+
+addEffectsSetting(sliderControlContainer, imageToUpload, effectsList, sliderWrapper);
+
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
+  submitButton.textContent = SubmitButtonText.SENDING;
+};
+
+const unblockSubmitButton = () => {
+  submitButton.disabled = false;
+  submitButton.textContent = SubmitButtonText.IDLE;
+};
+
+const initUploadImageForm = () => {
+  disableEscHandling(hashTagInput);
+  disableEscHandling(commentField);
+
+  uploadForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    createValidation(hashTagInput, commentField, pristine);
+    const isValid = pristine.validate();
+    if (isValid) {
+      blockSubmitButton();
+      sendData(new FormData(evt.target))
+        .then(
+          () => {
+            showSuccess();
+          }
+        )
+        .catch(
+          (err) => {
+            showError(err.message);
+          }
+        )
+        .finally(unblockSubmitButton);
+    }
+  });
+};
+
+export {
+  initUploadImageForm,
+  uploadWrapper,
+  cancelUploadByKeydown,
+  uploadOverlay,
+  clearUpload,
+  uploadImageInput,
+  uploadForm
+};

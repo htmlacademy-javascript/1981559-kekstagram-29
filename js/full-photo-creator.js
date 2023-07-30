@@ -1,11 +1,10 @@
-import {newArrayOfObjects} from './data.js';
-import {DEFAULT_SHOWN_COMMENTS} from './constatnt.js';
+import {DEFAULT_SHOWN_COMMENTS} from './constats.js';
 
-const fillFullPhotoCardData = (PictureData, pictureId) => {
-  PictureData.image.src = `./photos/${pictureId}.jpg`;
-  PictureData.likes.textContent = String(newArrayOfObjects[pictureId - 1].likes);
-  PictureData.description.textContent = newArrayOfObjects[pictureId - 1].description;
-  PictureData.commentsCounter.textContent = `${DEFAULT_SHOWN_COMMENTS} из ${String(newArrayOfObjects[pictureId - 1].comments.length)} комментариев`;
+const fillFullPhotoCardData = (PictureData, pictureId, arrayOfObjects) => {
+  PictureData.image.src = `photos/${Number(pictureId) + 1}.jpg`;
+  PictureData.likes.textContent = String(arrayOfObjects[pictureId].likes);
+  PictureData.description.textContent = arrayOfObjects[pictureId].description;
+  PictureData.commentsCounter.textContent = `${DEFAULT_SHOWN_COMMENTS} из ${String(arrayOfObjects[pictureId].comments.length)} комментариев`;
 };
 
 export {fillFullPhotoCardData};

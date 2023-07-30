@@ -1,4 +1,13 @@
+import {getData} from './load-data.js';
+import {showAlert} from './util.js';
 import {renderPhotoArray} from './rendering.js';
-import {newArrayOfObjects} from './data.js';
-import './upload-image.js';
-renderPhotoArray(newArrayOfObjects);
+import {initUploadImageForm} from './upload-image.js';
+
+initUploadImageForm();
+getData()
+  .then(renderPhotoArray)
+  .catch(
+    (err) => {
+      showAlert(err.message);
+    }
+  );
