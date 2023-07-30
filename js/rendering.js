@@ -30,22 +30,19 @@ const renderPhotoArray = (photoArray) => {
 
   const createUniqueIdArrayGenerator = () => {
     const newIdArray = [];
-    return () => {
-      while (newIdArray.length < UNIQUE_IMAGE_VALUE) {
-        let newId = getRandomId();
-        while (newIdArray.includes(newId)) {
-          newId = getRandomId();
-        }
-        newIdArray.push(newId);
+    while (newIdArray.length < UNIQUE_IMAGE_VALUE) {
+      let newId = getRandomId();
+      while (newIdArray.includes(newId)) {
+        newId = getRandomId();
       }
-      return newIdArray;
-    };
+      newIdArray.push(newId);
+    }
+    return newIdArray;
   };
 
-  const generateUniqueIdArray = createUniqueIdArrayGenerator();
-  const someArray = generateUniqueIdArray();
+  const uniqueIdArray = createUniqueIdArrayGenerator();
 
-  console.log(someArray);
+  console.log(uniqueIdArray);
   // console.log(photoArray);
 
   photoArray
