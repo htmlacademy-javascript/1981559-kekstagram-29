@@ -9,19 +9,21 @@ const renderPhotoArray = (photoArray) => {
   const pictureContainer = document.querySelector('.pictures');
   const photosFragment = document.createDocumentFragment();
 
-  const getImageRank = ({comments}) => {
-    let rank = 0;
-    rank += comments.length;
-    return rank;
-  };
+  // по популярности
 
-  const compareImages = (imageA, imageB) => {
-    const rankA = getImageRank(imageA);
-    const rankB = getImageRank(imageB);
-
-    return rankB - rankA;
-  };
-
+  // const getImageRank = ({comments}) => {
+  //   let rank = 0;
+  //   rank += comments.length;
+  //   return rank;
+  // };
+  //
+  // const compareImages = (imageA, imageB) => {
+  //   const rankA = getImageRank(imageA);
+  //   const rankB = getImageRank(imageB);
+  //
+  //   return rankB - rankA;
+  // };
+  //  // рандом
   const getRandomId = () => {
     const theFirstId = photoArray[0].id;
     const theLastId = photoArray[photoArray.length - 1].id;
@@ -41,13 +43,10 @@ const renderPhotoArray = (photoArray) => {
   };
 
   const uniqueIdArray = createUniqueIdArrayGenerator();
-
   const newArray = new Set ();
-
   uniqueIdArray.forEach((id) => {
     newArray.add(photoArray[id]);
   });
-
   Array.from(newArray);
 
 
