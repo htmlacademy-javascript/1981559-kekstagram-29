@@ -1,4 +1,5 @@
 import {onCardClick} from './mini-photo-click-handler.js';
+import {getRandomValue} from './util.js';
 
 const renderPhotoArray = (photoArray) => {
   const pictureTemplate = document.querySelector('#picture')
@@ -19,6 +20,30 @@ const renderPhotoArray = (photoArray) => {
 
     return rankB - rankA;
   };
+
+  const getRandomId = () => {
+    const theFirstId = photoArray[0].id;
+    const theLastId = photoArray[photoArray.length - 1].id;
+    return getRandomValue(theFirstId, theLastId);
+  };
+
+  const createUniqueIdArrayGenerator = () => {
+    const newIdArray = [];
+    return () => {
+      while (newIdArray.length < 10) {
+        let newId = getRandomId();
+        while (newIdArray.includes(newId)) {
+          newId = getRandomId();
+        }
+        newIdArray.push(newId);
+      }
+      return newIdArray;
+    };
+  };
+
+  const generateUniqueIdArray = createUniqueIdArrayGenerator();
+
+  console.log(generateUniqueIdArray());
 
   photoArray
     .slice()
