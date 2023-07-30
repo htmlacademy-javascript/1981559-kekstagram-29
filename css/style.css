@@ -132,6 +132,10 @@ main {
    justify-content: center;
 }
 
+.img-filters--inactive {
+  opacity: 0;
+}
+
 .img-filters__button {
   padding: 5px 15px;
 
