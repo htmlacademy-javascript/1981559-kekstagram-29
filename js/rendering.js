@@ -42,20 +42,20 @@ const renderPhotoArray = (photoArray) => {
 
   const uniqueIdArray = createUniqueIdArrayGenerator();
 
-  console.log(uniqueIdArray);
-  console.log(photoArray);
-
   const newArray = new Set ();
 
   uniqueIdArray.forEach((id) => {
     newArray.add(photoArray[id]);
   });
 
-  console.log(Array.from(newArray));
+  Array.from(newArray);
+
+
+  photoArray = newArray;
 
   photoArray
-    .slice()
-    .sort(compareImages)
+    // .slice()
+    // .sort(compareImages)
     .forEach(({id, url, description, likes, comments}) => {
       const pictureElement = pictureTemplate.cloneNode(true);
       pictureElement.dataset.pictureId = id;
