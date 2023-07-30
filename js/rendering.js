@@ -14,6 +14,10 @@ const onFilterButtonClick = (evt) => {
     selectedButton.classList.add('img-filters__button--active');
   }
 };
+/*
+Остановился на переключении кнопок.
+Надо добавить смену положеня карточек по клику.
+ */
 
 filtersForm.addEventListener('click', onFilterButtonClick);
 
