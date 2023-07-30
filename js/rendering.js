@@ -2,6 +2,7 @@ import {UNIQUE_IMAGE_VALUE} from './constats.js';
 import {onCardClick} from './mini-photo-click-handler.js';
 import {getRandomValue} from './util.js';
 import {defaultRender} from './rendering-default.js';
+import {onPopularityRender} from './rendering-on-popularity.js';
 
 const renderPhotoArray = (photoArray) => {
   const pictureTemplate = document.querySelector('#picture')
@@ -52,8 +53,7 @@ const renderPhotoArray = (photoArray) => {
 
 
   // photoArray
-  //   // .slice()
-  //   // .sort(compareImages)
+  //   .sort(compareImages)
   //   .forEach(({id, url, description, likes, comments}) => {
   //     const pictureElement = pictureTemplate.cloneNode(true);
   //     pictureElement.dataset.pictureId = id;
@@ -64,7 +64,8 @@ const renderPhotoArray = (photoArray) => {
   //     photosFragment.appendChild(pictureElement);
   //   });
 
-  defaultRender(photoArray,pictureTemplate, photosFragment);
+  // defaultRender(photoArray,pictureTemplate, photosFragment);
+  onPopularityRender(photoArray,pictureTemplate, photosFragment);
 
   pictureContainer.appendChild(photosFragment);
 
