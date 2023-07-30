@@ -43,7 +43,15 @@ const renderPhotoArray = (photoArray) => {
   const uniqueIdArray = createUniqueIdArrayGenerator();
 
   console.log(uniqueIdArray);
-  // console.log(photoArray);
+  console.log(photoArray);
+
+  const newArray = new Set ();
+
+  uniqueIdArray.forEach((id) => {
+    newArray.add(photoArray[id]);
+  });
+
+  console.log(Array.from(newArray));
 
   photoArray
     .slice()
