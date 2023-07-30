@@ -8,7 +8,7 @@ const createValidation = (inputField, comment, pristineConstructor) => {
 
   const checkMaxHashtags = () => {
     const inputArray = inputField.value.trim().split(' ');
-    return inputArray.length <= MAX_AVAILABLE_HASHTAGS;
+    return inputArray.length < MAX_AVAILABLE_HASHTAGS + 1;
   };
 
   const checkAllHashtags = () => {
