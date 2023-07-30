@@ -1,4 +1,4 @@
-const onPopularityRender = (array, template, fragment) => {
+const onPopularityRender = (array, cb) => {
   const getImageRank = ({comments}) => {
     let rank = 0;
     rank += comments.length;
@@ -14,15 +14,7 @@ const onPopularityRender = (array, template, fragment) => {
 
   array
     .sort(compareImages)
-    .forEach(({id, url, description, likes, comments}) => {
-      const pictureElement = template.cloneNode(true);
-      pictureElement.dataset.pictureId = id;
-      pictureElement.querySelector('.picture__img').src = url;
-      pictureElement.querySelector('.picture__img').alt = description;
-      pictureElement.querySelector('.picture__likes').textContent = likes;
-      pictureElement.querySelector('.picture__comments').textContent = comments.length;
-      fragment.appendChild(pictureElement);
-    });
+    .forEach(cb);
 };
 
 export {onPopularityRender};

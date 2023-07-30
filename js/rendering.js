@@ -9,10 +9,19 @@ const renderPhotoArray = (photoArray) => {
     .querySelector('.picture');
   const pictureContainer = document.querySelector('.pictures');
   const photosFragment = document.createDocumentFragment();
+  const fillPictureElement = ({id, url, description, likes, comments}) => {
+    const pictureElement = pictureTemplate.cloneNode(true);
+    pictureElement.dataset.pictureId = id;
+    pictureElement.querySelector('.picture__img').src = url;
+    pictureElement.querySelector('.picture__img').alt = description;
+    pictureElement.querySelector('.picture__likes').textContent = likes;
+    pictureElement.querySelector('.picture__comments').textContent = comments.length;
+    photosFragment.appendChild(pictureElement);
+  };
 
-  // defaultRender(photoArray,pictureTemplate, photosFragment);
-  // onPopularityRender(photoArray,pictureTemplate, photosFragment);
-  randomRender(photoArray,pictureTemplate, photosFragment);
+  defaultRender(photoArray,fillPictureElement);
+  // onPopularityRender(photoArray,fillPictureElement);
+  // randomRender(photoArray,fillPictureElement);
 
   pictureContainer.appendChild(photosFragment);
 
