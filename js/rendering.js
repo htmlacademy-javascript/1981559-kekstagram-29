@@ -3,17 +3,7 @@ import {defaultRender} from './rendering-default.js';
 import {onPopularityRender} from './rendering-on-popularity.js';
 import {randomRender} from './rendering-random.js';
 
-const filtersForm = document.querySelector('.img-filters__form');
 
-const onFilterButtonClick = (evt) => {
-  const selectedButton = evt.target.closest('.img-filters__button');
-  const isDisabledSelectedButton = selectedButton.classList.contains('img-filters__button--active') === false;
-  if (isDisabledSelectedButton) {
-    const previousSelectedButton = filtersForm.querySelector('.img-filters__button--active');
-    previousSelectedButton.classList.remove('img-filters__button--active');
-    selectedButton.classList.add('img-filters__button--active');
-  }
-};
 /*
 Остановился на переключении кнопок.
 Надо добавить смену положеня карточек по клику.
@@ -23,8 +13,6 @@ const onFilterButtonClick = (evt) => {
 обновление списка элементов, подходящих под фильтры, происходило не чаще,
 чем один раз в полсекунды.
  */
-
-filtersForm.addEventListener('click', onFilterButtonClick);
 
 const renderPhotoArray = (photoArray) => {
   const pictureTemplate = document.querySelector('#picture')
@@ -42,6 +30,7 @@ const renderPhotoArray = (photoArray) => {
     photosFragment.appendChild(pictureElement);
   };
 
+  // callback(photoArray,fillPictureElement);
   defaultRender(photoArray,fillPictureElement);
   // onPopularityRender(photoArray,fillPictureElement);
   // randomRender(photoArray,fillPictureElement);
