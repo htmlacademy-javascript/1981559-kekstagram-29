@@ -1,20 +1,5 @@
 import {onCardClick} from './mini-photo-click-handler.js';
-import {defaultRender} from './rendering-default.js';
-import {onPopularityRender} from './rendering-on-popularity.js';
-import {randomRender} from './rendering-random.js';
-
-
-/*
-Остановился на переключении кнопок.
-Надо добавить смену положеня карточек по клику.
-При переключении фильтра все фотографии, отрисованные ранее,
-нужно убрать и вместо них показать те, которые подходят под новые условия.
-Воспользуйтесь приёмом «устранение дребезга», чтобы при переключении фильтра
-обновление списка элементов, подходящих под фильтры, происходило не чаще,
-чем один раз в полсекунды.
- */
-
-const renderPhotoArray = (photoArray) => {
+const renderPhotoArray = (photoArray, cb) => {
   const pictureTemplate = document.querySelector('#picture')
     .content
     .querySelector('.picture');
@@ -29,14 +14,8 @@ const renderPhotoArray = (photoArray) => {
     pictureElement.querySelector('.picture__comments').textContent = comments.length;
     photosFragment.appendChild(pictureElement);
   };
-
-  // callback(photoArray,fillPictureElement);
-  defaultRender(photoArray,fillPictureElement);
-  // onPopularityRender(photoArray,fillPictureElement);
-  // randomRender(photoArray,fillPictureElement);
-
+  cb(photoArray,fillPictureElement);
   pictureContainer.appendChild(photosFragment);
-
   pictureContainer.addEventListener('click', (evt) => onCardClick(evt, photoArray));
 };
 

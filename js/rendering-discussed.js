@@ -1,4 +1,4 @@
-const onPopularityRender = (array, cb) => {
+const discussedRender = (array, cb) => {
   const getImageRank = ({comments}) => {
     let rank = 0;
     rank += comments.length;
@@ -17,4 +17,4 @@ const onPopularityRender = (array, cb) => {
     .forEach(cb);
 };
 
-export {onPopularityRender};
+export {discussedRender};
