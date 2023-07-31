@@ -13,6 +13,7 @@ const discussedRender = (array, cb) => {
   };
 
   array
+    .slice()
     .sort(compareImages)
     .forEach(cb);
 };

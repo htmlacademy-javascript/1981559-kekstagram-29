@@ -7,12 +7,15 @@ import {defaultRender} from './rendering-default.js';
 import {randomRender} from './rendering-random.js';
 import {discussedRender} from './rendering-discussed.js';
 
+const pictureContainer = document.querySelector('.pictures');
+let dataArray = [];
 
 const addFiltersButtonsListeners = () => {
   const filtersForm = document.querySelector('.img-filters__form');
 
   const onFilterButtonClick = (evt) => {
     const selectedButton = evt.target.closest('.img-filters__button');
+    const miniPictures = pictureContainer.querySelectorAll('.picture');
     const isDisabledSelectedButton = selectedButton.classList.contains('img-filters__button--active') === false;
     if (isDisabledSelectedButton) {
       const previousSelectedButton = filtersForm.querySelector('.img-filters__button--active');
@@ -21,13 +24,22 @@ const addFiltersButtonsListeners = () => {
       selectedButton.classList.add('img-filters__button--active');
       switch (selectedButtonId) {
         case 'filter-default':
-          console.log(selectedButtonId);
+          for (const miniPicture of miniPictures) {
+            miniPicture.remove();
+          }
+          renderPhotoArray(dataArray, defaultRender);
           break;
         case 'filter-random':
-          console.log(selectedButtonId);
+          for (const miniPicture of miniPictures) {
+            miniPicture.remove();
+          }
+          renderPhotoArray(dataArray, randomRender);
           break;
         case 'filter-discussed':
-          console.log(selectedButtonId);
+          for (const miniPicture of miniPictures) {
+            miniPicture.remove();
+          }
+          renderPhotoArray(dataArray, discussedRender);
           break;
       }
     }
@@ -45,8 +57,6 @@ const addFiltersButtonsListeners = () => {
 обновление списка элементов, подходящих под фильтры, происходило не чаще,
 чем один раз в полсекунды.
  */
-
-let dataArray = [];
 
 initUploadImageForm();
 getData()

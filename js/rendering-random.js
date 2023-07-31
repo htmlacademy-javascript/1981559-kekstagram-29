@@ -2,9 +2,11 @@ import {getRandomValue} from './util.js';
 import {UNIQUE_IMAGE_VALUE} from './constats.js';
 
 const randomRender = (array, cb) => {
+  const recievedArray = array.slice();
+
   const getRandomId = () => {
-    const theFirstId = array[0].id;
-    const theLastId = array[array.length - 1].id;
+    const theFirstId = recievedArray[0].id;
+    const theLastId = recievedArray[recievedArray.length - 1].id;
     return getRandomValue(theFirstId, theLastId);
   };
 
@@ -23,7 +25,7 @@ const randomRender = (array, cb) => {
   const uniqueIdArray = createUniqueIdArrayGenerator();
   const newArray = new Set ();
   uniqueIdArray.forEach((id) => {
-    newArray.add(array[id]);
+    newArray.add(recievedArray[id]);
   });
   Array.from(newArray);
   newArray.forEach(cb);
