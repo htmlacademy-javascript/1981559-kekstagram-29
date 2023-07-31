@@ -3,6 +3,7 @@ import {defaultRender} from './rendering-default.js';
 import {randomRender} from './rendering-random.js';
 import {discussedRender} from './rendering-discussed.js';
 import {dataArray} from './main.js';
+import {debounce} from './util.js';
 
 const pictureContainer = document.querySelector('.pictures');
 
@@ -12,7 +13,7 @@ const updatePictureContainer = (list, cb) => {
   }
   renderPhotoArray(dataArray, cb);
 };
-
+const debouncedUpdatePictureContainer = debounce(updatePictureContainer);
 const addFiltersButtonsListeners = () => {
   const filtersForm = document.querySelector('.img-filters__form');
 
@@ -27,13 +28,13 @@ const addFiltersButtonsListeners = () => {
       selectedButton.classList.add('img-filters__button--active');
       switch (selectedButtonId) {
         case 'filter-default':
-          updatePictureContainer(miniPictures, defaultRender);
+          debouncedUpdatePictureContainer(miniPictures, defaultRender);
           break;
         case 'filter-random':
-          updatePictureContainer(miniPictures, randomRender);
+          debouncedUpdatePictureContainer(miniPictures, randomRender);
           break;
         case 'filter-discussed':
-          updatePictureContainer(miniPictures, discussedRender);
+          debouncedUpdatePictureContainer(miniPictures, discussedRender);
           break;
       }
     }
