@@ -2,7 +2,7 @@ import {disableEscHandling, isEscapeKey} from './util.js';
 import {createValidation} from './upload-validation.js';
 import {addEffectsSetting} from './upload-effects.js';
 import {addScalingController} from './upload-scale-image.js';
-import {pristineDefaultConfig, SubmitButtonText} from './constats.js';
+import {pristineDefaultConfig, SubmitButtonText, FILE_TYPES} from './constats.js';
 import {showError} from './upload-error.js';
 import {showSuccess} from './upload-success.js';
 import {sendData} from './load-data.js';
@@ -36,6 +36,13 @@ const cancelUploadByKeydown = (evt) => {
 };
 
 const uploadImage = () => {
+  const file = uploadImageInput.files[0];
+  const fileName = file.name.toLowerCase();
+  const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
+  if (matches) {
+    imageToUpload.src = URL.createObjectURL(file);
+  }
+
   document.body.classList.add('modal-open');
   uploadOverlay.classList.remove('hidden');
   document.addEventListener('keydown', cancelUploadByKeydown);

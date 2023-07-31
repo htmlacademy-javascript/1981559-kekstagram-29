@@ -5,6 +5,7 @@ const SCALE_IMAGE_STEP = 25;
 const SCALE_IMAGE_MAX = 100;
 const SCALE_IMAGE_MIN = 25;
 const UNIQUE_IMAGE_VALUE = 10;
+const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 const pristineDefaultConfig = {
   classTo: 'img-upload__field-wrapper',
   errorClass: 'img-upload__field-wrapper--error',
@@ -70,6 +71,7 @@ export {
   SCALE_IMAGE_MIN,
   SCALE_IMAGE_STEP,
   UNIQUE_IMAGE_VALUE,
+  FILE_TYPES,
   pristineDefaultConfig,
   chromeValues,
   sepiaValues,
