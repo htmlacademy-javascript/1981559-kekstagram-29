@@ -1,5 +1,5 @@
 import {isEscapeKey} from './util.js';
-import {uploadWrapper, cancelUploadByKeydown, uploadOverlay} from './upload-image.js';
+import {uploadWrapper, cancelUploadByKeydown, uploadForm} from './upload-image.js';
 const errorTemplate = document.querySelector('#error')
   .content
   .querySelector('.error');
@@ -41,7 +41,7 @@ const showError = (message) => {
   document.addEventListener('click', onOutsideErrorContainerClick);
   errorButton.addEventListener('click', removeErrorMessage);
 
-  uploadOverlay.appendChild(errorElement);
+  uploadForm.appendChild(errorElement);
 };
 
 export {showError};

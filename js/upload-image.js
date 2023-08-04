@@ -23,6 +23,7 @@ const sliderControlContainer = uploadForm.querySelector('.effect-level__slider')
 const effectsList = uploadForm.querySelector('.effects__list');
 const submitButton = uploadForm.querySelector('.img-upload__submit');
 const uploadWrapper = uploadForm.querySelector('.img-upload__wrapper');
+const effectsPreviewList = effectsList.querySelectorAll('.effects__preview');
 
 addScalingController(scaleControlInput, imageToUpload, increaseScaleButton, decreaseScaleButton);
 
@@ -41,6 +42,9 @@ const uploadImage = () => {
   const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
   if (matches) {
     imageToUpload.src = URL.createObjectURL(file);
+    for (const effect of effectsPreviewList) {
+      effect.style.backgroundImage = `url(${URL.createObjectURL(file)})`;
+    }
   }
 
   document.body.classList.add('modal-open');
