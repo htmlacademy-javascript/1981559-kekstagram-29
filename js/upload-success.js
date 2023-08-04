@@ -1,4 +1,5 @@
-import {uploadOverlay, uploadWrapper, uploadImageInput, clearUpload} from './upload-image.js';
+import {uploadWrapper, uploadImageInput, clearUpload, uploadForm} from './upload-image.js';
+import {isEscapeKey} from './util.js';
 const successTemplate = document.querySelector('#success')
   .content
   .querySelector('.success');
@@ -7,29 +8,38 @@ const showSuccess = () => {
   const successElement = successTemplate.cloneNode(true);
   const successInnerContainer = successElement.querySelector('.success__inner');
   const successButton = successElement.querySelector('.success__button');
-  uploadWrapper.classList.add('hidden');
+  clearUpload();
+  let returnToFormOnEscapeClick = () => {};
 
   const removeSuccessMessage = () => {
     successButton.removeEventListener('click', removeSuccessMessage);
+    document.removeEventListener('keydown', returnToFormOnEscapeClick);
     uploadWrapper.classList.remove('hidden');
     successElement.remove();
     uploadImageInput.value = '';
-    clearUpload();
   };
 
-  successButton.addEventListener('click', removeSuccessMessage);
-
-  const onOutsideErrorContainerClick = (evt) => {
-    const outsideErrorContainerClick = evt.composedPath().includes(successInnerContainer) === false;
-    if (outsideErrorContainerClick) {
-      document.removeEventListener('click', onOutsideErrorContainerClick);
+  returnToFormOnEscapeClick = (evt) => {
+    if (isEscapeKey(evt)) {
       removeSuccessMessage();
     }
   };
 
-  document.addEventListener('click', onOutsideErrorContainerClick);
+  document.addEventListener('keydown', returnToFormOnEscapeClick);
 
-  uploadOverlay.appendChild(successElement);
+  successButton.addEventListener('click', removeSuccessMessage);
+
+  const onOutsideSuccessContainerClick = (evt) => {
+    const outsideErrorContainerClick = evt.composedPath().includes(successInnerContainer) === false;
+    if (outsideErrorContainerClick) {
+      document.removeEventListener('click', onOutsideSuccessContainerClick);
+      removeSuccessMessage();
+    }
+  };
+
+  document.addEventListener('click', onOutsideSuccessContainerClick);
+
+  uploadForm.appendChild(successElement);
 };
 
 export {showSuccess};
