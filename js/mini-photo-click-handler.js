@@ -14,8 +14,13 @@ const bigPictureData = {
   image: bigPicture.querySelector('.big-picture__img img'),
   likes: bigPicture.querySelector('.likes-count'),
   description: bigPicture.querySelector('.social__caption'),
-  commentsCounter: bigPicture.querySelector('.social__comment-count'),
+  commentsCounter: {
+    currentShownComments: bigPicture.querySelector('.social__comment-count .comments-count--current-shown'),
+    commentsCount: bigPicture.querySelector('.social__comment-count .comments-count'),
+    commentsCountWord: bigPicture.querySelector('.social__comment-count .comments-count--word'),
+  },
 };
+const {currentShownComments, commentsCount, commentsCountWord} = bigPictureData.commentsCounter;
 const commentsWordsArray = ['комментарий', 'комментария', 'комментариев'];
 const closeButton = bigPicture.querySelector('.big-picture__cancel');
 
@@ -31,8 +36,9 @@ const onClickShowMore = () => {
     currentShownCommentsValue += delta;
   }
 
-  bigPictureData.commentsCounter.textContent = `${currentShownCommentsValue} из ${String(totalShownCommentsValue)} комментариев`;
-
+  currentShownComments.textContent = `${currentShownCommentsValue} из `;
+  commentsCount.textContent = totalShownCommentsValue;
+  commentsCountWord.textContent = ' комментариев';
   generateComments(currentShownCommentsValue, totalShownCommentsValue, comments);
 
   if (currentShownCommentsValue === totalShownCommentsValue) {
@@ -63,7 +69,13 @@ const onCardClick = (evt, pictures) => {
     fillFullPhotoCardData(bigPictureData, selectedPictureId, pictures);
 
     if (totalShownCommentsValue < DEFAULT_SHOWN_COMMENTS + 1) {
-      bigPictureData.commentsCounter.textContent = pluralize(totalShownCommentsValue, commentsWordsArray);
+      currentShownComments.textContent = '';
+      commentsCount.textContent = `${totalShownCommentsValue } `;
+      commentsCountWord.textContent = pluralize(totalShownCommentsValue, commentsWordsArray);
+    } else {
+      currentShownComments.textContent = `${DEFAULT_SHOWN_COMMENTS} из `;
+      commentsCount.textContent = totalShownCommentsValue;
+      commentsCountWord.textContent = ' комментариев';
     }
 
     generateComments(DEFAULT_SHOWN_COMMENTS, selectedPictureId, comments);
