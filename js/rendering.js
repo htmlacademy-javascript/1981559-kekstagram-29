@@ -1,9 +1,10 @@
 import {onCardClick} from './mini-photo-click-handler.js';
+const pictureTemplate = document.querySelector('#picture')
+  .content
+  .querySelector('.picture');
+const pictureContainer = document.querySelector('.pictures');
+
 const renderPhotoArray = (photoArray, cb) => {
-  const pictureTemplate = document.querySelector('#picture')
-    .content
-    .querySelector('.picture');
-  const pictureContainer = document.querySelector('.pictures');
   const photosFragment = document.createDocumentFragment();
   const fillPictureElement = ({id, url, description, likes, comments}) => {
     const pictureElement = pictureTemplate.cloneNode(true);
