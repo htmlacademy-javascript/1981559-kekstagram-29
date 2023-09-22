@@ -5,7 +5,7 @@ import {
   phobosValues,
   heatValues
 } from './constats.js';
-import {uploadForm} from './upload-image.js';
+import {uploadForm} from './on-upload-image.js';
 
 const addEffectsSetting = (container, image, list, wrapper) => {
   const effectValue = uploadForm.querySelector('.effect-level__value');
