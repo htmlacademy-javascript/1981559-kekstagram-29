@@ -6,7 +6,7 @@ const addScalingController = (input, image, increase, decrease) => {
     scalableImage.style.transform = `scale(${scalingValue / percentToMath})`;
   };
 
-  const decreaseValue = () => {
+  const onDecreaseButtonClick = () => {
     let value = parseInt(input.value, 10);
     if (value > SCALE_IMAGE_MIN) {
       value -= SCALE_IMAGE_STEP;
@@ -15,7 +15,7 @@ const addScalingController = (input, image, increase, decrease) => {
     }
   };
 
-  const increaseValue = () => {
+  const onIncreaseButtonClick = () => {
     let value = parseInt(input.value, 10);
     if (value < SCALE_IMAGE_MAX) {
       value += SCALE_IMAGE_STEP;
@@ -24,8 +24,8 @@ const addScalingController = (input, image, increase, decrease) => {
     }
   };
 
-  increase.addEventListener('click', increaseValue);
-  decrease.addEventListener('click', decreaseValue);
+  increase.addEventListener('click', onIncreaseButtonClick);
+  decrease.addEventListener('click', onDecreaseButtonClick);
 };
 
 export {addScalingController};

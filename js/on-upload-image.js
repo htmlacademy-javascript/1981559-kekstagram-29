@@ -30,13 +30,13 @@ addScalingController(scaleControlInput, imageToUpload, increaseScaleButton, decr
 const pristine = new Pristine(uploadForm, pristineDefaultConfig);
 
 let clearUpload = () => {};
-const cancelUploadByKeydown = (evt) => {
+const onEscapeKeydownCancelUpload = (evt) => {
   if (isEscapeKey(evt)) {
     clearUpload();
   }
 };
 
-const uploadImage = () => {
+const onUploadImage = () => {
   const file = uploadImageInput.files[0];
   const fileName = file.name.toLowerCase();
   const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
@@ -49,7 +49,7 @@ const uploadImage = () => {
 
   document.body.classList.add('modal-open');
   uploadOverlay.classList.remove('hidden');
-  document.addEventListener('keydown', cancelUploadByKeydown);
+  document.addEventListener('keydown', onEscapeKeydownCancelUpload);
   imageToUpload.style.filter = 'none';
   imageToUpload.style.transform = 'none';
 
@@ -63,12 +63,12 @@ const uploadImage = () => {
 clearUpload = () => {
   document.body.classList.remove('modal-open');
   uploadOverlay.classList.add('hidden');
-  document.removeEventListener('keydown', cancelUploadByKeydown);
+  document.removeEventListener('keydown', onEscapeKeydownCancelUpload);
   uploadForm.reset();
   pristine.reset();
 };
 
-uploadImageInput.addEventListener('change', uploadImage);
+uploadImageInput.addEventListener('change', onUploadImage);
 cancelUploadButton.addEventListener('click', clearUpload);
 
 noUiSlider.create(sliderControlContainer, {
@@ -133,7 +133,7 @@ const initUploadImageForm = () => {
 export {
   initUploadImageForm,
   uploadWrapper,
-  cancelUploadByKeydown,
+  onEscapeKeydownCancelUpload,
   uploadOverlay,
   clearUpload,
   uploadImageInput,

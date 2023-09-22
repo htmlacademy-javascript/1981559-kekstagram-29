@@ -1,5 +1,5 @@
 import {isEscapeKey} from './util.js';
-import {uploadWrapper, cancelUploadByKeydown, uploadForm} from './upload-image.js';
+import {uploadWrapper, onEscapeKeydownCancelUpload, uploadForm} from './on-upload-image.js';
 const errorTemplate = document.querySelector('#error')
   .content
   .querySelector('.error');
@@ -11,35 +11,35 @@ const showError = (message) => {
   const errorButton = errorElement.querySelector('.error__button');
   errorTitle.textContent = message;
   uploadWrapper.classList.add('hidden');
-  document.removeEventListener('keydown', cancelUploadByKeydown);
-  let returnToFormOnEscapeClick = () => {};
+  document.removeEventListener('keydown', onEscapeKeydownCancelUpload);
+  let onEscapeKeydownReturnToForm = () => {};
 
-  const removeErrorMessage = () => {
-    errorButton.removeEventListener('click', removeErrorMessage);
-    document.removeEventListener('keydown', returnToFormOnEscapeClick);
-    document.addEventListener('keydown', cancelUploadByKeydown);
+  const onButtonClickRemoveErrorMessage = () => {
+    errorButton.removeEventListener('click', onButtonClickRemoveErrorMessage);
+    document.removeEventListener('keydown', onEscapeKeydownReturnToForm);
+    document.addEventListener('keydown', onEscapeKeydownCancelUpload);
     uploadWrapper.classList.remove('hidden');
     errorElement.remove();
   };
 
-  returnToFormOnEscapeClick = (evt) => {
+  onEscapeKeydownReturnToForm = (evt) => {
     if (isEscapeKey(evt)) {
-      removeErrorMessage();
+      onButtonClickRemoveErrorMessage();
     }
   };
 
-  document.addEventListener('keydown', returnToFormOnEscapeClick);
+  document.addEventListener('keydown', onEscapeKeydownReturnToForm);
 
   const onOutsideErrorContainerClick = (evt) => {
     const outsideErrorContainerClick = evt.composedPath().includes(errorInnerContainer) === false;
     if (outsideErrorContainerClick) {
       document.removeEventListener('click', onOutsideErrorContainerClick);
-      removeErrorMessage();
+      onButtonClickRemoveErrorMessage();
     }
   };
 
   document.addEventListener('click', onOutsideErrorContainerClick);
-  errorButton.addEventListener('click', removeErrorMessage);
+  errorButton.addEventListener('click', onButtonClickRemoveErrorMessage);
 
   uploadForm.appendChild(errorElement);
 };

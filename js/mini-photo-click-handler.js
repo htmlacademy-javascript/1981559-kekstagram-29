@@ -2,8 +2,8 @@ import {DEFAULT_SHOWN_COMMENTS} from './constats.js';
 import {fillFullPhotoCardData} from './full-photo-creator.js';
 import {generateComments} from './full-photo-comments-creator.js';
 import {
-  hideBigPictureByClick,
-  hideBigPictureByKeydown
+  onCloseButtonClickHideBigPicture,
+  onKeydownHideBigPicture
 } from './full-photo-close-listeners.js';
 import {pluralize} from './util.js';
 
@@ -54,7 +54,7 @@ const onCardClick = (evt, pictures) => {
     totalShownCommentsValue = 0;
     document.body.classList.add('modal-open');
     bigPicture.classList.remove('hidden');
-    document.addEventListener('keydown', hideBigPictureByKeydown);
+    document.addEventListener('keydown', onKeydownHideBigPicture);
     const selectedPictureId = selectedPictureElement.dataset.pictureId;
     const selectedPicture = pictures.find(({id}) => id === Number(selectedPictureId));
     comments = selectedPicture.comments;
@@ -82,7 +82,7 @@ const onCardClick = (evt, pictures) => {
   }
 };
 
-closeButton.addEventListener('click', hideBigPictureByClick);
+closeButton.addEventListener('click', onCloseButtonClickHideBigPicture);
 showMoreButton.addEventListener('click', onClickShowMore);
 
 

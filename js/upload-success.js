@@ -1,4 +1,4 @@
-import {uploadWrapper, uploadImageInput, clearUpload, uploadForm} from './upload-image.js';
+import {uploadWrapper, uploadImageInput, clearUpload, uploadForm} from './on-upload-image.js';
 import {isEscapeKey} from './util.js';
 const successTemplate = document.querySelector('#success')
   .content
@@ -9,23 +9,23 @@ const showSuccess = () => {
   const successInnerContainer = successElement.querySelector('.success__inner');
   const successButton = successElement.querySelector('.success__button');
   clearUpload();
-  let returnToFormOnEscapeClick = () => {};
+  let onEscapeClickReturnToForm = () => {};
 
   const removeSuccessMessage = () => {
     successButton.removeEventListener('click', removeSuccessMessage);
-    document.removeEventListener('keydown', returnToFormOnEscapeClick);
+    document.removeEventListener('keydown', onEscapeClickReturnToForm);
     uploadWrapper.classList.remove('hidden');
     successElement.remove();
     uploadImageInput.value = '';
   };
 
-  returnToFormOnEscapeClick = (evt) => {
+  onEscapeClickReturnToForm = (evt) => {
     if (isEscapeKey(evt)) {
       removeSuccessMessage();
     }
   };
 
-  document.addEventListener('keydown', returnToFormOnEscapeClick);
+  document.addEventListener('keydown', onEscapeClickReturnToForm);
 
   successButton.addEventListener('click', removeSuccessMessage);
 
